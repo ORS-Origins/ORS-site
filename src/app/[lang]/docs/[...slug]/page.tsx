@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CustomCodeBlock } from '@/components/mdx/custom-codeblock';
 import { Mermaid } from '@/components/mdx/mermaid';
+import { uiConfig } from '@/config';
 import { getPageDictionary } from '@/dictionaries';
 import { i18n, type Locale } from '@/lib/i18n';
 import { source } from '@/lib/source';
@@ -45,7 +46,11 @@ export default async function Page(props: PageProps<'/[lang]/docs/[...slug]'>) {
         <div className="mc-doc-pixel-dust" />
       </div>
 
-      <DocsPage toc={page.data.toc} full={page.data.full} tableOfContent={{ style: 'clerk' }}>
+      <DocsPage
+        toc={page.data.toc}
+        full={page.data.full}
+        tableOfContent={{ style: uiConfig.tocStyle }}
+      >
         <DocsTitle>{page.data.title}</DocsTitle>
         <DocsDescription>{page.data.description}</DocsDescription>
         {page.data.author && (

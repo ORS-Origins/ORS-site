@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { McServerStatus } from '@/components/mc-status';
 import { SplashText } from '@/components/splash-text';
 import EnterDocsButton from '@/components/transition/enter-docs-button';
-import { siteConfig } from '@/config';
+import { brandConfig, siteConfig } from '@/config';
 import { getPageDictionary } from '@/dictionaries';
 
 import { i18n, type Locale } from '@/lib/i18n';
@@ -109,7 +109,7 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
       <div className="relative z-10 space-y-6 text-center">
         <div className="home-enter home-enter--delay-1 relative inline-block">
           <h1 className="text-6xl md:text-8xl font-minecrafter tracking-widest text-shadow-md text-white/80 drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-            ORS
+            {brandConfig.homeTitle}
           </h1>
           {splashSrc && (
             <div className="hidden md:block absolute -right-20 -bottom-8 md:-right-24 md:-bottom-10">

@@ -53,7 +53,7 @@ export function baseOptions(locale: Locale = i18n.defaultLanguage): BaseLayoutPr
       title: (
         <span className="flex items-center gap-2">
           {/* biome-ignore lint/performance/noImgElement: static site logo */}
-          <img src="/imgs/widget/ors.png" alt="ORS" className="h-6 w-auto" />
+          <img src={siteConfig.logoPath} alt={siteConfig.appName} className="h-6 w-auto" />
           <span className="font-minecraft-ae font-bold text-xl tracking-wider">
             {siteConfig.appName}
           </span>

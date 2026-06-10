@@ -9,6 +9,7 @@
 
 import { animate, motion, useMotionTemplate, useMotionValue, useTransform } from 'framer-motion';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { storageKeys, themeConfig } from '@/config';
 import { maskRevealTransition } from '@/lib/motion';
 
 export default function MaskReveal() {
@@ -21,11 +22,14 @@ export default function MaskReveal() {
     // Initialize synchronously on client navigation to avoid flicker
     // 客户端跳转时同步初始化，避免闪烁
     if (typeof window !== 'undefined') {
-      const raw = sessionStorage.getItem('nd-docs-transition');
+      const raw = sessionStorage.getItem(storageKeys.transitionData);
       if (raw) {
         try {
           const data = JSON.parse(raw);
-          if (data.isTransitioning && Date.now() - data.ts < 3000) {
+          if (
+            data.isTransitioning &&
+            Date.now() - data.ts < themeConfig.maskRevealDurationMs + 500
+          ) {
             return {
               x: data.x,
               y: data.y,
@@ -46,7 +50,7 @@ export default function MaskReveal() {
   // Clear the flag immediately after reading to prevent re-trigger on refresh or back navigation
   // 清除标志位，阅后即焚，避免刷新或后退后误触发
   useLayoutEffect(() => {
-    sessionStorage.removeItem('nd-docs-transition');
+    sessionStorage.removeItem(storageKeys.transitionData);
   }, []);
 
   useEffect(() => {

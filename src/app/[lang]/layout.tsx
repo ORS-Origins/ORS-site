@@ -23,7 +23,7 @@ export async function generateMetadata(props: LayoutProps<'/[lang]'>): Promise<M
     title: siteConfig.appName,
     description: dict.tagline,
     icons: {
-      icon: '/imgs/widget/ors.png',
+      icon: siteConfig.faviconPath,
     },
   };
 }

@@ -90,7 +90,7 @@ export function Mermaid({ chart }: { chart: string }) {
   // `ref.innerHTML = …` 之类的命令式写入会在重挂载时被擦掉，导致
   // 图表显示为空。
   const [svgContent, setSvgContent] = useState<string | null>(null);
-  const [scale, setScale] = useState(mermaidConfig.defaultScale);
+  const [scale, setScale] = useState<number>(mermaidConfig.defaultScale);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   // `fitCanvasScale` is the largest scale at which the diagram fits
@@ -106,7 +106,7 @@ export function Mermaid({ chart }: { chart: string }) {
   // 图表超出画布可见边缘 —— 这是用户要求的"点击放大不应溢出"契
   // 约。它在画布尺寸或 SVG 内在尺寸可能变化的每次 render 时重算
   // （挂载、SVG 内容更新、放大态切换、窗口 resize）。
-  const [_fitCanvasScale, setFitCanvasScale] = useState(mermaidConfig.maxScale);
+  const [_fitCanvasScale, setFitCanvasScale] = useState<number>(mermaidConfig.maxScale);
   // `isMaximized` is the page-level maximize flag (NOT the browser
   // Fullscreen API) — it pins the diagram to the viewport inside the page
   // and is exited via the toolbar button, the Escape key, or by re-clicking

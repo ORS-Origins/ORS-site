@@ -5,6 +5,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Copy, Home, Info, Link2, RefreshCw } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { brandConfig, uiConfig } from '@/config';
 import { getPageDictionary } from '@/dictionaries';
 import type { Locale } from '@/lib/i18n';
 
@@ -57,7 +58,7 @@ export function ContextMenu({ locale }: ContextMenuProps) {
       label: dict.ctxMenuAbout,
       icon: <Info className="w-4 h-4" />,
       action: () => {
-        window.open('https://github.com/EmptyDreams/ORS', '_blank');
+        window.open(brandConfig.aboutUrl, '_blank');
       },
       divider: true,
     },
@@ -84,10 +85,10 @@ export function ContextMenu({ locale }: ContextMenuProps) {
       const selection = window.getSelection()?.toString().trim() ?? '';
       setSelectedText(selection);
 
-      const menuWidth = 192;
+      const menuWidth = uiConfig.contextMenu.width;
       const itemCount = selection ? baseItems.length + 1 : baseItems.length;
-      const menuHeight = itemCount * 40 + 16;
-      const padding = 8;
+      const menuHeight = itemCount * uiConfig.contextMenu.itemHeight + 16;
+      const padding = uiConfig.contextMenu.padding;
 
       let x = e.clientX;
       let y = e.clientY;

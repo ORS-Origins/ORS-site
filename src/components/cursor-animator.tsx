@@ -5,38 +5,30 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { cursorConfig } from '@/config';
 
-// Frame sequences for each cursor type / 每种指针类型的帧序列
+// Build frame sequence arrays from config / 根据配置构建帧序列数组
+function buildFrameSequence(key: keyof typeof cursorConfig.frameSequences): string[] {
+  const cfg = cursorConfig.frameSequences[key];
+  return Array.from({ length: cfg.length }, (_, i) => {
+    const frame = String(i + 1).padStart(2, '0');
+    return `${cursorConfig.pathPrefix}/${cfg.filenameTemplate.replace('{frame}', frame)}`;
+  });
+}
+
 const CURSOR_SEQUENCES = {
-  pointer: Array.from(
-    { length: 11 },
-    (_, i) => `/imgs/widget/cursor/pointer_page_${String(i + 1).padStart(2, '0')}.png`,
-  ),
-  grabbing: Array.from(
-    { length: 8 },
-    (_, i) => `/imgs/widget/cursor/grabbing_page_${String(i + 1).padStart(2, '0')}.png`,
-  ),
-  notAllowed: Array.from(
-    { length: 8 },
-    (_, i) => `/imgs/widget/cursor/not-allowed_page_${String(i + 1).padStart(2, '0')}.png`,
-  ),
+  pointer: buildFrameSequence('pointer'),
+  grabbing: buildFrameSequence('grabbing'),
+  notAllowed: buildFrameSequence('notAllowed'),
 } as const;
 
-// Fallback single-frame cursors / 单帧回退光标
-const STATIC_CURSORS: Record<string, string> = {
-  default: '/imgs/widget/cursor/default.png',
-  pointer: '/imgs/widget/cursor/pointer_page_01.png',
-  text: '/imgs/widget/cursor/text.png',
-  grab: '/imgs/widget/cursor/grab.png',
-  grabbing: '/imgs/widget/cursor/grabbing_page_01.png',
-  crosshair: '/imgs/widget/cursor/crosshair.png',
-  help: '/imgs/widget/cursor/help.png',
-  'not-allowed': '/imgs/widget/cursor/not-allowed_page_01.png',
-  'ns-resize': '/imgs/widget/cursor/resize-ns.png',
-  'ew-resize': '/imgs/widget/cursor/resize-ew.png',
-  'nesw-resize': '/imgs/widget/cursor/resize-ne.png',
-  'nwse-resize': '/imgs/widget/cursor/resize-nw.png',
-};
+// Build static cursor paths from config / 根据配置构建静态光标路径
+const STATIC_CURSORS: Record<string, string> = Object.fromEntries(
+  Object.entries(cursorConfig.staticCursors).map(([key, filename]) => [
+    key,
+    `${cursorConfig.pathPrefix}/${filename}`,
+  ]),
+);
 
 // Map CSS cursor keyword to our animated sequence / 将 CSS cursor 关键字映射到动画序列
 const SEQUENCE_MAP: Record<string, keyof typeof CURSOR_SEQUENCES> = {
@@ -44,9 +36,6 @@ const SEQUENCE_MAP: Record<string, keyof typeof CURSOR_SEQUENCES> = {
   grabbing: 'grabbing',
   'not-allowed': 'notAllowed',
 };
-
-// Frame interval in ms / 帧间隔（毫秒）
-const FRAME_INTERVAL = 80;
 
 export function CursorAnimator() {
   const intervalRef = useRef<number>(0);
@@ -102,22 +91,10 @@ export function CursorAnimator() {
 
     function applyCursor(type: string, frameUrl?: string) {
       const url = frameUrl ?? STATIC_CURSORS[type] ?? STATIC_CURSORS.default;
-      // Hotspot coordinates match minecraft.css definitions / 热点坐标匹配 minecraft.css 定义
-      const hotspots: Record<string, string> = {
-        default: '16 16',
-        pointer: '18 18',
-        text: '36 16',
-        grab: '18 18',
-        grabbing: '18 6',
-        crosshair: '30 30',
-        help: '16 6',
-        'not-allowed': '31 31',
-        'ns-resize': '31 31',
-        'ew-resize': '31 31',
-        'nesw-resize': '31 31',
-        'nwse-resize': '31 31',
-      };
-      const hotspot = hotspots[type] ?? '16 16';
+      // Hotspot coordinates from config / 热点坐标来自配置
+      const hotspot =
+        cursorConfig.hotspots[type as keyof typeof cursorConfig.hotspots] ??
+        cursorConfig.hotspots.default;
       const fallback = type === 'default' ? 'auto' : type;
       const cursorValue = `url("${url}") ${hotspot}, ${fallback}`;
 
@@ -157,7 +134,7 @@ export function CursorAnimator() {
     }
 
     // Start animation loop / 启动动画循环
-    intervalRef.current = window.setInterval(tick, FRAME_INTERVAL);
+    intervalRef.current = window.setInterval(tick, cursorConfig.frameIntervalMs);
     document.addEventListener('mousemove', onMouseMove);
 
     return () => {
