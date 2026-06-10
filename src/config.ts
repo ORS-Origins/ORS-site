@@ -103,8 +103,6 @@ export const uiConfig = {
     itemHeight: 40,
     padding: 8,
   },
-  /** Code block max height in px. / 代码块最大高度（像素）。 */
-  codeBlockMaxHeightPx: 600,
   /** Docs table of contents style. / 文档目录样式。 */
   tocStyle: 'clerk' as const,
 } as const;

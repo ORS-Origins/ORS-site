@@ -4,6 +4,7 @@ import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/page';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { Tab, Tabs } from '@/components/mdx/code-tabs';
 import { CustomCodeBlock } from '@/components/mdx/custom-codeblock';
 import { Mermaid } from '@/components/mdx/mermaid';
 import { uiConfig } from '@/config';
@@ -60,7 +61,7 @@ export default async function Page(props: PageProps<'/[lang]/docs/[...slug]'>) {
           </p>
         )}
         <DocsBody>
-          <MDX components={{ ...defaultMdxComponents, Mermaid, pre: CustomCodeBlock }} />
+          <MDX components={{ ...defaultMdxComponents, Mermaid, pre: CustomCodeBlock, Tabs, Tab }} />
         </DocsBody>
       </DocsPage>
     </div>

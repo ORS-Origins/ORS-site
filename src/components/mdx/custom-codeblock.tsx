@@ -17,7 +17,6 @@ import { useTranslations } from 'fumadocs-ui/contexts/i18n';
 import { useCopyButton } from 'fumadocs-ui/utils/use-copy-button';
 import { Check, Clipboard } from 'lucide-react';
 import { type ComponentProps, type ReactNode, useRef } from 'react';
-import { uiConfig } from '@/config';
 import { getLanguageDisplayName } from '@/lib/language-mapping';
 
 interface CodeBlockPreProps extends ComponentProps<'pre'> {
@@ -63,9 +62,8 @@ export function CustomCodeBlock(props: CodeBlockPreProps) {
         role="region"
         // biome-ignore lint/a11y/noNoninteractiveTabindex: matches fumadocs CodeBlock behavior
         tabIndex={0}
-        className={`text-[0.8125rem] py-3.5 overflow-auto fd-scroll-container focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fd-ring`}
+        className="text-[0.8125rem] py-3.5 overflow-auto max-h-[600px] fd-scroll-container focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fd-ring"
         style={{
-          maxHeight: uiConfig.codeBlockMaxHeightPx,
           counterSet: (rest as Record<string, unknown>)['data-line-numbers']
             ? `line ${Number((rest as Record<string, unknown>)['data-line-numbers-start'] ?? 1) - 1}`
             : undefined,
