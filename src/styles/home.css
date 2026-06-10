@@ -1,0 +1,684 @@
+/* Homepage dynamic light & shadow effects inspired by Minecraft light sources.
+   首页动态光影效果（灵感来源：Minecraft 光源系统 + 彩色发光方块）。
+
+   Color palette synced with Neoverse-Doc: light blue + light green + deep blue.
+   No yellow / amber / orange — Minecraft torch/gold blocks recolored to fit the brand.
+   配色与 Neoverse-Doc 同步：浅蓝 + 浅绿 + 深蓝。无黄/橙色调，MC 火把/金方块重新着色以契合品牌。
+
+   - Photo 1: colored luminous blocks (emerald, sea-lantern, amethyst, diamond) with soft halos
+   - Photo 2: warm-cool color duel (kept as cyan/blue/teal only)
+   - Bottom-layer photo carousel from /imgs/photos (Ken Burns slow zoom).
+*/
+
+/* ── Photo Carousel Layer / 照片轮播底层 ─────────────────────────── */
+/* Each photo is stacked, fades in/out with a long cross-dissolve cycle.
+   每张照片堆叠叠加，通过长周期交叉淡入淡出实现轮播。 */
+.home-photo-carousel {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+  background-color: #0a0d14;
+  /* First photo loads immediately without fade-in / 首张照片直接加载，无渐入 */
+  background-image: url("/imgs/photos/2021-7-8.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.home-photo-carousel__slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  will-change: opacity, transform;
+  /* Ken Burns slow zoom / 缓慢推拉效果 */
+  animation:
+    home-photo-fade 24s linear infinite,
+    home-photo-kenburns 24s ease-in-out infinite;
+}
+
+/* Dark overlay on photos so light effects remain visible.
+   在照片上叠加深色蒙版，确保上层光影效果仍清晰可见。 */
+.home-photo-carousel__overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, rgba(8, 12, 24, 0.18) 0%, rgba(8, 12, 24, 0.4) 100%),
+    linear-gradient(180deg, rgba(6, 12, 24, 0.08) 0%, rgba(6, 12, 24, 0.28) 100%);
+  z-index: 2;
+}
+
+/* The 6 photos from /imgs/photos, each with a 4s offset to start sequentially.
+   6 张照片来自 /imgs/photos，每张错开 4 秒开始顺序播放。 */
+.home-photo-carousel__slide--1 {
+  background-image: url("/imgs/photos/2021-7-8.png");
+  animation-delay: 0s, 0s;
+}
+.home-photo-carousel__slide--2 {
+  background-image: url("/imgs/photos/2021-12-1.png");
+  animation-delay: 4s, 4s;
+}
+.home-photo-carousel__slide--3 {
+  background-image: url("/imgs/photos/2022-4.png");
+  animation-delay: 8s, 8s;
+}
+.home-photo-carousel__slide--4 {
+  background-image: url("/imgs/photos/2022-7-3.png");
+  animation-delay: 12s, 12s;
+}
+.home-photo-carousel__slide--5 {
+  background-image: url("/imgs/photos/2022-12-24.jpg");
+  animation-delay: 16s, 16s;
+}
+.home-photo-carousel__slide--6 {
+  background-image: url("/imgs/photos/2023-1-21.png");
+  animation-delay: 20s, 20s;
+}
+
+@keyframes home-photo-fade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  4% {
+    opacity: 0;
+  }
+  16% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  87% {
+    opacity: 0;
+  }
+}
+
+@keyframes home-photo-kenburns {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.08) translate(-1%, -1.5%);
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+  }
+}
+
+/* ── Brand-tinted Base Layer / 品牌色底层 ─────────────────────────── */
+/* Sky-blue (38bdf8) + leaf-green (4ade80) + ocean-blue (0ea5e9) — same as Neoverse-Doc.
+   天空蓝 + 嫩绿 + 海蓝——与 Neoverse-Doc 一致。
+   The bottom linear gradient uses very low alpha (0.1-0.2) so the photo
+   carousel underneath stays clearly visible.
+   底层线性渐变使用极低不透明度 (0.1-0.2)，让底层照片轮播保持清晰可见。 */
+.home-gradient-bg {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(56, 189, 248, 0.22), transparent 38%),
+    radial-gradient(circle at 82% 22%, rgba(74, 222, 128, 0.2), transparent 36%),
+    radial-gradient(circle at 50% 82%, rgba(14, 165, 233, 0.18), transparent 42%),
+    linear-gradient(120deg, rgba(6, 12, 24, 0.1), rgba(8, 15, 32, 0.2));
+  background-size:
+    180% 180%,
+    180% 180%,
+    160% 160%,
+    100% 100%;
+  animation: home-gradient-drift 14s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  z-index: 3;
+}
+
+/* ── Soft Color Orbs / 柔和色彩光球 ─────────────────────────────── */
+.home-gradient-bg__orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+  animation:
+    home-orb-float 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate,
+    home-orb-pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+}
+
+.home-gradient-bg__orb--one {
+  top: -12%;
+  left: -8%;
+  width: 30rem;
+  height: 30rem;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.85), transparent 70%);
+  animation-delay: 0s, -1.5s;
+}
+
+.home-gradient-bg__orb--two {
+  top: 8%;
+  right: -10%;
+  width: 32rem;
+  height: 32rem;
+  /* Was orange (255, 170, 0) — now leaf green to keep palette brand-only.
+     原为橙色——改为嫩绿色以保持品牌色。 */
+  background: radial-gradient(circle, rgba(74, 222, 128, 0.78), transparent 68%);
+  animation-delay: -4s, -3s;
+}
+
+.home-gradient-bg__orb--three {
+  bottom: -16%;
+  left: 28%;
+  width: 30rem;
+  height: 30rem;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.7), transparent 72%);
+  animation-delay: -8s, -5s;
+}
+
+/* ── Luminous Minecraft Blocks / 自发光 Minecraft 方块 ─────────────── */
+/* All blocks recolored to fit Neoverse-Doc palette — no gold/amber/redstone.
+   全部方块重新着色以契合 Neoverse-Doc 配色——无金/橙/红石色。 */
+.mc-float-block {
+  position: absolute;
+  pointer-events: none;
+  image-rendering: pixelated;
+  opacity: 0.85;
+  will-change: transform, filter, opacity;
+  animation: mc-float-block-drift linear infinite;
+  /* 强化方块自身亮度 / Enhanced self-illumination */
+  filter: brightness(1.4) drop-shadow(0 0 12px currentColor) drop-shadow(0 0 24px currentColor)
+    drop-shadow(0 0 40px currentColor);
+}
+
+.mc-float-block--grass {
+  width: 36px;
+  height: 36px;
+  background-image: url("/imgs/blocks/grass-side.png");
+  background-size: cover;
+  animation-duration: 18s;
+  animation-delay: -2s;
+  top: 12%;
+  left: 8%;
+  color: #4ade80;
+}
+
+.mc-float-block--diamond {
+  width: 28px;
+  height: 28px;
+  background-image: url("/imgs/blocks/diamond-block.png");
+  background-size: cover;
+  animation-duration: 22s;
+  animation-delay: -8s;
+  top: 65%;
+  right: 12%;
+  color: #38bdf8;
+}
+
+.mc-float-block--lapis {
+  width: 32px;
+  height: 32px;
+  /* Replaces gold block — lapis lazuli fits the deep-blue brand color.
+     替代金方块——青金石契合深蓝品牌色。 */
+  background-image: url("/imgs/blocks/lapis-block.png");
+  background-size: cover;
+  animation-duration: 20s;
+  animation-delay: -14s;
+  top: 25%;
+  right: 18%;
+  color: #0ea5e9;
+}
+
+.mc-float-block--emerald {
+  width: 28px;
+  height: 28px;
+  background-image: url("/imgs/blocks/emerald-block.png");
+  background-size: cover;
+  animation-duration: 24s;
+  animation-delay: -5s;
+  bottom: 20%;
+  left: 15%;
+  color: #4ade80;
+}
+
+.mc-float-block--ice {
+  width: 18px;
+  height: 36px;
+  /* Replaces torch — packed ice/blue ice for vertical accent.
+     替代火把——冰/蓝冰作为垂直点缀。 */
+  background-image: url("/imgs/blocks/blue-ice.png");
+  background-size: cover;
+  animation-duration: 16s;
+  animation-delay: -10s;
+  top: 40%;
+  left: 5%;
+  color: #7dd3fc;
+}
+
+.mc-float-block--prismarine {
+  width: 28px;
+  height: 28px;
+  /* Replaces redstone — prismarine for cyan/teal accent.
+     替代红石——海晶石作为青蓝点缀。 */
+  background-image: url("/imgs/blocks/prismarine.png");
+  background-size: cover;
+  animation-duration: 19s;
+  animation-delay: -3s;
+  bottom: 35%;
+  right: 8%;
+  color: #5eead4;
+}
+
+/* ── Large Soft Halos Around Blocks / 方块周围的大范围柔光晕 ─────── */
+.mc-block-halo {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(80px) saturate(180%);
+  mix-blend-mode: screen;
+  opacity: 0.65;
+  will-change: transform, opacity;
+  animation:
+    home-orb-float 10s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate,
+    home-orb-pulse 7s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+}
+
+.mc-block-halo--emerald {
+  top: 8%;
+  left: 4%;
+  width: 28rem;
+  height: 28rem;
+  background: radial-gradient(circle, rgba(74, 222, 128, 0.7), transparent 65%);
+}
+
+.mc-block-halo--sky {
+  top: 20%;
+  right: 12%;
+  width: 32rem;
+  height: 32rem;
+  /* Was torch (orange) — now sky blue. 原为火把橙——改为天空蓝。 */
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.7), transparent 65%);
+  animation-delay: -3s, -2s;
+}
+
+.mc-block-halo--amethyst {
+  bottom: 12%;
+  right: 6%;
+  width: 32rem;
+  height: 32rem;
+  background: radial-gradient(circle, rgba(164, 94, 229, 0.55), transparent 65%);
+  animation-delay: -6s, -4s;
+}
+
+.mc-block-halo--sea-lantern {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36rem;
+  height: 36rem;
+  background: radial-gradient(circle, rgba(125, 211, 252, 0.6), transparent 65%);
+  animation-delay: -9s, -6s;
+}
+
+.mc-block-halo--teal {
+  bottom: 28%;
+  left: 8%;
+  width: 30rem;
+  height: 30rem;
+  /* Was redstone — now teal. 原为红石——改为青色。 */
+  background: radial-gradient(circle, rgba(94, 234, 212, 0.55), transparent 65%);
+  animation-delay: -5s, -3s;
+}
+
+/* ── Light Beams / 光柱效果（中央白色发光） ─────────────────────────── */
+.mc-light-beam {
+  position: absolute;
+  pointer-events: none;
+  width: 4px;
+  height: 12rem;
+  background: linear-gradient(180deg, transparent, rgba(186, 230, 253, 0.6), transparent);
+  filter: blur(2px);
+  mix-blend-mode: screen;
+  opacity: 0.4;
+  will-change: transform, opacity;
+  animation: mc-light-beam-flicker 3s ease-in-out infinite;
+}
+
+.mc-light-beam--1 {
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation-delay: 0s;
+}
+
+.mc-light-beam--2 {
+  top: 35%;
+  left: 30%;
+  transform: translateX(-50%) rotate(15deg);
+  animation-delay: 1s;
+  height: 10rem;
+}
+
+.mc-light-beam--3 {
+  top: 30%;
+  right: 25%;
+  transform: rotate(-15deg);
+  animation-delay: 2s;
+  height: 10rem;
+}
+
+@keyframes mc-light-beam-flicker {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* ── Block Breaking Particles / 方块破坏粒子效果 ─────────────────────── */
+.mc-particle {
+  position: absolute;
+  pointer-events: none;
+  width: 4px;
+  height: 4px;
+  background-size: cover;
+  image-rendering: pixelated;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: mc-particle-burst 3s ease-out infinite;
+  filter: brightness(1.5) drop-shadow(0 0 4px currentColor);
+}
+
+.mc-particle--dirt {
+  background-image: url("/imgs/blocks/dirt.png");
+  color: #6b7280;
+  animation-delay: 0s;
+  top: 70%;
+  left: 20%;
+}
+
+.mc-particle--stone {
+  background-image: url("/imgs/blocks/stone.png");
+  color: #94a3b8;
+  animation-delay: 1s;
+  top: 30%;
+  left: 75%;
+}
+
+.mc-particle--coal {
+  background-image: url("/imgs/blocks/coal-ore.png");
+  color: #334155;
+  animation-delay: 2s;
+  top: 55%;
+  left: 60%;
+}
+
+.mc-particle--lapis {
+  background-image: url("/imgs/blocks/lapis-ore.png");
+  color: #38bdf8;
+  animation-delay: 0.5s;
+  top: 15%;
+  left: 45%;
+}
+
+.mc-particle--emerald-ore {
+  background-image: url("/imgs/blocks/emerald-ore.png");
+  color: #4ade80;
+  animation-delay: 1.5s;
+  top: 80%;
+  left: 35%;
+}
+
+/* ── Pixel Dust / 像素尘埃（彩色光点） ─────────────────────────────── */
+.mc-pixel-dust {
+  position: absolute;
+  pointer-events: none;
+  width: 2px;
+  height: 2px;
+  background: rgba(74, 222, 128, 0.7);
+  image-rendering: pixelated;
+  will-change: transform, opacity;
+  animation: mc-pixel-drift linear infinite;
+  box-shadow: 0 0 6px currentColor;
+  color: #4ade80;
+}
+
+.mc-pixel-dust:nth-child(1) {
+  top: 20%;
+  left: 30%;
+  animation-duration: 14s;
+  animation-delay: -1s;
+  color: #4ade80;
+}
+.mc-pixel-dust:nth-child(2) {
+  top: 60%;
+  left: 70%;
+  animation-duration: 16s;
+  animation-delay: -4s;
+  color: #38bdf8;
+}
+.mc-pixel-dust:nth-child(3) {
+  top: 40%;
+  left: 50%;
+  animation-duration: 12s;
+  animation-delay: -7s;
+  color: #0ea5e9;
+}
+.mc-pixel-dust:nth-child(4) {
+  top: 80%;
+  left: 20%;
+  animation-duration: 18s;
+  animation-delay: -2s;
+  color: #4ade80;
+}
+.mc-pixel-dust:nth-child(5) {
+  top: 10%;
+  left: 80%;
+  animation-duration: 15s;
+  animation-delay: -5s;
+  color: #38bdf8;
+}
+.mc-pixel-dust:nth-child(6) {
+  top: 50%;
+  left: 10%;
+  animation-duration: 13s;
+  animation-delay: -9s;
+  color: #5eead4;
+}
+.mc-pixel-dust:nth-child(7) {
+  top: 35%;
+  left: 85%;
+  animation-duration: 17s;
+  animation-delay: -3s;
+  color: #0ea5e9;
+}
+.mc-pixel-dust:nth-child(8) {
+  top: 75%;
+  left: 55%;
+  animation-duration: 14s;
+  animation-delay: -6s;
+  color: #5eead4;
+}
+
+/* ── Vignette Effect / 暗角效果（增强中心光感） ─────────────────────── */
+.home-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%);
+  z-index: 9;
+}
+
+/* ── Keyframes ─────────────────────────────────────────────────────── */
+@keyframes home-gradient-drift {
+  0% {
+    background-position:
+      0% 50%,
+      100% 0%,
+      50% 100%,
+      0% 0%;
+  }
+
+  50% {
+    background-position:
+      100% 40%,
+      0% 60%,
+      60% 0%,
+      0% 0%;
+  }
+
+  100% {
+    background-position:
+      0% 50%,
+      100% 0%,
+      50% 100%,
+      0% 0%;
+  }
+}
+
+@keyframes home-orb-float {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate3d(0, 2rem, 0) scale(1.1);
+  }
+}
+
+@keyframes home-orb-pulse {
+  0% {
+    opacity: 0.35;
+  }
+
+  100% {
+    opacity: 0.75;
+  }
+}
+
+@keyframes mc-float-block-drift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate3d(12px, -18px, 0) rotate(90deg);
+  }
+
+  50% {
+    transform: translate3d(-8px, -10px, 0) rotate(180deg);
+  }
+
+  75% {
+    transform: translate3d(6px, -22px, 0) rotate(270deg);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(360deg);
+  }
+}
+
+@keyframes mc-particle-burst {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.5);
+  }
+
+  15% {
+    opacity: 1;
+    transform: translate3d(-10px, -20px, 0) scale(1);
+  }
+
+  40% {
+    opacity: 0.7;
+    transform: translate3d(5px, -40px, 0) scale(0.8);
+  }
+
+  70% {
+    opacity: 0.3;
+    transform: translate3d(-5px, -60px, 0) scale(0.6);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -80px, 0) scale(0.3);
+  }
+}
+
+@keyframes mc-pixel-drift {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+
+  20% {
+    opacity: 0.8;
+  }
+
+  80% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-30px, -60px, 0);
+  }
+}
+
+/* ── Entrance Animations / 首页进入动画 ───────────────────────────── */
+.home-enter {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  animation: home-enter-fade 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.home-enter--delay-1 {
+  animation-delay: 0.04s;
+}
+.home-enter--delay-2 {
+  animation-delay: 0.1s;
+}
+.home-enter--delay-3 {
+  animation-delay: 0.18s;
+}
+.home-enter--delay-4 {
+  animation-delay: 0.26s;
+}
+
+@keyframes home-enter-fade {
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ── Reduced Motion / 减少动画偏好 ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .home-gradient-bg,
+  .home-gradient-bg__orb,
+  .mc-float-block,
+  .mc-block-halo,
+  .mc-particle,
+  .mc-pixel-dust,
+  .mc-light-beam,
+  .home-photo-carousel__slide,
+  .home-enter {
+    animation: none !important;
+  }
+
+  .mc-float-block {
+    opacity: 0.5;
+  }
+
+  .home-photo-carousel__slide--1 {
+    opacity: 1;
+  }
+
+  .home-enter {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,1533 @@
+/* Minecraft UI component styles: pixel-art textures, block-based sizing, and MC-themed elements.
+   Minecraft UI 组件样式：像素纹理、方块尺寸系统、MC 主题元素。 */
+
+/* ── Block Size System / 方块尺寸系统 ─────────────────────────────── */
+:root {
+  --block-size: 48px;
+  --zoom: 1;
+  --block-1-16: calc(var(--block-size) / 16);
+
+  /* ── MC Light Source Colors / MC 光源颜色 ─────────────────────── */
+  --mc-torch: 255, 160, 64;
+  --mc-soul: 107, 207, 232;
+  --mc-redstone: 255, 48, 48;
+  --mc-glowstone: 255, 205, 128;
+  --mc-sea-lantern: 165, 240, 234;
+  --mc-shroomlight: 255, 123, 26;
+  --mc-emerald: 93, 188, 77;
+  --mc-amethyst: 164, 94, 229;
+  --mc-end-rod: 240, 224, 192;
+  --mc-magma: 179, 58, 26;
+  --mc-lantern: 255, 184, 84;
+}
+
+/* ── Pixel Art Rendering / 像素化渲染 ─────────────────────────────── */
+[class*="bg-block"],
+[class*="bg-item"] {
+  image-rendering: pixelated;
+  background-repeat: repeat;
+  background-size: var(--block-size);
+}
+
+/* ── MC Text Shadows / MC 文字阴影 ─────────────────────────────── */
+.text-shadow-xs {
+  text-shadow: 0.75px 0.75px #000;
+}
+.text-shadow-sm {
+  text-shadow: 1px 1px #000;
+}
+.text-shadow-md {
+  text-shadow: 1.5px 1.5px #000;
+}
+.text-shadow-lg {
+  text-shadow: 1.75px 1.75px #000;
+}
+.text-shadow-xl {
+  text-shadow: 2px 2px #000;
+}
+
+/* ── MC Pixel Cursor System / MC 像素光标系统 ─────────────────────── */
+/* Cursor pack: v2.4-MC-鼠标指针 / MC-鼠标指针 (用户提供)
+   All files converted to PNG at 64×64 px for full cross-browser support
+   (Chrome, Firefox, Safari, Edge). Browsers silently ignore cursor images
+   exceeding ~128 px, so the originals (160×160) were down-scaled with
+   nearest-neighbour to preserve the pixel-art aesthetic.
+   The 13 base files plus their animation frame strips live in
+   /imgs/widget/cursor/.
+   Use !important and single-line cursor shorthand so Tailwind v4 / PostCSS
+   cannot break the multi-line url() list during CSS parsing. */
+
+/* Default cursor on the document root. / 文档根上的默认光标。 */
+html,
+body {
+  cursor:
+    url("/imgs/widget/cursor/default.png") 16 16,
+    auto !important;
+}
+
+a,
+button,
+[role="button"],
+.glass-cta,
+.mc-button,
+summary,
+label,
+.mc-chip,
+.mc-item-slot {
+  cursor:
+    url("/imgs/widget/cursor/pointer_page_01.png") 18 18,
+    pointer !important;
+}
+
+input,
+textarea,
+select,
+[contenteditable="true"] {
+  cursor:
+    url("/imgs/widget/cursor/text.png") 36 16,
+    text !important;
+}
+
+[draggable="true"],
+.mc-draggable,
+.grab {
+  cursor:
+    url("/imgs/widget/cursor/grab.png") 18 18,
+    grab !important;
+}
+
+[draggable="true"]:active,
+.mc-draggable:active,
+.grab:active,
+.grabbing {
+  cursor:
+    url("/imgs/widget/cursor/grabbing_page_01.png") 18 6,
+    grabbing !important;
+}
+
+.mc-crosshair,
+code,
+pre,
+.mc-block,
+kbd {
+  cursor:
+    url("/imgs/widget/cursor/crosshair.png") 30 30,
+    crosshair !important;
+}
+
+.mc-help,
+[aria-label*="?"],
+abbr[title] {
+  cursor:
+    url("/imgs/widget/cursor/help.png") 16 6,
+    help !important;
+}
+
+.mc-not-allowed,
+[disabled],
+[aria-disabled="true"] {
+  cursor:
+    url("/imgs/widget/cursor/not-allowed_page_01.png") 31 31,
+    not-allowed !important;
+}
+
+.mc-wait,
+[aria-busy="true"] {
+  cursor:
+    url("/imgs/widget/cursor/help.png") 16 6,
+    wait !important;
+}
+
+/* Vertical resize / 垂直调整大小 */
+.resize-y,
+.mc-resize-ns,
+textarea[rows] {
+  cursor:
+    url("/imgs/widget/cursor/resize-ns.png") 31 31,
+    ns-resize !important;
+}
+
+/* Horizontal resize / 水平调整大小 */
+.resize-x,
+.mc-resize-ew {
+  cursor:
+    url("/imgs/widget/cursor/resize-ew.png") 31 31,
+    ew-resize !important;
+}
+
+/* Diagonal resize (top-left to bottom-right) / 沿对角线调整大小 1 */
+.resize-tr,
+.mc-resize-ne {
+  cursor:
+    url("/imgs/widget/cursor/resize-ne.png") 31 31,
+    nesw-resize !important;
+}
+
+/* Diagonal resize (top-right to bottom-left) / 沿对角线调整大小 2 */
+.resize-tl,
+.mc-resize-nw {
+  cursor:
+    url("/imgs/widget/cursor/resize-nw.png") 31 31,
+    nwse-resize !important;
+}
+
+/* ── MC Font Faces / MC 字体定义 ─────────────────────────────── */
+@font-face {
+  font-family: "Minecraft";
+  src: url("/fonts/Minecraft-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Minecraft";
+  src: url("/fonts/Minecraft-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Minecraft";
+  src: url("/fonts/Minecraft-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Minecraft";
+  src: url("/fonts/Minecraft-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Minecraft AE";
+  src: url("/fonts/Minecraft-AE.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Minecrafter";
+  src: url("/fonts/Minecrafter.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Minecrafter Alt";
+  src: url("/fonts/MinecrafterAlt.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Minecraft Evenings";
+  src: url("/fonts/MinecraftEvenings.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Monocraft";
+  src: url("/fonts/Monocraft.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── MC Server Status Component / MC 服务器状态组件 ────────────────── */
+.mc-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--glass-border-hairline);
+  border-radius: 0.75rem;
+  background-color: var(--glass-tint);
+  -webkit-backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate));
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    var(--glass-shadow);
+}
+
+.mc-status__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mc-status__indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mc-status__indicator--online {
+  background-color: #55ff55;
+  box-shadow: 0 0 6px rgba(85, 255, 85, 0.6);
+}
+
+.mc-status__indicator--offline {
+  background-color: #ff5555;
+  box-shadow: 0 0 6px rgba(255, 85, 85, 0.6);
+}
+
+.mc-status__players {
+  font-size: 0.875rem;
+  color: var(--color-fd-muted-foreground);
+}
+
+.mc-status__player-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.mc-status__player {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  background-color: var(--glass-tint-soft);
+  border: 1px solid var(--glass-border-hairline);
+}
+
+.mc-status__player-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  image-rendering: pixelated;
+}
+
+/* ── Minecraft Light Source System / Minecraft 光源系统 ─────────────── */
+/* Reference: in-game point-source lighting (torch, sea lantern, glowstone, etc.)
+   参考游戏内点光源照明（火把、海晶灯、荧石等）。 */
+
+/* Halo utility: small / medium / large / xl / 光晕工具类 */
+.mc-halo {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(60px) saturate(180%);
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  transform: translate(-50%, -50%);
+}
+.mc-halo-sm {
+  width: 12rem;
+  height: 12rem;
+  filter: blur(40px) saturate(180%);
+}
+.mc-halo-md {
+  width: 22rem;
+  height: 22rem;
+  filter: blur(60px) saturate(180%);
+}
+.mc-halo-lg {
+  width: 36rem;
+  height: 36rem;
+  filter: blur(100px) saturate(180%);
+}
+.mc-halo-xl {
+  width: 52rem;
+  height: 52rem;
+  filter: blur(140px) saturate(180%);
+}
+
+.mc-halo-torch {
+  background: radial-gradient(
+    circle,
+    rgba(var(--mc-torch), 0.85) 0%,
+    rgba(var(--mc-torch), 0.45) 32%,
+    rgba(var(--mc-torch), 0) 70%
+  );
+}
+.mc-halo-soul {
+  background: radial-gradient(
+    circle,
+    rgba(var(--mc-soul), 0.85) 0%,
+    rgba(var(--mc-soul), 0.4) 35%,
+    rgba(var(--mc-soul), 0) 72%
+  );
+}
+.mc-halo-redstone {
+  background: radial-gradient(
+    circle,
+    rgba(var(--mc-redstone), 0.85) 0%,
+    rgba(var(--mc-redstone), 0.4) 34%,
+    rgba(var(--mc-redstone), 0) 70%
+  );
+}
+.mc-halo-glowstone {
+  background: radial-gradient(
+    circle,
+    rgba(var(--mc-glowstone), 0.9) 0%,
+    rgba(var(--mc-glowstone), 0.45) 33%,
+    rgba(var(--mc-glowstone), 0) 72%
+  );
+}
+.mc-halo-sea-lantern {
+  background: radial-gradient(
+    circle,
+    rgba(var(--mc-sea-lantern), 0.9) 0%,
+    rgba(var(--mc-sea-lantern), 0.45) 33%,
+    rgba(var(--mc-sea-lantern), 0) 75%
+  );
+}
+.mc-halo-shroomlight {
+  background: radial-gradient(
+    circle,
+    rgba(var(--mc-shroomlight), 0.9) 0%,
+    rgba(var(--mc-shroomlight), 0.4) 33%,
+    rgba(var(--mc-shroomlight), 0) 70%
+  );
+}
+.mc-halo-emerald {
+  background: radial-gradient(
+    circle,
+    rgba(var(--mc-emerald), 0.85) 0%,
+    rgba(var(--mc-emerald), 0.4) 35%,
+    rgba(var(--mc-emerald), 0) 72%
+  );
+}
+.mc-halo-amethyst {
+  background: radial-gradient(
+    circle,
+    rgba(var(--mc-amethyst), 0.85) 0%,
+    rgba(var(--mc-amethyst), 0.4) 35%,
+    rgba(var(--mc-amethyst), 0) 72%
+  );
+}
+.mc-halo-end-rod {
+  background: radial-gradient(
+    circle,
+    rgba(var(--mc-end-rod), 0.9) 0%,
+    rgba(var(--mc-end-rod), 0.45) 33%,
+    rgba(var(--mc-end-rod), 0) 75%
+  );
+}
+.mc-halo-lantern {
+  background: radial-gradient(
+    circle,
+    rgba(var(--mc-lantern), 0.9) 0%,
+    rgba(var(--mc-lantern), 0.45) 33%,
+    rgba(var(--mc-lantern), 0) 72%
+  );
+}
+
+/* Section glow strip / corner utilities / 区块光晕条带与角落工具类 */
+.mc-section-glow {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.mc-section-glow::before,
+.mc-section-glow::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(120px) saturate(180%);
+  mix-blend-mode: screen;
+  z-index: -1;
+}
+.mc-section-glow-emerald::before {
+  width: 36rem;
+  height: 36rem;
+  top: -10rem;
+  left: -10rem;
+  background: radial-gradient(circle, rgba(var(--mc-emerald), 0.55), transparent 70%);
+}
+.mc-section-glow-emerald::after {
+  width: 28rem;
+  height: 28rem;
+  bottom: -8rem;
+  right: -6rem;
+  background: radial-gradient(circle, rgba(var(--mc-soul), 0.5), transparent 70%);
+}
+.mc-section-glow-amber::before {
+  width: 38rem;
+  height: 38rem;
+  top: -12rem;
+  right: -8rem;
+  background: radial-gradient(circle, rgba(var(--mc-torch), 0.55), transparent 70%);
+}
+.mc-section-glow-amber::after {
+  width: 26rem;
+  height: 26rem;
+  bottom: -8rem;
+  left: -4rem;
+  background: radial-gradient(circle, rgba(var(--mc-glowstone), 0.45), transparent 70%);
+}
+.mc-section-glow-arcane::before {
+  width: 42rem;
+  height: 42rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(var(--mc-amethyst), 0.45), transparent 70%);
+}
+.mc-section-glow-arcane::after {
+  width: 28rem;
+  height: 28rem;
+  top: 30%;
+  right: -6rem;
+  background: radial-gradient(circle, rgba(var(--mc-sea-lantern), 0.4), transparent 70%);
+}
+
+/* Inline MC light source chip / 行内 MC 光源芯片 */
+.mc-light-source {
+  display: inline-block;
+  position: relative;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  image-rendering: pixelated;
+  box-shadow:
+    0 0 6px currentColor,
+    0 0 14px currentColor;
+}
+.mc-light-source-torch {
+  background: rgb(var(--mc-torch));
+  color: rgb(var(--mc-torch));
+}
+.mc-light-source-soul {
+  background: rgb(var(--mc-soul));
+  color: rgb(var(--mc-soul));
+}
+.mc-light-source-redstone {
+  background: rgb(var(--mc-redstone));
+  color: rgb(var(--mc-redstone));
+}
+.mc-light-source-emerald {
+  background: rgb(var(--mc-emerald));
+  color: rgb(var(--mc-emerald));
+}
+.mc-light-source-amethyst {
+  background: rgb(var(--mc-amethyst));
+  color: rgb(var(--mc-amethyst));
+}
+.mc-light-source-glowstone {
+  background: rgb(var(--mc-glowstone));
+  color: rgb(var(--mc-glowstone));
+}
+
+/* ── Minecraft Pixel UI Elements / Minecraft 像素 UI 元素 ─────────── */
+
+/* Pixel button with border-image / 像素边框按钮 */
+.mc-button {
+  --zoom: 10;
+  user-select: none;
+  cursor:
+    url("/imgs/widget/cursor/pointer_page_01.png") 2 0,
+    pointer !important;
+  image-rendering: pixelated;
+  background-size: cover;
+  background-image: url("/imgs/ui/button-inside.png");
+  border-width: calc(var(--block-size) / var(--zoom));
+  border-image: url("/imgs/ui/button-border.png");
+  border-image-width: calc(var(--block-size) / var(--zoom));
+  border-image-slice: 10% 3%;
+  border-image-repeat: stretch;
+  color: #d1d5db;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-family: "Minecraft AE", "Minecraft", monospace;
+  font-size: 0.875rem;
+  text-shadow: 1px 1px 0 #000;
+  transition:
+    filter 0.18s ease,
+    transform 0.18s ease;
+}
+.mc-button:hover {
+  background-image: url("/imgs/ui/button-inside-hover.png");
+  border-image: url("/imgs/ui/button-border-hover.png");
+  color: #fef08a;
+  filter: brightness(1.08);
+}
+.mc-button:active {
+  background-image: url("/imgs/ui/button-inside-active.png");
+  border-image: url("/imgs/ui/button-border-active.png");
+  border-image-repeat: contain;
+  color: #a8a29e;
+  transform: translateY(1px);
+}
+
+/* MC Panel / 面板 */
+.mc-panel {
+  --zoom: 10;
+  border-width: calc(var(--block-size) / var(--zoom));
+  border-image: url("/imgs/ui/panel.png");
+  border-image-width: calc(var(--block-size) / var(--zoom));
+  border-image-slice: 43% 43% fill;
+  border-image-repeat: stretch;
+  image-rendering: pixelated;
+}
+
+.mc-panel-dark {
+  --zoom: 10;
+  border-width: calc(var(--block-size) / var(--zoom));
+  border-image: url("/imgs/ui/panel-dark.png");
+  border-image-width: calc(var(--block-size) / var(--zoom));
+  border-image-slice: 43% 43% fill;
+  border-image-repeat: stretch;
+  image-rendering: pixelated;
+}
+
+/* MC Slot / 物品槽 */
+.mc-slot {
+  --zoom: 24;
+  border-width: calc(var(--block-size) / var(--zoom));
+  border-image: url("/imgs/ui/slot.png");
+  border-image-width: calc(var(--block-size) / var(--zoom));
+  border-image-slice: 33.5% 33.5% fill;
+  border-image-repeat: stretch;
+  image-rendering: pixelated;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mc-slot-raised {
+  --zoom: 24;
+  border-width: calc(var(--block-size) / var(--zoom));
+  border-image: url("/imgs/ui/raised-slot.png");
+  border-image-width: calc(var(--block-size) / var(--zoom));
+  border-image-slice: 33.5% 33.5% fill;
+  border-image-repeat: stretch;
+  image-rendering: pixelated;
+}
+.mc-slot-raised:hover {
+  border-image: url("/imgs/ui/raised-slot-hover.png");
+}
+.mc-slot-raised:active {
+  border-image: url("/imgs/ui/raised-slot-active.png");
+}
+
+/* MC Achievement Panel / 成就面板 */
+.mc-achievement-panel {
+  --zoom: 10;
+  border-width: calc(var(--block-size) / var(--zoom));
+  border-image: url("/imgs/ui/achievement-panel.png");
+  border-image-width: calc(var(--block-size) / var(--zoom));
+  border-image-slice: 45.5% 45.5% fill;
+  border-image-repeat: stretch;
+  image-rendering: pixelated;
+}
+
+/* ── Block Breaking Loader / 方块破坏加载动画 ─────────────────────── */
+.mc-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mc-loading-text {
+  font-family: "Minecraft AE", monospace;
+  text-shadow: 1.5px 1.5px 0 #000;
+  letter-spacing: 0.04em;
+}
+
+.mc-destroy-anim {
+  image-rendering: pixelated;
+  animation: mc-destroy 1s steps(10) infinite;
+  background-size: cover;
+}
+
+@keyframes mc-destroy {
+  0% {
+    background-image: url("/imgs/blocks/destroy-0.png");
+  }
+  10% {
+    background-image: url("/imgs/blocks/destroy-1.png");
+  }
+  20% {
+    background-image: url("/imgs/blocks/destroy-2.png");
+  }
+  30% {
+    background-image: url("/imgs/blocks/destroy-3.png");
+  }
+  40% {
+    background-image: url("/imgs/blocks/destroy-4.png");
+  }
+  50% {
+    background-image: url("/imgs/blocks/destroy-5.png");
+  }
+  60% {
+    background-image: url("/imgs/blocks/destroy-6.png");
+  }
+  70% {
+    background-image: url("/imgs/blocks/destroy-7.png");
+  }
+  80% {
+    background-image: url("/imgs/blocks/destroy-8.png");
+  }
+  90% {
+    background-image: url("/imgs/blocks/destroy-9.png");
+  }
+  100% {
+    background-image: url("/imgs/blocks/destroy-0.png");
+  }
+}
+
+/* ── Block Background Utilities / 方块背景工具类 ──────────────────── */
+.bg-block-grass {
+  background-image: url("/imgs/blocks/grass-side.png");
+}
+.bg-block-dirt {
+  background-image: url("/imgs/blocks/dirt.png");
+}
+.bg-block-stone {
+  background-image: url("/imgs/blocks/stone.png");
+}
+.bg-block-cobblestone {
+  background-image: url("/imgs/blocks/cobblestone.png");
+}
+.bg-block-oak-planks {
+  background-image: url("/imgs/blocks/planks-oak.png");
+}
+.bg-block-diamond {
+  background-image: url("/imgs/blocks/diamond-block.png");
+}
+.bg-block-gold {
+  background-image: url("/imgs/blocks/gold-block.png");
+}
+.bg-block-emerald {
+  background-image: url("/imgs/blocks/emerald-block.png");
+}
+.bg-block-iron {
+  background-image: url("/imgs/blocks/iron-block.png");
+}
+.bg-block-redstone {
+  background-image: url("/imgs/blocks/redstone-block.png");
+}
+.bg-block-lapis {
+  background-image: url("/imgs/blocks/lapis-block.png");
+}
+.bg-block-obsidian {
+  background-image: url("/imgs/blocks/obsidian.png");
+}
+.bg-block-bedrock {
+  background-image: url("/imgs/blocks/bedrock.png");
+}
+.bg-block-glowstone {
+  background-image: url("/imgs/blocks/glowstone.png");
+}
+
+/* ── Modern Minecraft Chips / 现代化 Minecraft 芯片 ───────────────── */
+.mc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+.mc-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #5dbc4d;
+  box-shadow: 0 0 8px #5dbc4d;
+}
+.mc-chip-cyan {
+  background: rgba(92, 229, 224, 0.12);
+  border-color: rgba(92, 229, 224, 0.35);
+}
+.mc-chip-cyan .mc-chip-dot {
+  background: #5ce5e0;
+  box-shadow: 0 0 8px #5ce5e0;
+}
+.mc-chip-amber {
+  background: rgba(255, 170, 0, 0.12);
+  border-color: rgba(255, 170, 0, 0.35);
+}
+.mc-chip-amber .mc-chip-dot {
+  background: #ffaa00;
+  box-shadow: 0 0 8px #ffaa00;
+}
+.mc-chip-redstone {
+  background: rgba(255, 48, 48, 0.12);
+  border-color: rgba(255, 48, 48, 0.35);
+}
+.mc-chip-redstone .mc-chip-dot {
+  background: #ff3030;
+  box-shadow: 0 0 8px #ff3030;
+}
+
+/* ── Status Dot / 状态指示点 ─────────────────────────────────────── */
+.mc-status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: #5dbc4d;
+  box-shadow:
+    0 0 0 4px rgba(93, 188, 77, 0.18),
+    0 0 12px #5dbc4d;
+  animation: mc-status-pulse 1.6s ease-in-out infinite;
+}
+.mc-status-dot.offline {
+  background: #ff6b6b;
+  box-shadow:
+    0 0 0 4px rgba(255, 107, 107, 0.18),
+    0 0 12px #ff6b6b;
+}
+
+@keyframes mc-status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.85);
+  }
+}
+
+/* ── Item Slot / 物品槽（现代化） ─────────────────────────────────── */
+.mc-item-slot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(36, 49, 82, 0.85), rgba(15, 20, 36, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.4) inset,
+    0 6px 14px -8px rgba(0, 0, 0, 0.6);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+  image-rendering: pixelated;
+}
+.mc-item-slot:hover {
+  transform: translateY(-2px);
+  border-color: rgba(93, 188, 77, 0.6);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.12) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.4) inset,
+    0 10px 22px -8px rgba(93, 188, 77, 0.45);
+}
+
+/* ── Tech Grid Background / 科技网格背景 ─────────────────────────── */
+.mc-tech-grid {
+  background-image:
+    linear-gradient(rgba(93, 188, 77, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(93, 188, 77, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.mc-tech-grid-fine {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* ── Heading Glow / 标题发光效果 ─────────────────────────────────── */
+.mc-heading-glow {
+  text-shadow:
+    0 0 12px rgba(93, 188, 77, 0.45),
+    0 0 28px rgba(93, 188, 77, 0.25);
+}
+
+/* ── Link Tech / 科技链接 ────────────────────────────────────────── */
+.mc-link-tech {
+  color: #7de0ff;
+  background-image: linear-gradient(90deg, #7de0ff, #5dbc4d);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition:
+    background-size 0.35s ease,
+    color 0.2s ease;
+}
+.mc-link-tech:hover {
+  color: #b6f0ff;
+  background-size: 100% 1px;
+}
+
+/* ── MC Navbar / Minecraft 风格导航栏 ─────────────────────────────── */
+/* Fumadocs nav structure: <header id="nd-nav"><div class="backdrop-blur..."><nav>...</nav></div></header>
+   The inner div is the actual visible bar. We target #nd-nav > div for bg/filter,
+   and #nd-nav for child element styles.
+   fumadocs 导航结构如上，内部 div 是实际可见的 bar。
+   我们对 #nd-nav > div 设置背景/滤镜，对 #nd-nav 设置子元素样式。 */
+
+/* Light mode glass navbar with oak plank texture / 浅色模式玻璃导航栏 + 橡木木板纹理 */
+:is([data-theme="light"], .light) #nd-nav > div {
+  background:
+    linear-gradient(180deg, rgba(255, 252, 248, 0.55) 0%, rgba(248, 244, 238, 0.6) 100%),
+    url("/imgs/blocks/planks-oak.png") !important;
+  background-size:
+    100% 100%,
+    32px 32px !important;
+  -webkit-backdrop-filter: blur(6px) saturate(120%) !important;
+  backdrop-filter: blur(6px) saturate(120%) !important;
+  border-bottom: 2px solid rgba(160, 140, 100, 0.4) !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 var(--glass-highlight),
+    0 2px 0 rgba(140, 120, 80, 0.25),
+    0 4px 16px rgba(0, 0, 0, 0.06) !important;
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    -webkit-backdrop-filter 0.35s ease,
+    backdrop-filter 0.35s ease !important;
+}
+
+/* Dark mode glass navbar with stone texture / 深色模式玻璃导航栏 + 石头纹理 */
+[data-theme="dark"] #nd-nav > div,
+.dark #nd-nav > div {
+  background:
+    linear-gradient(180deg, rgba(38, 38, 52, 0.6) 0%, rgba(30, 30, 42, 0.65) 100%),
+    url("/imgs/blocks/stone.png") !important;
+  background-size:
+    100% 100%,
+    32px 32px !important;
+  -webkit-backdrop-filter: blur(6px) saturate(120%) !important;
+  backdrop-filter: blur(6px) saturate(120%) !important;
+  border-bottom: 2px solid rgba(100, 100, 115, 0.4) !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 var(--glass-highlight),
+    0 2px 0 rgba(60, 60, 75, 0.25),
+    0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    -webkit-backdrop-filter 0.35s ease,
+    backdrop-filter 0.35s ease !important;
+}
+
+/* Navbar text font / 导航栏文字字体 */
+#nd-nav a,
+#nd-nav button,
+#nd-nav [role="button"],
+#nd-nav span,
+#nd-nav input {
+  font-family: "Minecraft AE", "Minecraft", monospace !important;
+}
+
+/* ── Light mode buttons / 浅色模式按钮 ── */
+/* Independent translucent bg that harmonises with navbar / 独立半透明背景，与导航栏协调 */
+:is([data-theme="light"], .light) #nd-nav [data-search-full],
+:is([data-theme="light"], .light) #nd-nav [data-theme-toggle],
+:is([data-theme="light"], .light) #nd-nav [aria-label="选择语言"],
+:is([data-theme="light"], .light) #nd-nav [aria-label="切换菜单"],
+:is([data-theme="light"], .light) #nd-nav [aria-label="打开搜索"] {
+  background-color: rgba(255, 252, 248, 0.65) !important;
+  border: 2px solid rgba(160, 140, 100, 0.4) !important;
+  border-radius: 0 !important;
+  color: #1a1a1a !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 2px 0 rgba(140, 120, 80, 0.25),
+    0 4px 16px rgba(0, 0, 0, 0.06) !important;
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    color 0.35s ease !important;
+}
+
+/* Theme toggle extra padding / 主题切换按钮额外内边距 */
+:is([data-theme="light"], .light) #nd-nav [data-theme-toggle] {
+  padding: 4px 8px !important;
+  min-width: 56px !important;
+}
+
+:is([data-theme="light"], .light) #nd-nav [data-search-full]:hover,
+:is([data-theme="light"], .light) #nd-nav [data-theme-toggle]:hover,
+:is([data-theme="light"], .light) #nd-nav [aria-label="选择语言"]:hover,
+:is([data-theme="light"], .light) #nd-nav [aria-label="切换菜单"]:hover,
+:is([data-theme="light"], .light) #nd-nav [aria-label="打开搜索"]:hover {
+  background-color: rgba(255, 252, 248, 0.85) !important;
+  border-color: rgba(140, 120, 80, 0.55) !important;
+  color: #000 !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 2px 0 rgba(140, 120, 80, 0.35),
+    0 4px 16px rgba(0, 0, 0, 0.08) !important;
+}
+
+:is([data-theme="light"], .light) #nd-nav [data-search-full] kbd {
+  background-color: rgba(240, 238, 235, 0.85) !important;
+  border: 1px solid rgba(160, 140, 100, 0.45) !important;
+  color: #1a1a1a !important;
+  border-radius: 0 !important;
+  font-family: "Minecraft AE", "Minecraft", monospace !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ── Dark mode buttons / 深色模式按钮 ── */
+/* Independent translucent bg that harmonises with navbar / 独立半透明背景，与导航栏协调 */
+[data-theme="dark"] #nd-nav [data-search-full],
+[data-theme="dark"] #nd-nav [data-theme-toggle],
+[data-theme="dark"] #nd-nav [aria-label="选择语言"],
+[data-theme="dark"] #nd-nav [aria-label="切换菜单"],
+[data-theme="dark"] #nd-nav [aria-label="打开搜索"],
+.dark #nd-nav [data-search-full],
+.dark #nd-nav [data-theme-toggle],
+.dark #nd-nav [aria-label="选择语言"],
+.dark #nd-nav [aria-label="切换菜单"],
+.dark #nd-nav [aria-label="打开搜索"] {
+  background-color: rgba(55, 55, 72, 0.65) !important;
+  border: 2px solid rgba(100, 100, 115, 0.4) !important;
+  border-radius: 0 !important;
+  color: #e8e8f8 !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 2px 0 rgba(60, 60, 75, 0.25),
+    0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    color 0.35s ease !important;
+}
+
+/* Theme toggle extra padding / 主题切换按钮额外内边距 */
+[data-theme="dark"] #nd-nav [data-theme-toggle],
+.dark #nd-nav [data-theme-toggle] {
+  padding: 4px 8px !important;
+  min-width: 56px !important;
+}
+
+[data-theme="dark"] #nd-nav [data-search-full]:hover,
+[data-theme="dark"] #nd-nav [data-theme-toggle]:hover,
+[data-theme="dark"] #nd-nav [aria-label="选择语言"]:hover,
+[data-theme="dark"] #nd-nav [aria-label="切换菜单"]:hover,
+[data-theme="dark"] #nd-nav [aria-label="打开搜索"]:hover,
+.dark #nd-nav [data-search-full]:hover,
+.dark #nd-nav [data-theme-toggle]:hover,
+.dark #nd-nav [aria-label="选择语言"]:hover,
+.dark #nd-nav [aria-label="切换菜单"]:hover,
+.dark #nd-nav [aria-label="打开搜索"]:hover {
+  background-color: rgba(75, 75, 100, 0.85) !important;
+  border-color: rgba(120, 120, 140, 0.55) !important;
+  color: #fff !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 2px 0 rgba(60, 60, 75, 0.35),
+    0 4px 16px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] #nd-nav [data-search-full] kbd,
+.dark #nd-nav [data-search-full] kbd {
+  background-color: rgba(40, 40, 55, 0.85) !important;
+  border: 1px solid rgba(100, 100, 115, 0.45) !important;
+  color: #e8e8f8 !important;
+  border-radius: 0 !important;
+  font-family: "Minecraft AE", "Minecraft", monospace !important;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ── Docs Page Ambient Background / 文档页面环境背景光效 ─────────── */
+/* Subtle Minecraft-themed effects that do not interfere with text readability.
+   微妙的 Minecraft 主题效果，不干扰文字阅读。 */
+
+.mc-doc-halo {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(100px) saturate(160%);
+  mix-blend-mode: screen;
+  opacity: 0.12;
+  will-change: transform, opacity;
+  animation:
+    mc-doc-halo-float 12s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate,
+    mc-doc-halo-pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+}
+
+.mc-doc-halo--emerald {
+  width: 24rem;
+  height: 24rem;
+  top: -6rem;
+  left: -8rem;
+  background: radial-gradient(circle, rgba(var(--mc-emerald), 0.7), transparent 70%);
+}
+
+.mc-doc-halo--sky {
+  width: 28rem;
+  height: 28rem;
+  top: 20%;
+  right: -10rem;
+  background: radial-gradient(circle, rgba(var(--mc-torch), 0.6), transparent 70%);
+  animation-delay: -4s, -3s;
+}
+
+.mc-doc-halo--amethyst {
+  width: 26rem;
+  height: 26rem;
+  bottom: -4rem;
+  left: 30%;
+  background: radial-gradient(circle, rgba(var(--mc-amethyst), 0.6), transparent 70%);
+  animation-delay: -8s, -5s;
+}
+
+/* Small floating blocks for doc pages / 文档页面小浮动方块 */
+.mc-doc-float-block {
+  position: absolute;
+  pointer-events: none;
+  image-rendering: pixelated;
+  opacity: 0.28;
+  will-change: transform, opacity;
+  animation: mc-doc-block-drift linear infinite;
+  filter: brightness(1.3) drop-shadow(0 0 10px currentColor);
+}
+
+.mc-doc-float-block--diamond {
+  width: 28px;
+  height: 28px;
+  background-image: url("/imgs/blocks/diamond-block.png");
+  background-size: cover;
+  animation-duration: 28s;
+  animation-delay: -6s;
+  top: 15%;
+  right: 8%;
+  color: #38bdf8;
+}
+
+.mc-doc-float-block--emerald {
+  width: 26px;
+  height: 26px;
+  background-image: url("/imgs/blocks/emerald-block.png");
+  background-size: cover;
+  animation-duration: 32s;
+  animation-delay: -14s;
+  bottom: 25%;
+  left: 6%;
+  color: #4ade80;
+}
+
+.mc-doc-float-block--lapis {
+  width: 28px;
+  height: 28px;
+  background-image: url("/imgs/blocks/lapis-block.png");
+  background-size: cover;
+  animation-duration: 26s;
+  animation-delay: -20s;
+  top: 55%;
+  right: 12%;
+  color: #0ea5e9;
+}
+
+.mc-doc-float-block--glowstone {
+  width: 24px;
+  height: 24px;
+  background-image: url("/imgs/blocks/glowstone.png");
+  background-size: cover;
+  animation-duration: 30s;
+  animation-delay: -9s;
+  top: 8%;
+  left: 60%;
+  color: #fcd34d;
+}
+
+.mc-doc-float-block--prismarine {
+  width: 28px;
+  height: 28px;
+  background-image: url("/imgs/blocks/prismarine.png");
+  background-size: cover;
+  animation-duration: 24s;
+  animation-delay: -3s;
+  bottom: 18%;
+  right: 18%;
+  color: #5eead4;
+}
+
+.mc-doc-float-block--redstone {
+  width: 22px;
+  height: 22px;
+  background-image: url("/imgs/blocks/redstone-block.png");
+  background-size: cover;
+  animation-duration: 34s;
+  animation-delay: -16s;
+  top: 40%;
+  left: 3%;
+  color: #ff3030;
+}
+
+.mc-doc-float-block--iron {
+  width: 26px;
+  height: 26px;
+  background-image: url("/imgs/blocks/iron-block.png");
+  background-size: cover;
+  animation-duration: 27s;
+  animation-delay: -11s;
+  bottom: 10%;
+  left: 45%;
+  color: #cbd5e1;
+}
+
+/* Pixel dust for doc pages (subtler than homepage) / 文档页面像素尘埃（比首页更淡） */
+.mc-doc-pixel-dust {
+  position: absolute;
+  pointer-events: none;
+  width: 2px;
+  height: 2px;
+  background: rgba(74, 222, 128, 0.45);
+  image-rendering: pixelated;
+  will-change: transform, opacity;
+  animation: mc-doc-dust-drift linear infinite;
+  box-shadow: 0 0 4px currentColor;
+  color: #4ade80;
+}
+
+/* 3 halos + 7 float-blocks = 10 siblings before pixel-dust
+   3 个光晕 + 7 个浮动方块 = 像素尘埃前有 10 个兄弟元素 */
+.mc-doc-pixel-dust:nth-child(11) {
+  top: 18%;
+  left: 25%;
+  animation-duration: 18s;
+  animation-delay: -2s;
+  color: #4ade80;
+}
+.mc-doc-pixel-dust:nth-child(12) {
+  top: 45%;
+  left: 75%;
+  animation-duration: 22s;
+  animation-delay: -8s;
+  color: #38bdf8;
+}
+.mc-doc-pixel-dust:nth-child(13) {
+  top: 70%;
+  left: 40%;
+  animation-duration: 16s;
+  animation-delay: -12s;
+  color: #0ea5e9;
+}
+.mc-doc-pixel-dust:nth-child(14) {
+  top: 30%;
+  left: 60%;
+  animation-duration: 20s;
+  animation-delay: -5s;
+  color: #5eead4;
+}
+.mc-doc-pixel-dust:nth-child(15) {
+  top: 85%;
+  left: 15%;
+  animation-duration: 19s;
+  animation-delay: -15s;
+  color: #4ade80;
+}
+.mc-doc-pixel-dust:nth-child(16) {
+  top: 12%;
+  left: 85%;
+  animation-duration: 21s;
+  animation-delay: -7s;
+  color: #fcd34d;
+}
+.mc-doc-pixel-dust:nth-child(17) {
+  top: 60%;
+  left: 10%;
+  animation-duration: 17s;
+  animation-delay: -10s;
+  color: #5eead4;
+}
+.mc-doc-pixel-dust:nth-child(18) {
+  top: 38%;
+  left: 35%;
+  animation-duration: 23s;
+  animation-delay: -4s;
+  color: #38bdf8;
+}
+
+@keyframes mc-doc-halo-float {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(0, 1.5rem, 0) scale(1.08);
+  }
+}
+
+@keyframes mc-doc-halo-pulse {
+  0% {
+    opacity: 0.08;
+  }
+  100% {
+    opacity: 0.18;
+  }
+}
+
+@keyframes mc-doc-block-drift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate3d(8px, -12px, 0) rotate(90deg);
+  }
+  50% {
+    transform: translate3d(-4px, -6px, 0) rotate(180deg);
+  }
+  75% {
+    transform: translate3d(6px, -14px, 0) rotate(270deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(360deg);
+  }
+}
+
+@keyframes mc-doc-dust-drift {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  20% {
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-20px, -40px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mc-doc-halo,
+  .mc-doc-float-block,
+  .mc-doc-pixel-dust {
+    animation: none !important;
+  }
+
+  .mc-doc-float-block {
+    opacity: 0.12;
+  }
+}
+
+/* ── Minecraft Splash Text / Minecraft 闪烁标语 ─────────────────── */
+/* Random player splash image next to the brand wordmark.
+   品牌标题旁随机显示的玩家标语图片。 */
+
+.mc-splash {
+  pointer-events: none;
+  width: 14rem;
+  height: 9rem;
+  transform: rotate(-12deg);
+  filter: drop-shadow(0 0 18px rgba(93, 188, 77, 0.5));
+}
+
+.mc-splash__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  animation: mc-splash-zoom 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes mc-splash-zoom {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mc-splash__img {
+    animation: none !important;
+  }
+}
+
+/* Icon size inside small buttons / 小按钮内图标尺寸 */
+#nd-nav [aria-label="选择语言"] svg,
+#nd-nav [aria-label="切换菜单"] svg,
+#nd-nav [aria-label="打开搜索"] svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* Theme toggle icons: larger size + square shape for MC style
+   主题切换图标：更大尺寸 + 方形以匹配 MC 风格 */
+#nd-nav [data-theme-toggle] svg {
+  width: 20px !important;
+  height: 20px !important;
+  padding: 2px !important;
+  border-radius: 0 !important;
+}
+
+/* Theme toggle active icon / 主题切换激活图标 */
+:is([data-theme="light"], .light) #nd-nav [data-theme-toggle] .bg-fd-accent {
+  background-color: rgba(200, 200, 210, 0.4) !important;
+}
+
+[data-theme="dark"] #nd-nav [data-theme-toggle] .bg-fd-accent,
+.dark #nd-nav [data-theme-toggle] .bg-fd-accent {
+  background-color: rgba(90, 90, 115, 0.45) !important;
+}
+
+/* ── Language Selector Dropdown / 语言选择器下拉菜单 ─────────────── */
+/* Minecraft-styled dropdown for the language selector; matches the navbar
+   texture and colours in both light and dark modes.
+   Minecraft 风格的语言选择器下拉菜单；深浅色模式下与导航栏纹理和色彩一致。 */
+[data-radix-popover-content]:has(> p:first-child):has(> button) {
+  min-width: 200px !important;
+  image-rendering: pixelated !important;
+}
+
+/* Light mode / 浅色模式 */
+:is([data-theme="light"], .light) [data-radix-popover-content]:has(> p:first-child):has(> button) {
+  background:
+    linear-gradient(180deg, rgba(255, 252, 248, 0.92) 0%, rgba(248, 244, 238, 0.95) 100%),
+    url("/imgs/blocks/planks-oak.png") !important;
+  background-size:
+    100% 100%,
+    32px 32px !important;
+  -webkit-backdrop-filter: blur(8px) saturate(120%) !important;
+  backdrop-filter: blur(8px) saturate(120%) !important;
+  border: 2px solid rgba(160, 140, 100, 0.5) !important;
+  border-radius: 0 !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.06),
+    0 4px 16px rgba(0, 0, 0, 0.12) !important;
+}
+
+:is([data-theme="light"], .light)
+  [data-radix-popover-content]:has(> p:first-child):has(> button)
+  > p {
+  font-family: "Minecraft AE", "Minecraft", monospace !important;
+  color: #5a4a2a !important;
+  text-shadow: 0.75px 0.75px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+:is([data-theme="light"], .light)
+  [data-radix-popover-content]:has(> p:first-child):has(> button)
+  > button {
+  font-family: "Minecraft AE", "Minecraft", monospace !important;
+  border-radius: 0 !important;
+  color: #3a2e1a !important;
+  border: 2px solid transparent !important;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    color 0.18s ease !important;
+}
+
+:is([data-theme="light"], .light)
+  [data-radix-popover-content]:has(> p:first-child):has(> button)
+  > button:hover {
+  background-color: rgba(255, 252, 248, 0.95) !important;
+  border-color: rgba(160, 140, 100, 0.55) !important;
+  color: #000 !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.06) !important;
+}
+
+:is([data-theme="light"], .light)
+  [data-radix-popover-content]:has(> p:first-child):has(> button)
+  > button[class*="bg-fd-primary"] {
+  background-color: rgba(160, 140, 100, 0.25) !important;
+  border-color: rgba(160, 140, 100, 0.55) !important;
+  color: #5a4a2a !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Dark mode / 深色模式 */
+[data-theme="dark"] [data-radix-popover-content]:has(> p:first-child):has(> button),
+.dark [data-radix-popover-content]:has(> p:first-child):has(> button) {
+  background:
+    linear-gradient(180deg, rgba(38, 38, 52, 0.92) 0%, rgba(30, 30, 42, 0.95) 100%),
+    url("/imgs/blocks/stone.png") !important;
+  background-size:
+    100% 100%,
+    32px 32px !important;
+  -webkit-backdrop-filter: blur(8px) saturate(120%) !important;
+  backdrop-filter: blur(8px) saturate(120%) !important;
+  border: 2px solid rgba(100, 100, 115, 0.5) !important;
+  border-radius: 0 !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.15),
+    0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] [data-radix-popover-content]:has(> p:first-child):has(> button) > p,
+.dark [data-radix-popover-content]:has(> p:first-child):has(> button) > p {
+  font-family: "Minecraft AE", "Minecraft", monospace !important;
+  color: #c8c8d8 !important;
+  text-shadow: 0.75px 0.75px 0 rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="dark"] [data-radix-popover-content]:has(> p:first-child):has(> button) > button,
+.dark [data-radix-popover-content]:has(> p:first-child):has(> button) > button {
+  font-family: "Minecraft AE", "Minecraft", monospace !important;
+  border-radius: 0 !important;
+  color: #e8e8f8 !important;
+  border: 2px solid transparent !important;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    color 0.18s ease !important;
+}
+
+[data-theme="dark"] [data-radix-popover-content]:has(> p:first-child):has(> button) > button:hover,
+.dark [data-radix-popover-content]:has(> p:first-child):has(> button) > button:hover {
+  background-color: rgba(75, 75, 100, 0.85) !important;
+  border-color: rgba(120, 120, 140, 0.55) !important;
+  color: #fff !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.12) !important;
+}
+
+[data-theme="dark"]
+  [data-radix-popover-content]:has(> p:first-child):has(> button)
+  > button[class*="bg-fd-primary"],
+.dark
+  [data-radix-popover-content]:has(> p:first-child):has(> button)
+  > button[class*="bg-fd-primary"] {
+  background-color: rgba(100, 100, 120, 0.35) !important;
+  border-color: rgba(120, 120, 140, 0.55) !important;
+  color: #e8e8f8 !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.1) !important;
+}
