@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Tab, Tabs } from '@/components/mdx/code-tabs';
 import { CustomCodeBlock } from '@/components/mdx/custom-codeblock';
+import { DocsAuthor, DocsContributors } from '@/components/mdx/docs-author';
 import { Mermaid } from '@/components/mdx/mermaid';
 import { uiConfig } from '@/config';
 import { getPageDictionary } from '@/dictionaries';
@@ -20,7 +21,9 @@ export default async function Page(props: PageProps<'/[lang]/docs/[...slug]'>) {
   if (!page) notFound();
 
   const MDX = page.data.body;
-  const _contributors = page.data.contributors ?? page.data.contributor;
+  // Contributor frontmatter supports both singular and plural keys.
+  // 贡献者 frontmatter 同时兼容单数与复数字段。
+  const contributors = page.data.contributors ?? page.data.contributor;
 
   return (
     <div className="relative isolate">
@@ -55,14 +58,14 @@ export default async function Page(props: PageProps<'/[lang]/docs/[...slug]'>) {
         <DocsTitle>{page.data.title}</DocsTitle>
         <DocsDescription>{page.data.description}</DocsDescription>
         {page.data.author && (
-          <p className="text-sm text-fd-muted-foreground mb-4">
-            {dict.primaryAuthorLabel}
-            {page.data.author}
-          </p>
+          <DocsAuthor author={page.data.author} label={dict.primaryAuthorLabel} />
         )}
         <DocsBody>
           <MDX components={{ ...defaultMdxComponents, Mermaid, pre: CustomCodeBlock, Tabs, Tab }} />
         </DocsBody>
+        {contributors && (
+          <DocsContributors contributors={contributors} title={dict.documentContributorsTitle} />
+        )}
       </DocsPage>
     </div>
   );
