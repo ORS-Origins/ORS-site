@@ -1425,13 +1425,15 @@ textarea[rows] {
 /* Minecraft-styled dropdown for the language selector; matches the navbar
    texture and colours in both light and dark modes.
    Minecraft 风格的语言选择器下拉菜单；深浅色模式下与导航栏纹理和色彩一致。 */
-[data-radix-popover-content]:has(> p:first-child):has(> button) {
+/* Use role="dialog" with p+button children to target the language dropdown.
+   使用 role="dialog" 配合 p+button 子元素来定位语言下拉菜单。 */
+[role="dialog"]:has(> p:first-child):has(> button) {
   min-width: 200px !important;
   image-rendering: pixelated !important;
 }
 
 /* Light mode / 浅色模式 */
-:is([data-theme="light"], .light) [data-radix-popover-content]:has(> p:first-child):has(> button) {
+:is([data-theme="light"], .light) [role="dialog"]:has(> p:first-child):has(> button) {
   background:
     linear-gradient(180deg, rgba(255, 252, 248, 0.92) 0%, rgba(248, 244, 238, 0.95) 100%),
     url("/imgs/blocks/planks-oak.png") !important;
@@ -1448,17 +1450,13 @@ textarea[rows] {
     0 4px 16px rgba(0, 0, 0, 0.12) !important;
 }
 
-:is([data-theme="light"], .light)
-  [data-radix-popover-content]:has(> p:first-child):has(> button)
-  > p {
+:is([data-theme="light"], .light) [role="dialog"]:has(> p:first-child):has(> button) > p {
   font-family: "Minecraft AE", "Minecraft", monospace !important;
   color: #5a4a2a !important;
   text-shadow: 0.75px 0.75px 0 rgba(255, 255, 255, 0.6) !important;
 }
 
-:is([data-theme="light"], .light)
-  [data-radix-popover-content]:has(> p:first-child):has(> button)
-  > button {
+:is([data-theme="light"], .light) [role="dialog"]:has(> p:first-child):has(> button) > button {
   font-family: "Minecraft AE", "Minecraft", monospace !important;
   border-radius: 0 !important;
   color: #3a2e1a !important;
@@ -1471,7 +1469,7 @@ textarea[rows] {
 }
 
 :is([data-theme="light"], .light)
-  [data-radix-popover-content]:has(> p:first-child):has(> button)
+  [role="dialog"]:has(> p:first-child):has(> button)
   > button:hover {
   background-color: rgba(255, 252, 248, 0.95) !important;
   border-color: rgba(160, 140, 100, 0.55) !important;
@@ -1482,7 +1480,7 @@ textarea[rows] {
 }
 
 :is([data-theme="light"], .light)
-  [data-radix-popover-content]:has(> p:first-child):has(> button)
+  [role="dialog"]:has(> p:first-child):has(> button)
   > button[class*="bg-fd-primary"] {
   background-color: rgba(160, 140, 100, 0.25) !important;
   border-color: rgba(160, 140, 100, 0.55) !important;
@@ -1493,8 +1491,8 @@ textarea[rows] {
 }
 
 /* Dark mode / 深色模式 */
-[data-theme="dark"] [data-radix-popover-content]:has(> p:first-child):has(> button),
-.dark [data-radix-popover-content]:has(> p:first-child):has(> button) {
+[data-theme="dark"] [role="dialog"]:has(> p:first-child):has(> button),
+.dark [role="dialog"]:has(> p:first-child):has(> button) {
   background:
     linear-gradient(180deg, rgba(38, 38, 52, 0.92) 0%, rgba(30, 30, 42, 0.95) 100%),
     url("/imgs/blocks/stone.png") !important;
@@ -1511,15 +1509,15 @@ textarea[rows] {
     0 4px 16px rgba(0, 0, 0, 0.3) !important;
 }
 
-[data-theme="dark"] [data-radix-popover-content]:has(> p:first-child):has(> button) > p,
-.dark [data-radix-popover-content]:has(> p:first-child):has(> button) > p {
+[data-theme="dark"] [role="dialog"]:has(> p:first-child):has(> button) > p,
+.dark [role="dialog"]:has(> p:first-child):has(> button) > p {
   font-family: "Minecraft AE", "Minecraft", monospace !important;
   color: #c8c8d8 !important;
   text-shadow: 0.75px 0.75px 0 rgba(0, 0, 0, 0.6) !important;
 }
 
-[data-theme="dark"] [data-radix-popover-content]:has(> p:first-child):has(> button) > button,
-.dark [data-radix-popover-content]:has(> p:first-child):has(> button) > button {
+[data-theme="dark"] [role="dialog"]:has(> p:first-child):has(> button) > button,
+.dark [role="dialog"]:has(> p:first-child):has(> button) > button {
   font-family: "Minecraft AE", "Minecraft", monospace !important;
   border-radius: 0 !important;
   color: #e8e8f8 !important;
@@ -1531,8 +1529,8 @@ textarea[rows] {
     color 0.18s ease !important;
 }
 
-[data-theme="dark"] [data-radix-popover-content]:has(> p:first-child):has(> button) > button:hover,
-.dark [data-radix-popover-content]:has(> p:first-child):has(> button) > button:hover {
+[data-theme="dark"] [role="dialog"]:has(> p:first-child):has(> button) > button:hover,
+.dark [role="dialog"]:has(> p:first-child):has(> button) > button:hover {
   background-color: rgba(75, 75, 100, 0.85) !important;
   border-color: rgba(120, 120, 140, 0.55) !important;
   color: #fff !important;
@@ -1542,11 +1540,9 @@ textarea[rows] {
 }
 
 [data-theme="dark"]
-  [data-radix-popover-content]:has(> p:first-child):has(> button)
+  [role="dialog"]:has(> p:first-child):has(> button)
   > button[class*="bg-fd-primary"],
-.dark
-  [data-radix-popover-content]:has(> p:first-child):has(> button)
-  > button[class*="bg-fd-primary"] {
+.dark [role="dialog"]:has(> p:first-child):has(> button) > button[class*="bg-fd-primary"] {
   background-color: rgba(100, 100, 120, 0.35) !important;
   border-color: rgba(120, 120, 140, 0.55) !important;
   color: #e8e8f8 !important;
