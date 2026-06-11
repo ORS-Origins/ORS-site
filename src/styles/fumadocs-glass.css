@@ -32,6 +32,32 @@
   }
 }
 
+/* ── Mobile Docs Layout Fix / 移动端文档布局修复 ─────────────────── */
+/* On narrow screens the fumadocs grid still reserves sidebar columns,
+   squeezing the main content to ~140px. Force the layout to a single
+   full-width column and let the main area span all available space.
+   在窄屏下 fumadocs 的 grid 仍保留 sidebar 列，导致主内容被压缩到约 140px。
+   强制布局为单列并让主内容区占据全部可用宽度。 */
+@media (max-width: 767.98px) {
+  #nd-docs-layout {
+    grid-template-columns: 1fr !important;
+    grid-template-areas:
+      "header"
+      "toc-popover"
+      "main" !important;
+  }
+
+  #nd-docs-layout > * {
+    grid-column: 1 / -1 !important;
+  }
+
+  #nd-page {
+    max-width: 100% !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
 /* ── Fumadocs Surface Glassification / Fumadocs 表面玻璃化 ─────────────────── */
 /* :where() wrapper keeps lowest specificity, avoiding conflicts with the #nd-toc constraint block above
    and not blocking fumadocs default hover / collapse utility overrides.

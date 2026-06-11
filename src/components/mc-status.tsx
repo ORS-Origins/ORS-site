@@ -125,89 +125,123 @@ export function McServerStatus({ locale }: { locale?: string }) {
         )}
       </div>
 
-      {data?.online && (
-        <>
-          <div className="flex items-center gap-2 text-sm">
-            <Users size={14} className="text-fd-muted-foreground" />
-            <span className="font-minecraft-ae">
-              {data.players.online} / {data.players.max} {labels.serverPlayers}
-              {(() => {
-                const fakeCount = getFakePlayerCount(data.players.online, data.players.list ?? []);
-                const realCount = (data.players.list ?? []).length;
-                if (fakeCount <= 0) return null;
-                return (
-                  <span className="text-fd-muted-foreground text-xs ml-1">
-                    ({fakeCount} {labels.fakePlayers} / {realCount} {labels.realPlayers})
-                  </span>
-                );
-              })()}
+      {/* Skeleton layer / 骨架屏层 */}
+      <div
+        className={`flex flex-col gap-1 transition-opacity duration-500 ${loading ? 'opacity-100' : 'opacity-0 pointer-events-none absolute inset-0'}`}
+        aria-hidden={!loading}
+      >
+        <div className="flex items-center gap-2 text-sm">
+          <Users size={14} className="text-fd-muted-foreground" />
+          <span className="h-4 w-24 rounded bg-fd-muted-foreground/20 animate-pulse" />
+        </div>
+        <div className="flex items-center gap-2 text-sm">
+          <Box size={14} className="text-fd-muted-foreground" />
+          <span className="h-4 w-16 rounded bg-fd-muted-foreground/20 animate-pulse" />
+        </div>
+        <div className="mc-status__player-section">
+          <div className="mc-status__player-list">
+            <span className="mc-status__player">
+              <span className="mc-status__player-avatar rounded bg-fd-muted-foreground/20 animate-pulse" />
+              <span className="h-3 w-16 rounded bg-fd-muted-foreground/20 animate-pulse" />
+            </span>
+            <span className="mc-status__player">
+              <span className="mc-status__player-avatar rounded bg-fd-muted-foreground/20 animate-pulse" />
+              <span className="h-3 w-12 rounded bg-fd-muted-foreground/20 animate-pulse" />
             </span>
           </div>
-
-          {data.version && (
-            <div className="flex items-center gap-2 text-sm">
-              <Box size={14} className="text-fd-muted-foreground" />
-              <span className="font-minecraft-ae text-fd-muted-foreground">{data.version}</span>
-            </div>
-          )}
-
-          {/* Real players returned by API / API 返回的真人玩家 */}
-          {data.players.list && data.players.list.length > 0 && (
-            <div className="mc-status__player-section">
-              <div className="mc-status__player-list">
-                {data.players.list.map((player) => (
-                  <span key={player.uuid} className="mc-status__player">
-                    {/* biome-ignore lint/performance/noImgElement: external MC head avatar API, 16px fixed size */}
-                    <img
-                      src={`${mcConfig.avatarApiBase}/${player.uuid}/${mcConfig.avatarSize}`}
-                      alt={player.name}
-                      className="mc-status__player-avatar"
-                      loading="lazy"
-                    />
-                    <span className="font-minecraft-ae">{player.name}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </>
-      )}
-
-      <div className="flex items-center gap-2 text-xs text-fd-muted-foreground">
-        <span className="font-minecraft-ae">{labels.serverIp}:</span>
-        <button
-          type="button"
-          onClick={handleCopyIp}
-          className={`relative bg-fd-accent px-1.5 py-0.5 rounded text-xs font-minecraft-ae cursor-pointer transition-all duration-200 hover:brightness-110 ${
-            copied
-              ? 'bg-green-500/20 text-green-700 dark:text-green-400 ring-1 ring-green-500/40'
-              : ''
-          }`}
-          title={copied ? '已复制 / Copied' : '点击复制 / Click to copy'}
-        >
-          {mcConfig.defaultPort === 25565
-            ? mcConfig.serverIp
-            : `${mcConfig.serverIp}:${mcConfig.defaultPort}`}
-          {copied && (
-            <span className="absolute -top-8 left-1/2 -translate-x-1/2 flex items-center gap-1 px-2 py-0.5 bg-[#1a2e1a]/95 border border-green-600/60 text-[10px] text-green-400 font-minecraft-ae whitespace-nowrap rounded-sm shadow-[0_2px_8px_rgba(0,0,0,0.4)] transition-all duration-200 animate-in fade-in slide-in-from-bottom-1">
-              <svg
-                className="w-3 h-3 text-green-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={3}
-                aria-label="Check"
-              >
-                <title>Check</title>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              {currentLocale === 'zh' ? '已复制' : 'Copied'}
-              {/* Small arrow pointing down / 指向下方的箭头 */}
-              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#1a2e1a] border-r border-b border-green-600/60 rotate-45" />
-            </span>
-          )}
-        </button>
+        </div>
       </div>
+
+      {/* Real data layer / 真实数据层 */}
+      <div
+        className={`flex flex-col gap-1 transition-opacity duration-500 ${!loading && data?.online ? 'opacity-100' : 'opacity-0 pointer-events-none absolute inset-0'}`}
+        aria-hidden={loading || !data?.online}
+      >
+        <div className="flex items-center gap-2 text-sm">
+          <Users size={14} className="text-fd-muted-foreground" />
+          <span className="font-minecraft-ae">
+            {data?.players.online} / {data?.players.max} {labels.serverPlayers}
+            {(() => {
+              const fakeCount = getFakePlayerCount(
+                data?.players.online ?? 0,
+                data?.players.list ?? [],
+              );
+              const realCount = (data?.players.list ?? []).length;
+              if (fakeCount <= 0) return null;
+              return (
+                <span className="text-fd-muted-foreground text-xs ml-1">
+                  ({fakeCount} {labels.fakePlayers} / {realCount} {labels.realPlayers})
+                </span>
+              );
+            })()}
+          </span>
+        </div>
+
+        {data?.version && (
+          <div className="flex items-center gap-2 text-sm">
+            <Box size={14} className="text-fd-muted-foreground" />
+            <span className="font-minecraft-ae text-black">{data.version}</span>
+          </div>
+        )}
+
+        {/* Real players returned by API / API 返回的真人玩家 */}
+        {data?.players.list && data.players.list.length > 0 && (
+          <div className="mc-status__player-section">
+            <div className="mc-status__player-list">
+              {data.players.list.map((player) => (
+                <span key={player.uuid} className="mc-status__player">
+                  {/* biome-ignore lint/performance/noImgElement: external MC head avatar API, 16px fixed size */}
+                  <img
+                    src={`${mcConfig.avatarApiBase}/${player.uuid}/${mcConfig.avatarSize}`}
+                    alt={player.name}
+                    className="mc-status__player-avatar"
+                    loading="lazy"
+                  />
+                  <span className="font-minecraft-ae">{player.name}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {mcConfig.showServerIp && (
+        <div className="flex items-center gap-2 text-xs text-fd-muted-foreground">
+          <span className="font-minecraft-ae text-black">{labels.serverIp}:</span>
+          <button
+            type="button"
+            onClick={handleCopyIp}
+            className={`relative bg-fd-accent px-1.5 py-0.5 rounded text-xs font-minecraft-ae cursor-pointer transition-all duration-200 hover:brightness-110 ${
+              copied
+                ? 'bg-green-500/20 text-green-700 dark:text-green-400 ring-1 ring-green-500/40'
+                : ''
+            }`}
+            title={copied ? '已复制 / Copied' : '点击复制 / Click to copy'}
+          >
+            {mcConfig.defaultPort === 25565
+              ? mcConfig.serverIp
+              : `${mcConfig.serverIp}:${mcConfig.defaultPort}`}
+            {copied && (
+              <span className="absolute -top-8 left-1/2 -translate-x-1/2 flex items-center gap-1 px-2 py-0.5 bg-[#1a2e1a]/95 border border-green-600/60 text-[10px] text-green-400 font-minecraft-ae whitespace-nowrap rounded-sm shadow-[0_2px_8px_rgba(0,0,0,0.4)] transition-all duration-200 animate-in fade-in slide-in-from-bottom-1">
+                <svg
+                  className="w-3 h-3 text-green-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={3}
+                  aria-label="Check"
+                >
+                  <title>Check</title>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                {currentLocale === 'zh' ? '已复制' : 'Copied'}
+                {/* Small arrow pointing down / 指向下方的箭头 */}
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#1a2e1a] border-r border-b border-green-600/60 rotate-45" />
+              </span>
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
