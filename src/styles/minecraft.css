@@ -288,6 +288,18 @@ textarea[rows] {
   color: var(--color-fd-muted-foreground);
 }
 
+.mc-status__player-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mc-status__player-section-title {
+  font-size: 0.75rem;
+  color: var(--color-fd-muted-foreground);
+  opacity: 0.8;
+}
+
 .mc-status__player-list {
   display: flex;
   flex-wrap: wrap;
@@ -305,11 +317,22 @@ textarea[rows] {
   border: 1px solid var(--glass-border-hairline);
 }
 
+.mc-status__player--fake {
+  opacity: 0.6;
+  border-style: dashed;
+}
+
 .mc-status__player-avatar {
   width: 16px;
   height: 16px;
   border-radius: 2px;
   image-rendering: pixelated;
+}
+
+.mc-status__player-avatar--fake {
+  display: inline-block;
+  background-color: var(--color-fd-muted-foreground);
+  opacity: 0.3;
 }
 
 /* ── Minecraft Light Source System / Minecraft 光源系统 ─────────────── */

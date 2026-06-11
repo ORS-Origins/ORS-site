@@ -27,6 +27,9 @@ export const zh = {
   serverOffline: '离线',
   serverPlayers: '玩家',
   serverIp: '服务器 IP',
+  realPlayers: '真人玩家',
+  fakePlayers: '假人',
+  fakePlayerUnit: '个',
   // Mermaid toolbar a11y labels / Mermaid 工具栏无障碍标签
   mermaidZoomOut: '缩小图表',
   mermaidZoomIn: '放大图表',

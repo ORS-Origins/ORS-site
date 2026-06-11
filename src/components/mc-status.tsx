@@ -15,6 +15,11 @@ import { i18n } from '@/lib/i18n';
 // Locale → labels lookup / 按 locale 查表获取文案
 const LABELS = { zh, en } as const;
 
+interface McPlayer {
+  name: string;
+  uuid: string;
+}
+
 interface McServerData {
   online: boolean;
   ip: string;
@@ -24,8 +29,19 @@ interface McServerData {
   players: {
     online: number;
     max: number;
-    list?: Array<{ name: string; uuid: string }>;
+    list?: McPlayer[];
   };
+}
+
+/**
+ * Calculate the number of fake players.
+ * Players returned by the API (with name + uuid + avatar) are real players.
+ * The rest (online - real) are fake players.
+ * 计算假人数量。API 返回的玩家（带名称、UUID、头像）是真人玩家，
+ * 其余（在线人数 - 真人数量）为假人。
+ */
+function getFakePlayerCount(online: number, realList: McPlayer[]): number {
+  return Math.max(0, online - realList.length);
 }
 
 export function McServerStatus({ locale }: { locale?: string }) {
@@ -115,6 +131,16 @@ export function McServerStatus({ locale }: { locale?: string }) {
             <Users size={14} className="text-fd-muted-foreground" />
             <span className="font-minecraft-ae">
               {data.players.online} / {data.players.max} {labels.serverPlayers}
+              {(() => {
+                const fakeCount = getFakePlayerCount(data.players.online, data.players.list ?? []);
+                const realCount = (data.players.list ?? []).length;
+                if (fakeCount <= 0) return null;
+                return (
+                  <span className="text-fd-muted-foreground text-xs ml-1">
+                    ({fakeCount} {labels.fakePlayers} / {realCount} {labels.realPlayers})
+                  </span>
+                );
+              })()}
             </span>
           </div>
 
@@ -125,20 +151,23 @@ export function McServerStatus({ locale }: { locale?: string }) {
             </div>
           )}
 
+          {/* Real players returned by API / API 返回的真人玩家 */}
           {data.players.list && data.players.list.length > 0 && (
-            <div className="mc-status__player-list">
-              {data.players.list.map((player) => (
-                <span key={player.uuid} className="mc-status__player">
-                  {/* biome-ignore lint/performance/noImgElement: external MC head avatar API, 16px fixed size */}
-                  <img
-                    src={`${mcConfig.avatarApiBase}/${player.uuid}/${mcConfig.avatarSize}`}
-                    alt={player.name}
-                    className="mc-status__player-avatar"
-                    loading="lazy"
-                  />
-                  <span className="font-minecraft-ae">{player.name}</span>
-                </span>
-              ))}
+            <div className="mc-status__player-section">
+              <div className="mc-status__player-list">
+                {data.players.list.map((player) => (
+                  <span key={player.uuid} className="mc-status__player">
+                    {/* biome-ignore lint/performance/noImgElement: external MC head avatar API, 16px fixed size */}
+                    <img
+                      src={`${mcConfig.avatarApiBase}/${player.uuid}/${mcConfig.avatarSize}`}
+                      alt={player.name}
+                      className="mc-status__player-avatar"
+                      loading="lazy"
+                    />
+                    <span className="font-minecraft-ae">{player.name}</span>
+                  </span>
+                ))}
+              </div>
             </div>
           )}
         </>

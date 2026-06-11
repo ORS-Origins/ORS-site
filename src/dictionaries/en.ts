@@ -28,6 +28,9 @@ export const en = {
   serverOffline: 'Offline',
   serverPlayers: 'Players',
   serverIp: 'Server IP',
+  realPlayers: 'Real Players',
+  fakePlayers: 'Fake Players',
+  fakePlayerUnit: '',
   // Mermaid toolbar a11y labels / Mermaid 工具栏无障碍标签
   mermaidZoomOut: 'Zoom out',
   mermaidZoomIn: 'Zoom in',
