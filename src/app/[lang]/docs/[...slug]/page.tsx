@@ -26,10 +26,17 @@ export default async function Page(props: PageProps<'/[lang]/docs/[...slug]'>) {
   const contributors = page.data.contributors ?? page.data.contributor;
 
   return (
-    <div className="relative isolate">
+    <DocsPage
+      toc={page.data.toc}
+      full={page.data.full}
+      tableOfContent={{ style: uiConfig.tocStyle }}
+    >
       {/* Subtle Minecraft-themed ambient background effects.
           微妙的 Minecraft 风格环境背景光效。 */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden -z-10"
+      >
         <div className="mc-doc-halo mc-doc-halo--emerald" />
         <div className="mc-doc-halo mc-doc-halo--sky" />
         <div className="mc-doc-halo mc-doc-halo--amethyst" />
@@ -50,24 +57,16 @@ export default async function Page(props: PageProps<'/[lang]/docs/[...slug]'>) {
         <div className="mc-doc-pixel-dust" />
       </div>
 
-      <DocsPage
-        toc={page.data.toc}
-        full={page.data.full}
-        tableOfContent={{ style: uiConfig.tocStyle }}
-      >
-        <DocsTitle>{page.data.title}</DocsTitle>
-        <DocsDescription>{page.data.description}</DocsDescription>
-        {page.data.author && (
-          <DocsAuthor author={page.data.author} label={dict.primaryAuthorLabel} />
-        )}
-        <DocsBody>
-          <MDX components={{ ...defaultMdxComponents, Mermaid, pre: CustomCodeBlock, Tabs, Tab }} />
-        </DocsBody>
-        {contributors && (
-          <DocsContributors contributors={contributors} title={dict.documentContributorsTitle} />
-        )}
-      </DocsPage>
-    </div>
+      <DocsTitle>{page.data.title}</DocsTitle>
+      <DocsDescription>{page.data.description}</DocsDescription>
+      {page.data.author && <DocsAuthor author={page.data.author} label={dict.primaryAuthorLabel} />}
+      <DocsBody>
+        <MDX components={{ ...defaultMdxComponents, Mermaid, pre: CustomCodeBlock, Tabs, Tab }} />
+      </DocsBody>
+      {contributors && (
+        <DocsContributors contributors={contributors} title={dict.documentContributorsTitle} />
+      )}
+    </DocsPage>
   );
 }
 
