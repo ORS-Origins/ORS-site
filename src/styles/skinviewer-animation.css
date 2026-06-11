@@ -1,6 +1,6 @@
 /* Minecraft Skin Viewer Animations / Minecraft 皮肤查看器动画 */
 
-.d-skin-aciton-walk .d-skin-arm-left {
+.d-skin-action-walk .d-skin-arm-left {
   -webkit-animation: d-skin-action-walk-arm-left 2s ease-in-out infinite;
   animation: d-skin-action-walk-arm-left 2s ease-in-out infinite;
 }
@@ -20,7 +20,7 @@
   }
 }
 
-.d-skin-aciton-walk .d-skin-arm-right {
+.d-skin-action-walk .d-skin-arm-right {
   -webkit-animation: d-skin-action-walk-arm-right 2s ease-in-out infinite;
   animation: d-skin-action-walk-arm-right 2s ease-in-out infinite;
 }
@@ -40,12 +40,12 @@
   }
 }
 
-.d-skin-aciton-walk .d-skin-leg-right {
+.d-skin-action-walk .d-skin-leg-right {
   -webkit-animation: d-skin-action-walk-leg-left 2s ease-in-out infinite;
   animation: d-skin-action-walk-leg-left 2s ease-in-out infinite;
 }
 
-.d-skin-aciton-walk .d-skin-leg-left {
+.d-skin-action-walk .d-skin-leg-left {
   -webkit-animation: d-skin-action-walk-leg-right 2s ease-in-out infinite;
   animation: d-skin-action-walk-leg-right 2s ease-in-out infinite;
 }
@@ -80,7 +80,7 @@
   }
 }
 
-.d-skin-aciton-stand .d-skin-arm-left {
+.d-skin-action-stand .d-skin-arm-left {
   -webkit-animation: d-skin-action-stand-arm-left 3s ease-in-out infinite;
   animation: d-skin-action-stand-arm-left 3s ease-in-out infinite;
 }
@@ -100,7 +100,7 @@
   }
 }
 
-.d-skin-aciton-stand .d-skin-arm-right {
+.d-skin-action-stand .d-skin-arm-right {
   -webkit-animation: d-skin-action-stand-arm-right 3s ease-in-out infinite;
   animation: d-skin-action-stand-arm-right 3s ease-in-out infinite;
 }
@@ -120,12 +120,12 @@
   }
 }
 
-.d-skin-aciton-run .d-skin-arm-left {
+.d-skin-action-run .d-skin-arm-left {
   -webkit-animation: d-skin-action-run-arm-left 0.8s ease-in-out infinite;
   animation: d-skin-action-run-arm-left 0.8s ease-in-out infinite;
 }
 
-.d-skin-aciton-run .d-skin-arm-right {
+.d-skin-action-run .d-skin-arm-right {
   -webkit-animation: d-skin-action-run-arm-right 0.8s ease-in-out infinite;
   animation: d-skin-action-run-arm-right 0.8s ease-in-out infinite;
 }
@@ -160,12 +160,12 @@
   }
 }
 
-.d-skin-aciton-run .d-skin-leg-right {
+.d-skin-action-run .d-skin-leg-right {
   -webkit-animation: d-skin-action-run-leg-left 0.8s ease-in-out infinite;
   animation: d-skin-action-run-leg-left 0.8s ease-in-out infinite;
 }
 
-.d-skin-aciton-run .d-skin-leg-left {
+.d-skin-action-run .d-skin-leg-left {
   -webkit-animation: d-skin-action-run-leg-right 0.8s ease-in-out infinite;
   animation: d-skin-action-run-leg-right 0.8s ease-in-out infinite;
 }
@@ -200,7 +200,7 @@
   }
 }
 
-.d-skin-aciton-run .d-skin-main-translate {
+.d-skin-action-run .d-skin-main-translate {
   -webkit-animation: d-skin-action-run-main 0.4s ease-in-out infinite;
   animation: d-skin-action-run-main 0.4s ease-in-out infinite;
 }

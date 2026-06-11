@@ -400,7 +400,7 @@ class SkinViewer {
     if (!(skin instanceof HTMLCanvasElement) && !(skin instanceof HTMLImageElement)) {
       throw new Error('skin must be a canvas or image element');
     }
-    this.skin = skin instanceof HTMLImageElement ? skin : DEFAULT_SKIN;
+    this.skin = skin instanceof HTMLImageElement ? skin : (skin as HTMLCanvasElement);
     refreshTexture(this.elements, this.skin, this.skinType);
   }
 
@@ -478,7 +478,7 @@ export function SkinViewerComponent({
 
     // Apply animation class / 应用动画类
     if (animation !== 'none') {
-      const animClass = `d-skin-aciton-${animation}`;
+      const animClass = `d-skin-action-${animation}`;
       container.classList.add(animClass);
     }
 
