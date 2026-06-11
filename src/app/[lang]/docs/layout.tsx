@@ -4,6 +4,7 @@
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { Sidebar, SidebarTrigger, useSidebar } from 'fumadocs-ui/layouts/docs/slots/sidebar';
 import { SidebarProvider } from '@/components/sidebar-provider';
+import { SkinViewerComponent } from '@/components/skin-viewer';
 import MaskReveal from '@/components/transition/mask-reveal';
 import { i18n, type Locale } from '@/lib/i18n';
 import { baseOptions } from '@/lib/layout.shared';
@@ -34,6 +35,7 @@ export default async function Layout({ params, children }: LayoutProps<'/[lang]/
       >
         {children}
       </DocsLayout>
+      <SkinViewerComponent />
     </>
   );
 }

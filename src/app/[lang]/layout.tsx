@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { ContextMenu } from '@/components/context-menu';
 import { CursorAnimator } from '@/components/cursor-animator';
 import DefaultSearchDialog from '@/components/search';
+
 import { siteConfig } from '@/config';
 import { getPageDictionary } from '@/dictionaries';
 import { i18n, type Locale } from '@/lib/i18n';

@@ -1,0 +1,221 @@
+/* Minecraft Skin Viewer Animations / Minecraft 皮肤查看器动画 */
+
+.d-skin-aciton-walk .d-skin-arm-left {
+  -webkit-animation: d-skin-action-walk-arm-left 2s ease-in-out infinite;
+  animation: d-skin-action-walk-arm-left 2s ease-in-out infinite;
+}
+
+@keyframes d-skin-action-walk-arm-left {
+  0% {
+    -webkit-transform: rotateX(-20deg) rotateZ(0);
+    transform: rotateX(-20deg) rotateZ(0);
+  }
+  50% {
+    -webkit-transform: rotateX(20deg) rotateZ(-3deg);
+    transform: rotateX(20deg) rotateZ(-3deg);
+  }
+  100% {
+    -webkit-transform: rotateX(-20deg) rotateZ(0);
+    transform: rotateX(-20deg) rotateZ(0);
+  }
+}
+
+.d-skin-aciton-walk .d-skin-arm-right {
+  -webkit-animation: d-skin-action-walk-arm-right 2s ease-in-out infinite;
+  animation: d-skin-action-walk-arm-right 2s ease-in-out infinite;
+}
+
+@keyframes d-skin-action-walk-arm-right {
+  0% {
+    -webkit-transform: rotateX(20deg) rotateZ(0);
+    transform: rotateX(20deg) rotateZ(0);
+  }
+  50% {
+    -webkit-transform: rotateX(-20deg) rotateZ(3deg);
+    transform: rotateX(-20deg) rotateZ(3deg);
+  }
+  100% {
+    -webkit-transform: rotateX(20deg) rotateZ(0);
+    transform: rotateX(20deg) rotateZ(0);
+  }
+}
+
+.d-skin-aciton-walk .d-skin-leg-right {
+  -webkit-animation: d-skin-action-walk-leg-left 2s ease-in-out infinite;
+  animation: d-skin-action-walk-leg-left 2s ease-in-out infinite;
+}
+
+.d-skin-aciton-walk .d-skin-leg-left {
+  -webkit-animation: d-skin-action-walk-leg-right 2s ease-in-out infinite;
+  animation: d-skin-action-walk-leg-right 2s ease-in-out infinite;
+}
+
+@keyframes d-skin-action-walk-leg-left {
+  0% {
+    -webkit-transform: rotate3d(1, 0, 0, -20deg);
+    transform: rotate3d(1, 0, 0, -20deg);
+  }
+  50% {
+    -webkit-transform: rotate3d(1, 0, 0, 20deg);
+    transform: rotate3d(1, 0, 0, 20deg);
+  }
+  100% {
+    -webkit-transform: rotate3d(1, 0, 0, -20deg);
+    transform: rotate3d(1, 0, 0, -20deg);
+  }
+}
+
+@keyframes d-skin-action-walk-leg-right {
+  0% {
+    -webkit-transform: rotate3d(1, 0, 0, 20deg);
+    transform: rotate3d(1, 0, 0, 20deg);
+  }
+  50% {
+    -webkit-transform: rotate3d(1, 0, 0, -20deg);
+    transform: rotate3d(1, 0, 0, -20deg);
+  }
+  100% {
+    -webkit-transform: rotate3d(1, 0, 0, 20deg);
+    transform: rotate3d(1, 0, 0, 20deg);
+  }
+}
+
+.d-skin-aciton-stand .d-skin-arm-left {
+  -webkit-animation: d-skin-action-stand-arm-left 3s ease-in-out infinite;
+  animation: d-skin-action-stand-arm-left 3s ease-in-out infinite;
+}
+
+@keyframes d-skin-action-stand-arm-left {
+  0% {
+    -webkit-transform: rotateZ(0);
+    transform: rotateZ(0);
+  }
+  50% {
+    -webkit-transform: rotateZ(-3deg);
+    transform: rotateZ(-3deg);
+  }
+  100% {
+    -webkit-transform: rotateZ(0);
+    transform: rotateZ(0);
+  }
+}
+
+.d-skin-aciton-stand .d-skin-arm-right {
+  -webkit-animation: d-skin-action-stand-arm-right 3s ease-in-out infinite;
+  animation: d-skin-action-stand-arm-right 3s ease-in-out infinite;
+}
+
+@keyframes d-skin-action-stand-arm-right {
+  0% {
+    -webkit-transform: rotateZ(0);
+    transform: rotateZ(0);
+  }
+  50% {
+    -webkit-transform: rotateZ(3deg);
+    transform: rotateZ(3deg);
+  }
+  100% {
+    -webkit-transform: rotateZ(0);
+    transform: rotateZ(0);
+  }
+}
+
+.d-skin-aciton-run .d-skin-arm-left {
+  -webkit-animation: d-skin-action-run-arm-left 0.8s ease-in-out infinite;
+  animation: d-skin-action-run-arm-left 0.8s ease-in-out infinite;
+}
+
+.d-skin-aciton-run .d-skin-arm-right {
+  -webkit-animation: d-skin-action-run-arm-right 0.8s ease-in-out infinite;
+  animation: d-skin-action-run-arm-right 0.8s ease-in-out infinite;
+}
+
+@keyframes d-skin-action-run-arm-left {
+  0% {
+    -webkit-transform: rotateX(-60deg) rotateZ(0);
+    transform: rotateX(-60deg) rotateZ(0);
+  }
+  50% {
+    -webkit-transform: rotateX(60deg) rotateZ(-10deg);
+    transform: rotateX(60deg) rotateZ(-10deg);
+  }
+  100% {
+    -webkit-transform: rotateX(-60deg) rotateZ(0);
+    transform: rotateX(-60deg) rotateZ(0);
+  }
+}
+
+@keyframes d-skin-action-run-arm-right {
+  0% {
+    -webkit-transform: rotateX(60deg) rotateZ(0);
+    transform: rotateX(60deg) rotateZ(0);
+  }
+  50% {
+    -webkit-transform: rotateX(-60deg) rotateZ(10deg);
+    transform: rotateX(-60deg) rotateZ(10deg);
+  }
+  100% {
+    -webkit-transform: rotateX(60deg) rotateZ(0);
+    transform: rotateX(60deg) rotateZ(0);
+  }
+}
+
+.d-skin-aciton-run .d-skin-leg-right {
+  -webkit-animation: d-skin-action-run-leg-left 0.8s ease-in-out infinite;
+  animation: d-skin-action-run-leg-left 0.8s ease-in-out infinite;
+}
+
+.d-skin-aciton-run .d-skin-leg-left {
+  -webkit-animation: d-skin-action-run-leg-right 0.8s ease-in-out infinite;
+  animation: d-skin-action-run-leg-right 0.8s ease-in-out infinite;
+}
+
+@keyframes d-skin-action-run-leg-left {
+  0% {
+    -webkit-transform: rotate3d(1, 0, 0, -70deg);
+    transform: rotate3d(1, 0, 0, -70deg);
+  }
+  50% {
+    -webkit-transform: rotate3d(1, 0, 0, 70deg);
+    transform: rotate3d(1, 0, 0, 70deg);
+  }
+  100% {
+    -webkit-transform: rotate3d(1, 0, 0, -70deg);
+    transform: rotate3d(1, 0, 0, -70deg);
+  }
+}
+
+@keyframes d-skin-action-run-leg-right {
+  0% {
+    -webkit-transform: rotate3d(1, 0, 0, 70deg);
+    transform: rotate3d(1, 0, 0, 70deg);
+  }
+  50% {
+    -webkit-transform: rotate3d(1, 0, 0, -70deg);
+    transform: rotate3d(1, 0, 0, -70deg);
+  }
+  100% {
+    -webkit-transform: rotate3d(1, 0, 0, 70deg);
+    transform: rotate3d(1, 0, 0, 70deg);
+  }
+}
+
+.d-skin-aciton-run .d-skin-main-translate {
+  -webkit-animation: d-skin-action-run-main 0.4s ease-in-out infinite;
+  animation: d-skin-action-run-main 0.4s ease-in-out infinite;
+}
+
+@keyframes d-skin-action-run-main {
+  0% {
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+  50% {
+    -webkit-transform: translate3d(0, 20px, 0);
+    transform: translate3d(0, 20px, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+}
