@@ -985,9 +985,23 @@ textarea[rows] {
     color 0.35s ease !important;
 }
 
-/* Theme toggle extra padding / 主题切换按钮额外内边距 */
+/* Unified button sizing / 统一按钮尺寸 */
+:is([data-theme="light"], .light) #nd-nav [data-search-full],
+:is([data-theme="light"], .light) #nd-nav [data-theme-toggle],
+:is([data-theme="light"], .light) #nd-nav [aria-label="选择语言"],
+:is([data-theme="light"], .light) #nd-nav [aria-label="切换菜单"],
+:is([data-theme="light"], .light) #nd-nav [aria-label="打开搜索"] {
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 6px 8px !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Theme toggle extra min-width / 主题切换按钮最小宽度 */
 :is([data-theme="light"], .light) #nd-nav [data-theme-toggle] {
-  padding: 4px 8px !important;
   min-width: 56px !important;
 }
 
@@ -1045,10 +1059,29 @@ textarea[rows] {
     color 0.35s ease !important;
 }
 
-/* Theme toggle extra padding / 主题切换按钮额外内边距 */
+/* Unified button sizing / 统一按钮尺寸 */
+[data-theme="dark"] #nd-nav [data-search-full],
+[data-theme="dark"] #nd-nav [data-theme-toggle],
+[data-theme="dark"] #nd-nav [aria-label="选择语言"],
+[data-theme="dark"] #nd-nav [aria-label="切换菜单"],
+[data-theme="dark"] #nd-nav [aria-label="打开搜索"],
+.dark #nd-nav [data-search-full],
+.dark #nd-nav [data-theme-toggle],
+.dark #nd-nav [aria-label="选择语言"],
+.dark #nd-nav [aria-label="切换菜单"],
+.dark #nd-nav [aria-label="打开搜索"] {
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 6px 8px !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Theme toggle extra min-width / 主题切换按钮最小宽度 */
 [data-theme="dark"] #nd-nav [data-theme-toggle],
 .dark #nd-nav [data-theme-toggle] {
-  padding: 4px 8px !important;
   min-width: 56px !important;
 }
 

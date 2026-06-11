@@ -180,7 +180,7 @@ export function McServerStatus({ locale }: { locale?: string }) {
         {data?.version && (
           <div className="flex items-center gap-2 text-sm">
             <Box size={14} className="text-fd-muted-foreground" />
-            <span className="font-minecraft-ae text-black">{data.version}</span>
+            <span className="font-minecraft-ae text-black dark:text-white">{data.version}</span>
           </div>
         )}
 
@@ -207,7 +207,7 @@ export function McServerStatus({ locale }: { locale?: string }) {
 
       {mcConfig.showServerIp && (
         <div className="flex items-center gap-2 text-xs text-fd-muted-foreground">
-          <span className="font-minecraft-ae text-black">{labels.serverIp}:</span>
+          <span className="font-minecraft-ae text-black dark:text-white">{labels.serverIp}:</span>
           <button
             type="button"
             onClick={handleCopyIp}
