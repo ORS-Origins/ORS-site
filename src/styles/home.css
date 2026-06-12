@@ -245,7 +245,7 @@
   height: 36px;
   /* Replaces torch — packed ice/blue ice for vertical accent.
      替代火把——冰/蓝冰作为垂直点缀。 */
-  background-image: url("/imgs/blocks/blue-ice.png");
+  background-image: url("/imgs/blocks/ice-packed.png");
   background-size: cover;
   animation-duration: 16s;
   animation-delay: -10s;
@@ -259,7 +259,7 @@
   height: 28px;
   /* Replaces redstone — prismarine for cyan/teal accent.
      替代红石——海晶石作为青蓝点缀。 */
-  background-image: url("/imgs/blocks/prismarine.png");
+  background-image: url("/imgs/blocks/prismarine-rough.png");
   background-size: cover;
   animation-duration: 19s;
   animation-delay: -3s;

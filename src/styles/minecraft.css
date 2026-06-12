@@ -1221,7 +1221,7 @@ textarea[rows] {
 .mc-doc-float-block--prismarine {
   width: 28px;
   height: 28px;
-  background-image: url("/imgs/blocks/prismarine.png");
+  background-image: url("/imgs/blocks/prismarine-rough.png");
   background-size: cover;
   animation-duration: 24s;
   animation-delay: -3s;
