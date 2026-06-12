@@ -78,6 +78,16 @@ blockquote {
   --glass-ambient-b: rgba(255, 170, 0, 0.1);
   --glass-ambient-c: rgba(85, 255, 255, 0.06);
   --glass-codeblock-sheen: rgba(85, 255, 85, 0.08);
+
+  /* Docs bar surface: aligns sidebar/subnav with the docs ambient background without block textures.
+     文档栏背景：让侧栏 / 二级栏贴合正文环境光风格，不再使用方块贴图。 */
+  --docs-bar-background:
+    radial-gradient(120% 72% at 12% 0%, var(--glass-ambient-a), transparent 58%),
+    radial-gradient(100% 70% at 100% 18%, var(--glass-ambient-c), transparent 62%),
+    linear-gradient(180deg, var(--glass-tint-strong) 0%, var(--glass-tint-medium) 100%);
+  --docs-bar-border: var(--glass-border-hairline);
+  --docs-bar-shadow: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow);
+
   --glass-blur: 24px;
   --glass-blur-strong: 32px;
   --glass-blur-soft: 14px;
@@ -132,6 +142,15 @@ blockquote {
   --glass-ambient-b: rgba(255, 170, 0, 0.08);
   --glass-ambient-c: rgba(85, 255, 255, 0.05);
   --glass-codeblock-sheen: rgba(85, 255, 85, 0.06);
+
+  /* Docs bar surface: aligns sidebar/subnav with the docs ambient background without block textures.
+     文档栏背景：让侧栏 / 二级栏贴合正文环境光风格，不再使用方块贴图。 */
+  --docs-bar-background:
+    radial-gradient(110% 68% at 10% 0%, var(--glass-ambient-a), transparent 58%),
+    radial-gradient(92% 64% at 100% 16%, var(--glass-ambient-c), transparent 64%),
+    linear-gradient(180deg, var(--glass-tint-strong) 0%, var(--glass-tint-medium) 100%);
+  --docs-bar-border: var(--glass-border-hairline);
+  --docs-bar-shadow: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow);
 
   --color-fd-background: var(--background);
   --color-fd-foreground: var(--foreground);

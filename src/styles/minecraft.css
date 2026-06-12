@@ -885,11 +885,11 @@ textarea[rows] {
    fumadocs 导航结构如上，内部 div 是实际可见的 bar。
    我们对 #nd-nav > div 设置背景/滤镜，对 #nd-nav 设置子元素样式。 */
 
-/* ── Unified MC Liquid Glass Bar System / 统一 MC 液态玻璃 Bar 系统 ─────────── */
-/* All bars (nav, subnav, sidebar, toc-popover) share the same Minecraft texture
-   + liquid-glass translucency formula for visual consistency.
-   所有 bar（导航、二级导航、侧边栏、TOC 弹出层）共享同一套 Minecraft 纹理
-   + 液态玻璃透明度公式，保持视觉一致性。 */
+/* ── Top Nav MC Liquid Glass Bar System / 顶部导航 MC 液态玻璃 Bar 系统 ─────────── */
+/* Top nav keeps the Minecraft texture, while docs sidebar/subnav use the
+   ambient docs bar surface from fumadocs-glass.css for visual consistency.
+   顶部导航保留 Minecraft 纹理；文档侧栏 / 二级栏改用 fumadocs-glass.css
+   中的文档环境光栏背景，保持阅读区视觉一致。 */
 
 /* Light mode liquid glass navbar with oak plank texture / 浅色模式液态玻璃导航栏 + 橡木木板纹理 */
 :is([data-theme="light"], .light) #nd-nav > div {

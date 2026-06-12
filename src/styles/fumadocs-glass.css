@@ -71,6 +71,7 @@
 :where(#nd-subnav),
 :where(#nd-sidebar):not([data-collapsed="true"]),
 :where(#nd-sidebar)[data-collapsed="true"],
+:where(#nd-sidebar-mobile),
 :where([data-toc-popover-content]) > div,
 [role="dialog"][data-state="open"]:has(input) {
   transition-duration: var(--theme-transition-duration);
@@ -91,75 +92,36 @@
   transform: translateZ(0);
 }
 
-/* Mobile docs secondary header / 移动端 docs 二级头部 */
-/* Unified MC liquid glass: subtle texture + high translucency.
-   统一 MC 液态玻璃：微妙纹理 + 高透明度。 */
+/* Mobile docs secondary header: use the ambient docs bar surface instead of block textures.
+   移动端 docs 二级头部：使用文档环境光栏背景，替代方块贴图。 */
 :where(#nd-subnav) {
+  background: var(--docs-bar-background);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
-  border-bottom-color: var(--glass-border-hairline);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    var(--glass-shadow);
+  border-bottom-color: var(--docs-bar-border);
+  box-shadow: var(--docs-bar-shadow);
   transform: translateZ(0);
 }
 
-:is([data-theme="light"], .light) :where(#nd-subnav) {
-  background:
-    linear-gradient(180deg, rgba(255, 252, 248, 0.35) 0%, rgba(248, 244, 238, 0.42) 100%),
-    url("/imgs/blocks/planks-oak.png");
-  background-size:
-    100% 100%,
-    32px 32px;
-}
-
-[data-theme="dark"] :where(#nd-subnav),
-.dark :where(#nd-subnav) {
-  background:
-    linear-gradient(180deg, rgba(38, 38, 52, 0.42) 0%, rgba(30, 30, 42, 0.48) 100%),
-    url("/imgs/blocks/stone.png");
-  background-size:
-    100% 100%,
-    32px 32px;
-}
-
-/* Docs left sidebar: expanded state gets full glassification; collapsed state uses glass-edge only to avoid double blur.
-   文档左侧栏：展开态完整玻璃化；折叠态外框只走 glass-edge 修饰，避免双重 blur。 */
-:where(#nd-sidebar):not([data-collapsed="true"]) {
+/* Docs left sidebar/mobile drawer: share the ambient docs bar surface with the secondary header.
+   文档左侧栏 / 移动端抽屉：与二级头部共用文档环境光栏背景。 */
+:where(#nd-sidebar):not([data-collapsed="true"]),
+:where(#nd-sidebar-mobile) {
+  background: var(--docs-bar-background);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
-  border-inline-end-color: var(--glass-border-hairline);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    var(--glass-shadow);
-}
-
-:is([data-theme="light"], .light) :where(#nd-sidebar):not([data-collapsed="true"]) {
-  background:
-    linear-gradient(180deg, rgba(255, 252, 248, 0.32) 0%, rgba(248, 244, 238, 0.38) 100%),
-    url("/imgs/blocks/planks-oak.png");
-  background-size:
-    100% 100%,
-    32px 32px;
-}
-
-[data-theme="dark"] :where(#nd-sidebar):not([data-collapsed="true"]),
-.dark :where(#nd-sidebar):not([data-collapsed="true"]) {
-  background:
-    linear-gradient(180deg, rgba(38, 38, 52, 0.4) 0%, rgba(30, 30, 42, 0.45) 100%),
-    url("/imgs/blocks/stone.png");
-  background-size:
-    100% 100%,
-    32px 32px;
+  border-color: var(--docs-bar-border);
+  border-inline-end-color: var(--docs-bar-border);
+  box-shadow: var(--docs-bar-shadow);
 }
 
 :where(#nd-sidebar)[data-collapsed="true"] {
-  background-color: var(--glass-tint-soft);
-  border-color: var(--glass-border-hairline);
+  background: var(--docs-bar-background);
+  border-color: var(--docs-bar-border);
   box-shadow: inset 0 1px 0 var(--glass-highlight);
 }
 
