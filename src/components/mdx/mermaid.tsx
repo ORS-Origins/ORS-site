@@ -37,6 +37,33 @@ let counter = 0;
 // 平移原点。缩放目标初始居中；用常量保持与重置逻辑一致。
 const ORIGIN = { x: 0, y: 0 };
 
+// Read a safe baseline size directly from Mermaid's SVG string before the
+// DOM measurement pass runs, so portal-only renders never start as 0x0.
+// 在 DOM 测量前先从 Mermaid 生成的 SVG 字符串读取基础尺寸，避免仅
+// portal 渲染时从 0x0 尺寸开始。
+function readSvgBaseline(svgMarkup: string) {
+  if (typeof DOMParser === 'undefined') return null;
+  const doc = new DOMParser().parseFromString(svgMarkup, 'image/svg+xml');
+  const svg = doc.querySelector('svg');
+  if (!svg) return null;
+
+  const viewBox = svg.getAttribute('viewBox')?.trim();
+  if (viewBox) {
+    const parts = viewBox.split(/\s+/).map(Number);
+    if (parts.length === 4 && parts.every(Number.isFinite) && parts[2] > 0 && parts[3] > 0) {
+      return { viewBox, width: parts[2], height: parts[3] };
+    }
+  }
+
+  const width = Number.parseFloat(svg.getAttribute('width') ?? '');
+  const height = Number.parseFloat(svg.getAttribute('height') ?? '');
+  if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
+    return { viewBox: `0 0 ${width} ${height}`, width, height };
+  }
+
+  return null;
+}
+
 export function Mermaid({ chart }: { chart: string }) {
   // `wrapperRef` wraps the diagram; the wrapper is portaled to <body> when
   // maximized so the position: fixed layout escapes ancestor stacking
@@ -187,6 +214,11 @@ export function Mermaid({ chart }: { chart: string }) {
 
       const { svg } = await mermaid.render(id, code);
       if (!mountedRef.current) return;
+      const baseline = readSvgBaseline(svg);
+      if (baseline) {
+        expandedViewBoxRef.current = baseline;
+        setSvgNatural({ width: baseline.width, height: baseline.height });
+      }
       setSvgContent(svg);
     } catch {
       if (!mountedRef.current) return;
@@ -248,9 +280,10 @@ export function Mermaid({ chart }: { chart: string }) {
   // 浏览器绘制之前同步执行，避免先以原始（裁剪过的）尺寸闪一帧。
   useLayoutEffect(() => {
     if (!svgContent) return;
-    const wrapper = inPageWrapperRef.current;
-    if (!wrapper) return;
-    const svg = wrapper.querySelector<SVGSVGElement>('.mermaid-svg-host > svg');
+    const wrappers: (HTMLDivElement | null)[] = [inPageWrapperRef.current, wrapperRef.current];
+    const svg = wrappers
+      .map((wrapper) => wrapper?.querySelector<SVGSVGElement>('.mermaid-svg-host > svg') ?? null)
+      .find((node) => node !== null);
     if (!svg) return;
     const vb = svg.viewBox.baseVal;
     // Safety padding in user units, applied to every side of the union
@@ -816,6 +849,12 @@ export function Mermaid({ chart }: { chart: string }) {
   //     （如 docs-transition 的 framer-motion wrapper），position: fixed
   //     以视口为基准
   //   - state、事件与 SVG 内容两边天然共享 — 不复制逻辑、无同步问题
+  // In-page wrapper: ALWAYS rendered at the diagram's semantic position in
+  // the docs content. When maximized we hide it with `visibility: hidden`
+  // and render a lightweight placeholder to avoid duplicate SVG IDs in the
+  // DOM (mermaid SVGs use internal ids that clash when cloned).
+  // 始终在文档里渲染的 wrapper：放大时用 `visibility: hidden` 隐藏，
+  // 并渲染轻量占位符，避免 DOM 中出现两份相同 SVG 导致内部 ID 冲突。
   const inPageWrapper = (
     <div
       ref={inPageWrapperRef}
@@ -824,7 +863,11 @@ export function Mermaid({ chart }: { chart: string }) {
       data-hidden={isMaximized || undefined}
       aria-hidden={isMaximized || undefined}
     >
-      {canvasAndToolbar}
+      {isMaximized ? (
+        <div className="mermaid-canvas" style={{ minHeight: 120 }} />
+      ) : (
+        canvasAndToolbar
+      )}
     </div>
   );
 
