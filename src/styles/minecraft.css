@@ -1601,3 +1601,218 @@ textarea[rows] {
     inset 0 2px 0 rgba(255, 255, 255, 0.08),
     inset 0 -2px 0 rgba(0, 0, 0, 0.1) !important;
 }
+
+/* Unified liquid glass navigation override: replaces block textures with a transparent,
+   animated glass surface while keeping the Minecraft typography.
+   统一液态玻璃导航覆盖：用透明动态玻璃面替代方块纹理，同时保留 Minecraft 字体。 */
+:is([data-theme="light"], .light) #nd-nav > div,
+[data-theme="dark"] #nd-nav > div,
+.dark #nd-nav > div,
+#nd-subnav {
+  background: var(--nav-glass-background) !important;
+  background-size:
+    160% 160%,
+    100% 100% !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
+  border-bottom: 1px solid var(--nav-glass-border) !important;
+  box-shadow: var(--nav-glass-shadow) !important;
+  animation: mc-nav-glass-flow 16s ease-in-out infinite alternate;
+}
+
+/* Small top-bar sheen: gives the title bar motion without adding heavy full-page layers.
+   顶栏细高光：为标题栏增加灵动感，避免新增重型全屏图层。 */
+:is([data-theme="light"], .light) #nd-nav > div::after,
+[data-theme="dark"] #nd-nav > div::after,
+.dark #nd-nav > div::after,
+#nd-subnav::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
+  opacity: 0.28;
+  transform: translateX(-35%);
+  animation: mc-nav-sheen 8s ease-in-out infinite;
+}
+
+/* Shared glass controls for navbar and mobile subnav buttons.
+   导航栏与移动端二级栏按钮共用的玻璃控件样式。 */
+:is([data-theme="light"], .light) #nd-nav [data-search-full],
+:is([data-theme="light"], .light) #nd-nav [data-theme-toggle],
+:is([data-theme="light"], .light) #nd-nav [aria-label="选择语言"],
+:is([data-theme="light"], .light) #nd-nav [aria-label="切换菜单"],
+:is([data-theme="light"], .light) #nd-nav [aria-label="打开搜索"],
+[data-theme="dark"] #nd-nav [data-search-full],
+[data-theme="dark"] #nd-nav [data-theme-toggle],
+[data-theme="dark"] #nd-nav [aria-label="选择语言"],
+[data-theme="dark"] #nd-nav [aria-label="切换菜单"],
+[data-theme="dark"] #nd-nav [aria-label="打开搜索"],
+.dark #nd-nav [data-search-full],
+.dark #nd-nav [data-theme-toggle],
+.dark #nd-nav [aria-label="选择语言"],
+.dark #nd-nav [aria-label="切换菜单"],
+.dark #nd-nav [aria-label="打开搜索"],
+#nd-subnav button {
+  background-color: var(--nav-control-background) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
+  backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
+  border: 1px solid var(--nav-control-border) !important;
+  border-radius: var(--radius-lg) !important;
+  color: var(--nav-control-color) !important;
+  box-shadow: var(--nav-control-shadow) !important;
+  transform: translateZ(0);
+}
+
+:is([data-theme="light"], .light) #nd-nav [data-search-full]:hover,
+:is([data-theme="light"], .light) #nd-nav [data-theme-toggle]:hover,
+:is([data-theme="light"], .light) #nd-nav [aria-label="选择语言"]:hover,
+:is([data-theme="light"], .light) #nd-nav [aria-label="切换菜单"]:hover,
+:is([data-theme="light"], .light) #nd-nav [aria-label="打开搜索"]:hover,
+[data-theme="dark"] #nd-nav [data-search-full]:hover,
+[data-theme="dark"] #nd-nav [data-theme-toggle]:hover,
+[data-theme="dark"] #nd-nav [aria-label="选择语言"]:hover,
+[data-theme="dark"] #nd-nav [aria-label="切换菜单"]:hover,
+[data-theme="dark"] #nd-nav [aria-label="打开搜索"]:hover,
+.dark #nd-nav [data-search-full]:hover,
+.dark #nd-nav [data-theme-toggle]:hover,
+.dark #nd-nav [aria-label="选择语言"]:hover,
+.dark #nd-nav [aria-label="切换菜单"]:hover,
+.dark #nd-nav [aria-label="打开搜索"]:hover,
+#nd-subnav button:hover {
+  background-color: var(--nav-control-background-hover) !important;
+  border-color: var(--nav-control-border) !important;
+  color: var(--nav-control-color) !important;
+  box-shadow: var(--nav-control-shadow-hover) !important;
+}
+
+/* Navbar keyboard hints and theme icons: keep glass radius instead of the old square block look.
+   导航快捷键与主题图标：保留玻璃圆角，替代旧的方块直角感。 */
+:is([data-theme="light"], .light) #nd-nav [data-search-full] kbd,
+[data-theme="dark"] #nd-nav [data-search-full] kbd,
+.dark #nd-nav [data-search-full] kbd {
+  background-color: var(--nav-kbd-background) !important;
+  border: 1px solid var(--nav-control-border) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--nav-control-color) !important;
+  box-shadow: var(--nav-control-shadow) !important;
+}
+
+#nd-nav [data-theme-toggle] svg {
+  border-radius: var(--radius-md) !important;
+}
+
+/* Language selector popover: align the open panel with the transparent glass navbar/sidebar.
+   语言选择弹窗：打开态面板与透明玻璃导航栏 / 侧栏保持一致。 */
+:is([data-theme="light"], .light) [role="dialog"]:has(> p:first-child):has(> button),
+[data-theme="dark"] [role="dialog"]:has(> p:first-child):has(> button),
+.dark [role="dialog"]:has(> p:first-child):has(> button) {
+  background: var(--nav-glass-background) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
+  backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
+  border: 1px solid var(--nav-glass-border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--nav-glass-shadow) !important;
+  image-rendering: auto !important;
+}
+
+:is([data-theme="light"], .light) [role="dialog"]:has(> p:first-child):has(> button) > p,
+[data-theme="dark"] [role="dialog"]:has(> p:first-child):has(> button) > p,
+.dark [role="dialog"]:has(> p:first-child):has(> button) > p {
+  color: var(--nav-popover-label-color) !important;
+  text-shadow: none !important;
+}
+
+:is([data-theme="light"], .light) [role="dialog"]:has(> p:first-child):has(> button) > button,
+[data-theme="dark"] [role="dialog"]:has(> p:first-child):has(> button) > button,
+.dark [role="dialog"]:has(> p:first-child):has(> button) > button {
+  background-color: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--nav-control-color) !important;
+  box-shadow: none !important;
+}
+
+:is([data-theme="light"], .light) [role="dialog"]:has(> p:first-child):has(> button) > button:hover,
+[data-theme="dark"] [role="dialog"]:has(> p:first-child):has(> button) > button:hover,
+.dark [role="dialog"]:has(> p:first-child):has(> button) > button:hover {
+  background-color: var(--nav-control-background-hover) !important;
+  border-color: var(--nav-control-border) !important;
+  color: var(--nav-control-color) !important;
+  box-shadow: var(--nav-control-shadow-hover) !important;
+}
+
+:is([data-theme="light"], .light)
+  [role="dialog"]:has(> p:first-child):has(> button)
+  > button[class*="bg-fd-primary"],
+[data-theme="dark"]
+  [role="dialog"]:has(> p:first-child):has(> button)
+  > button[class*="bg-fd-primary"],
+.dark [role="dialog"]:has(> p:first-child):has(> button) > button[class*="bg-fd-primary"] {
+  background-color: var(--nav-control-active-background) !important;
+  border-color: var(--nav-control-border) !important;
+  color: var(--nav-control-active-color) !important;
+  box-shadow: var(--nav-control-shadow) !important;
+}
+
+@keyframes mc-nav-glass-flow {
+  0% {
+    background-position:
+      0% 50%,
+      0% 0%;
+  }
+  100% {
+    background-position:
+      100% 50%,
+      0% 0%;
+  }
+}
+
+@keyframes mc-nav-sheen {
+  0%,
+  38% {
+    transform: translateX(-45%);
+    opacity: 0;
+  }
+  58% {
+    opacity: 0.28;
+  }
+  100% {
+    transform: translateX(45%);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is([data-theme="light"], .light) #nd-nav > div,
+  [data-theme="dark"] #nd-nav > div,
+  .dark #nd-nav > div,
+  #nd-subnav,
+  :is([data-theme="light"], .light) #nd-nav > div::after,
+  [data-theme="dark"] #nd-nav > div::after,
+  .dark #nd-nav > div::after,
+  #nd-subnav::after {
+    animation: none !important;
+  }
+}
+
+/* Mobile title bars keep transparency but stop decorative motion to reduce touch-device GPU cost.
+   移动端标题栏保留透明玻璃，但停止装饰性动画以降低触屏设备 GPU 消耗。 */
+@media (max-width: 767.98px), (hover: none) and (pointer: coarse) {
+  :is([data-theme="light"], .light) #nd-nav > div,
+  [data-theme="dark"] #nd-nav > div,
+  .dark #nd-nav > div,
+  #nd-subnav,
+  :is([data-theme="light"], .light) #nd-nav > div::after,
+  [data-theme="dark"] #nd-nav > div::after,
+  .dark #nd-nav > div::after,
+  #nd-subnav::after {
+    animation: none !important;
+  }
+}

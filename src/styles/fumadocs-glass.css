@@ -80,28 +80,28 @@
 /* Top nav: inner div is the fumadocs backdrop-blur container, strengthen it directly.
    顶部导航：内层 div 是 fumadocs 给的 backdrop-blur 容器，直接强化。 */
 :where(#nd-nav) > div {
-  background-color: var(--glass-tint) !important;
+  position: relative;
+  overflow: hidden;
+  background: var(--nav-glass-background) !important;
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
-  border-bottom-color: var(--glass-border-hairline);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    var(--glass-shadow);
+  border-bottom-color: var(--nav-glass-border);
+  box-shadow: var(--nav-glass-shadow);
   transform: translateZ(0);
 }
 
 /* Mobile docs secondary header: use the ambient docs bar surface instead of block textures.
    移动端 docs 二级头部：使用文档环境光栏背景，替代方块贴图。 */
 :where(#nd-subnav) {
-  background: var(--docs-bar-background);
+  background: var(--nav-glass-background);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
-  border-bottom-color: var(--docs-bar-border);
-  box-shadow: var(--docs-bar-shadow);
+  border-bottom-color: var(--nav-glass-border);
+  box-shadow: var(--nav-glass-shadow);
   transform: translateZ(0);
 }
 
@@ -129,13 +129,13 @@
 /* Unified glass styling for sidebar functional buttons and panels (about, search, theme, language, etc.)
    统一覆盖侧边栏内的功能级按钮与面板（关于、搜索、主题、语言等）为液态玻璃 */
 #nd-sidebar .bg-fd-secondary\/50 {
-  background-color: var(--glass-tint) !important;
+  background-color: var(--nav-control-background) !important;
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
-  border-color: var(--glass-border-hairline) !important;
-  box-shadow: inset 0 1px 0 var(--glass-highlight) !important;
+  border-color: var(--nav-control-border) !important;
+  box-shadow: var(--nav-control-shadow) !important;
   transition: all var(--theme-transition-duration) ease !important;
 }
 
@@ -143,14 +143,12 @@
    悬停状态：背景变得进一步透明（更符合玻璃光影反馈），并保持玻璃高亮阴影不丢失 */
 #nd-sidebar .bg-fd-secondary\/50:hover,
 #nd-sidebar .bg-fd-secondary\/50:has(button:hover) {
-  background-color: var(--glass-tint-soft) !important;
+  background-color: var(--nav-control-background-hover) !important;
   -webkit-backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
   backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    var(--glass-shadow-hover) !important;
+  box-shadow: var(--nav-control-shadow-hover) !important;
 }
 
 /* Dark mode only: enhance hover glow for better visibility on dark backgrounds.
@@ -159,11 +157,36 @@
 .dark #nd-sidebar .bg-fd-secondary\/50:hover,
 [data-theme="dark"] #nd-sidebar .bg-fd-secondary\/50:has(button:hover),
 .dark #nd-sidebar .bg-fd-secondary\/50:has(button:hover) {
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    var(--glass-shadow-hover) !important;
-  border-color: var(--glass-border-hairline) !important;
+  box-shadow: var(--nav-control-shadow-hover) !important;
+  border-color: var(--nav-control-border) !important;
   transform: translateZ(0);
+}
+
+/* Sidebar active links: match the homepage glass controls without losing the Fumadocs active state.
+   侧栏当前项：与主页玻璃控件统一，同时保留 Fumadocs 的当前页状态。 */
+#nd-sidebar a[data-active="true"] {
+  background-color: var(--nav-control-active-background) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
+  backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
+  border: 1px solid var(--nav-control-border);
+  box-shadow: var(--nav-control-shadow);
+  color: var(--nav-control-active-color) !important;
+}
+
+#nd-sidebar a[data-active="true"]:hover {
+  background-color: var(--nav-control-background-hover) !important;
+  box-shadow: var(--nav-control-shadow-hover);
+}
+
+/* Sidebar theme switcher: convert the bottom segmented control to the same glass chip language.
+   侧栏主题切换：将底部切换控件统一为同一套玻璃按钮语言。 */
+#nd-sidebar [data-theme-toggle] {
+  background-color: var(--nav-control-background) !important;
+  border-color: var(--nav-control-border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--nav-control-shadow) !important;
 }
 
 /* Fix physical sizing for legacy components like language switcher, force large border-radius.
