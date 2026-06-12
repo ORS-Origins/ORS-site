@@ -19,6 +19,8 @@
   :where([data-toc-popover-content]) > div,
   :where([data-toc-popover-trigger]),
   :where([data-toc-popover]) > header,
+  /* Language selector glass panel fallback / 语言选择玻璃面板兜底 */
+  [role="dialog"]:has(> p:first-child):has(> button),
   [role="dialog"][data-state="open"]:has(input) {
     background: var(--background) !important;
     -webkit-backdrop-filter: none !important;
@@ -48,6 +50,8 @@
   :where([data-toc-popover-content]) > div,
   :where([data-toc-popover-trigger]),
   :where([data-toc-popover]) > header,
+  /* Language selector glass panel fallback / 语言选择玻璃面板兜底 */
+  [role="dialog"]:has(> p:first-child):has(> button),
   [role="dialog"][data-state="open"]:has(input) {
     background: var(--background);
   }

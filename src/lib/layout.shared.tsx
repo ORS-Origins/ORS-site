@@ -52,6 +52,9 @@ export function baseOptions(locale: Locale = i18n.defaultLanguage): BaseLayoutPr
     nav: {
       title: <NavLogo />,
       url: `/${locale}`,
+      // Keep the Fumadocs navbar transparent so the custom liquid glass surface can reveal page content.
+      // 保持 Fumadocs 导航透明，让自定义液态玻璃表面可以透出页面内容。
+      transparentMode: 'always',
     },
     links: [],
   };

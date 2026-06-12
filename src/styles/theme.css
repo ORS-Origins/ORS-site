@@ -88,6 +88,28 @@ blockquote {
   --docs-bar-border: var(--glass-border-hairline);
   --docs-bar-shadow: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow);
 
+  /* Navigation and sidebar control glass tokens: tune transparency from one place.
+     导航与侧栏控件玻璃变量：集中调整透明度与质感。 */
+  --nav-glass-background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.2) 48%),
+    linear-gradient(90deg, rgba(85, 255, 85, 0.08), rgba(85, 255, 255, 0.1));
+  --nav-glass-border: rgba(15, 23, 42, 0.08);
+  --nav-glass-shadow: inset 0 1px 0 var(--glass-highlight), 0 12px 36px -24px rgba(15, 23, 42, 0.2);
+  --nav-control-background: rgba(255, 255, 255, 0.34);
+  --nav-control-background-hover: rgba(255, 255, 255, 0.52);
+  --nav-control-active-background: color-mix(
+    in oklab,
+    var(--fd-primary) 24%,
+    var(--glass-tint-strong)
+  );
+  --nav-control-active-color: color-mix(in oklab, var(--fd-primary) 46%, var(--foreground));
+  --nav-control-border: rgba(15, 23, 42, 0.09);
+  --nav-control-color: var(--foreground);
+  --nav-control-shadow: inset 0 1px 0 var(--glass-highlight);
+  --nav-control-shadow-hover: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow-hover);
+  --nav-kbd-background: rgba(255, 255, 255, 0.48);
+  --nav-popover-label-color: rgba(15, 23, 42, 0.62);
+
   --glass-blur: 24px;
   --glass-blur-strong: 32px;
   --glass-blur-soft: 14px;
@@ -151,6 +173,24 @@ blockquote {
     linear-gradient(180deg, var(--glass-tint-strong) 0%, var(--glass-tint-medium) 100%);
   --docs-bar-border: var(--glass-border-hairline);
   --docs-bar-shadow: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow);
+
+  /* Navigation and sidebar control glass tokens: tune transparency from one place.
+     导航与侧栏控件玻璃变量：集中调整透明度与质感。 */
+  --nav-glass-background:
+    linear-gradient(115deg, rgba(15, 23, 42, 0.28), rgba(15, 23, 42, 0.1) 52%),
+    linear-gradient(90deg, rgba(85, 255, 85, 0.08), rgba(85, 255, 255, 0.07));
+  --nav-glass-border: rgba(255, 255, 255, 0.08);
+  --nav-glass-shadow: inset 0 1px 0 var(--glass-highlight), 0 14px 38px -24px rgba(0, 0, 0, 0.55);
+  --nav-control-background: rgba(15, 23, 42, 0.24);
+  --nav-control-background-hover: rgba(30, 41, 59, 0.38);
+  --nav-control-active-background: color-mix(in oklab, var(--fd-primary) 18%, transparent);
+  --nav-control-active-color: var(--fd-primary);
+  --nav-control-border: rgba(255, 255, 255, 0.08);
+  --nav-control-color: var(--foreground);
+  --nav-control-shadow: inset 0 1px 0 var(--glass-highlight);
+  --nav-control-shadow-hover: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow-hover);
+  --nav-kbd-background: rgba(15, 23, 42, 0.35);
+  --nav-popover-label-color: rgba(232, 232, 232, 0.68);
 
   --color-fd-background: var(--background);
   --color-fd-foreground: var(--foreground);

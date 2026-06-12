@@ -7,7 +7,7 @@
 
    - Photo 1: colored luminous blocks (emerald, sea-lantern, amethyst, diamond) with soft halos
    - Photo 2: warm-cool color duel (kept as cyan/blue/teal only)
-   - Bottom-layer photo carousel from /imgs/photos (Ken Burns slow zoom).
+   - Bottom-layer photo carousel from /imgs/photos (opacity-only cross fade).
 */
 
 /* ── Photo Carousel Layer / 照片轮播底层 ─────────────────────────── */
@@ -34,12 +34,10 @@
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0;
-  /* Performance: only animate opacity; transform handled by fewer layers / 性能：仅动画 opacity，transform 由更少层处理 */
+  /* Performance: cross-fade photos without full-screen transform repaint.
+     性能：照片仅做淡入淡出，避免全屏 transform 重绘。 */
   will-change: opacity;
-  /* Ken Burns slow zoom / 缓慢推拉效果 */
-  animation:
-    home-photo-fade 24s linear infinite,
-    home-photo-kenburns 24s ease-in-out infinite;
+  animation: home-photo-fade 30s linear infinite;
 }
 
 /* Dark overlay on photos so light effects remain visible.
@@ -54,31 +52,31 @@
   z-index: 2;
 }
 
-/* The 6 photos from /imgs/photos, each with a 4s offset to start sequentially.
-   6 张照片来自 /imgs/photos，每张错开 4 秒开始顺序播放。 */
+/* The 6 photos from /imgs/photos, each with a 5s offset to start sequentially.
+   6 张照片来自 /imgs/photos，每张错开 5 秒开始顺序播放。 */
 .home-photo-carousel__slide--1 {
   background-image: url("/imgs/photos/2021-7-8.webp");
-  animation-delay: 0s, 0s;
+  animation-delay: 0s;
 }
 .home-photo-carousel__slide--2 {
   background-image: url("/imgs/photos/2021-12-1.webp");
-  animation-delay: 4s, 4s;
+  animation-delay: 5s;
 }
 .home-photo-carousel__slide--3 {
   background-image: url("/imgs/photos/2022-4.webp");
-  animation-delay: 8s, 8s;
+  animation-delay: 10s;
 }
 .home-photo-carousel__slide--4 {
   background-image: url("/imgs/photos/2022-7-3.webp");
-  animation-delay: 12s, 12s;
+  animation-delay: 15s;
 }
 .home-photo-carousel__slide--5 {
   background-image: url("/imgs/photos/2022-12-24.webp");
-  animation-delay: 16s, 16s;
+  animation-delay: 20s;
 }
 .home-photo-carousel__slide--6 {
   background-image: url("/imgs/photos/2023-1-21.webp");
-  animation-delay: 20s, 20s;
+  animation-delay: 25s;
 }
 
 @keyframes home-photo-fade {
@@ -100,18 +98,6 @@
   }
 }
 
-@keyframes home-photo-kenburns {
-  0% {
-    transform: scale(1) translate(0, 0);
-  }
-  50% {
-    transform: scale(1.08) translate(-1%, -1.5%);
-  }
-  100% {
-    transform: scale(1) translate(0, 0);
-  }
-}
-
 /* ── Brand-tinted Base Layer / 品牌色底层 ─────────────────────────── */
 /* Sky-blue (38bdf8) + leaf-green (4ade80) + ocean-blue (0ea5e9) — same as Neoverse-Doc.
    天空蓝 + 嫩绿 + 海蓝——与 Neoverse-Doc 一致。
@@ -129,7 +115,8 @@
     180% 180%,
     160% 160%,
     100% 100%;
-  animation: home-gradient-drift 14s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  /* Performance: keep the full-screen base gradient static; smaller layers carry motion.
+     性能：全屏基础渐变保持静态，由更小的图层承担动态效果。 */
   z-index: 3;
 }
 
@@ -518,32 +505,6 @@
 }
 
 /* ── Keyframes ─────────────────────────────────────────────────────── */
-@keyframes home-gradient-drift {
-  0% {
-    background-position:
-      0% 50%,
-      100% 0%,
-      50% 100%,
-      0% 0%;
-  }
-
-  50% {
-    background-position:
-      100% 40%,
-      0% 60%,
-      60% 0%,
-      0% 0%;
-  }
-
-  100% {
-    background-position:
-      0% 50%,
-      100% 0%,
-      50% 100%,
-      0% 0%;
-  }
-}
-
 @keyframes home-orb-float {
   0% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -665,7 +626,23 @@
 /* ── Mobile Performance / 移动端性能优化 ─────────────────────────── */
 /* Hide heavy animated layers on narrow screens to preserve GPU & battery.
    在窄屏下隐藏重型动画层，保护 GPU 与电量。 */
-@media (max-width: 767.98px) {
+@media (max-width: 767.98px), (hover: none) and (pointer: coarse) {
+  .home-photo-carousel {
+    contain: paint;
+  }
+
+  .home-photo-carousel__slide {
+    display: none;
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .home-photo-carousel__slide--1 {
+    display: block;
+    opacity: 1;
+  }
+
   .mc-block-halo,
   .mc-float-block,
   .mc-light-beam,
@@ -675,23 +652,24 @@
   }
 
   .home-gradient-bg__orb {
-    opacity: 0.3;
-    filter: blur(80px);
-    animation-duration: 12s, 10s;
-  }
-
-  .home-photo-carousel__slide {
-    animation-duration: 16s, 16s;
+    display: none;
   }
 
   .home-gradient-bg {
-    animation-duration: 20s;
+    background-size:
+      120% 120%,
+      120% 120%,
+      110% 110%,
+      100% 100%;
+  }
+
+  .home-enter {
+    will-change: auto;
   }
 }
 
 /* ── Reduced Motion / 减少动画偏好 ─────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .home-gradient-bg,
   .home-gradient-bg__orb,
   .mc-float-block,
   .mc-block-halo,
