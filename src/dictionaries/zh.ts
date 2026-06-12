@@ -43,4 +43,7 @@ export const zh = {
   ctxMenuCopyLink: '复制链接',
   ctxMenuCopyText: '复制选中内容',
   ctxMenuAbout: '关于 ORS',
+  // MC status copy IP button / MC 状态 IP 复制按钮
+  copiedLabel: '已复制',
+  clickToCopyLabel: '点击复制',
 } as const;

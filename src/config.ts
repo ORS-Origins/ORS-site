@@ -20,7 +20,7 @@ export const brandConfig = {
   /** Large brand title on homepage. / 首页大号品牌标题。 */
   homeTitle: 'ORS',
   /** External about URL for context menu. / 右键菜单"关于"跳转的外部链接。 */
-  aboutUrl: 'https://github.com/EmptyDreams/ORS',
+  aboutUrl: 'https://github.com/ORS-Origins/ORS-site',
   /** Splash image directory path prefix. / 闪烁标语图片目录路径前缀。 */
   splashPathPrefix: '/imgs/splash',
 } as const;

@@ -44,4 +44,7 @@ export const en = {
   ctxMenuCopyLink: 'Copy Link',
   ctxMenuCopyText: 'Copy Selection',
   ctxMenuAbout: 'About ORS',
+  // MC status copy IP button / MC 状态 IP 复制按钮
+  copiedLabel: 'Copied',
+  clickToCopyLabel: 'Click to copy',
 } as const;
