@@ -31,32 +31,6 @@ export default async function Page(props: PageProps<'/[lang]/docs/[...slug]'>) {
       full={page.data.full}
       tableOfContent={{ style: uiConfig.tocStyle }}
     >
-      {/* Subtle Minecraft-themed ambient background effects.
-          微妙的 Minecraft 风格环境背景光效。 */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden -z-10"
-      >
-        <div className="mc-doc-halo mc-doc-halo--emerald" />
-        <div className="mc-doc-halo mc-doc-halo--sky" />
-        <div className="mc-doc-halo mc-doc-halo--amethyst" />
-        <div className="mc-doc-float-block mc-doc-float-block--diamond" />
-        <div className="mc-doc-float-block mc-doc-float-block--emerald" />
-        <div className="mc-doc-float-block mc-doc-float-block--lapis" />
-        <div className="mc-doc-float-block mc-doc-float-block--glowstone" />
-        <div className="mc-doc-float-block mc-doc-float-block--prismarine" />
-        <div className="mc-doc-float-block mc-doc-float-block--redstone" />
-        <div className="mc-doc-float-block mc-doc-float-block--iron" />
-        <div className="mc-doc-pixel-dust" />
-        <div className="mc-doc-pixel-dust" />
-        <div className="mc-doc-pixel-dust" />
-        <div className="mc-doc-pixel-dust" />
-        <div className="mc-doc-pixel-dust" />
-        <div className="mc-doc-pixel-dust" />
-        <div className="mc-doc-pixel-dust" />
-        <div className="mc-doc-pixel-dust" />
-      </div>
-
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       {page.data.author && <DocsAuthor author={page.data.author} label={dict.primaryAuthorLabel} />}

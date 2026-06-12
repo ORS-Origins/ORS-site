@@ -21,7 +21,7 @@
   z-index: 0;
   background-color: #0a0d14;
   /* First photo loads immediately without fade-in / 首张照片直接加载，无渐入 */
-  background-image: url("/imgs/photos/2021-7-8.png");
+  background-image: url("/imgs/photos/2021-7-8.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -34,7 +34,8 @@
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0;
-  will-change: opacity, transform;
+  /* Performance: only animate opacity; transform handled by fewer layers / 性能：仅动画 opacity，transform 由更少层处理 */
+  will-change: opacity;
   /* Ken Burns slow zoom / 缓慢推拉效果 */
   animation:
     home-photo-fade 24s linear infinite,
@@ -56,27 +57,27 @@
 /* The 6 photos from /imgs/photos, each with a 4s offset to start sequentially.
    6 张照片来自 /imgs/photos，每张错开 4 秒开始顺序播放。 */
 .home-photo-carousel__slide--1 {
-  background-image: url("/imgs/photos/2021-7-8.png");
+  background-image: url("/imgs/photos/2021-7-8.webp");
   animation-delay: 0s, 0s;
 }
 .home-photo-carousel__slide--2 {
-  background-image: url("/imgs/photos/2021-12-1.png");
+  background-image: url("/imgs/photos/2021-12-1.webp");
   animation-delay: 4s, 4s;
 }
 .home-photo-carousel__slide--3 {
-  background-image: url("/imgs/photos/2022-4.png");
+  background-image: url("/imgs/photos/2022-4.webp");
   animation-delay: 8s, 8s;
 }
 .home-photo-carousel__slide--4 {
-  background-image: url("/imgs/photos/2022-7-3.png");
+  background-image: url("/imgs/photos/2022-7-3.webp");
   animation-delay: 12s, 12s;
 }
 .home-photo-carousel__slide--5 {
-  background-image: url("/imgs/photos/2022-12-24.jpg");
+  background-image: url("/imgs/photos/2022-12-24.webp");
   animation-delay: 16s, 16s;
 }
 .home-photo-carousel__slide--6 {
-  background-image: url("/imgs/photos/2023-1-21.png");
+  background-image: url("/imgs/photos/2023-1-21.webp");
   animation-delay: 20s, 20s;
 }
 
@@ -140,7 +141,9 @@
   opacity: 0.55;
   mix-blend-mode: screen;
   transform: translate3d(0, 0, 0);
-  will-change: transform, opacity;
+  /* Performance: use contain to isolate paint / 性能：使用 contain 隔离绘制 */
+  contain: layout style paint;
+  will-change: transform;
   animation:
     home-orb-float 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate,
     home-orb-pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
@@ -183,7 +186,9 @@
   pointer-events: none;
   image-rendering: pixelated;
   opacity: 0.85;
-  will-change: transform, filter, opacity;
+  /* Performance: isolate paint and reduce will-change / 性能：隔离绘制并减少 will-change */
+  contain: layout style paint;
+  will-change: transform;
   animation: mc-float-block-drift linear infinite;
   /* 强化方块自身亮度 / Enhanced self-illumination */
   filter: brightness(1.4) drop-shadow(0 0 12px currentColor) drop-shadow(0 0 24px currentColor)
@@ -276,7 +281,9 @@
   filter: blur(80px) saturate(180%);
   mix-blend-mode: screen;
   opacity: 0.65;
-  will-change: transform, opacity;
+  /* Performance: isolate paint / 性能：隔离绘制 */
+  contain: layout style paint;
+  will-change: transform;
   animation:
     home-orb-float 10s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate,
     home-orb-pulse 7s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
@@ -652,6 +659,33 @@
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ── Mobile Performance / 移动端性能优化 ─────────────────────────── */
+/* Hide heavy animated layers on narrow screens to preserve GPU & battery.
+   在窄屏下隐藏重型动画层，保护 GPU 与电量。 */
+@media (max-width: 767.98px) {
+  .mc-block-halo,
+  .mc-float-block,
+  .mc-light-beam,
+  .mc-particle,
+  .mc-pixel-dust {
+    display: none !important;
+  }
+
+  .home-gradient-bg__orb {
+    opacity: 0.3;
+    filter: blur(80px);
+    animation-duration: 12s, 10s;
+  }
+
+  .home-photo-carousel__slide {
+    animation-duration: 16s, 16s;
+  }
+
+  .home-gradient-bg {
+    animation-duration: 20s;
   }
 }
 

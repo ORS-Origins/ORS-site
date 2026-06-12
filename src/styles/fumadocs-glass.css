@@ -92,8 +92,9 @@
 }
 
 /* Mobile docs secondary header / 移动端 docs 二级头部 */
+/* Unified MC liquid glass: subtle texture + high translucency.
+   统一 MC 液态玻璃：微妙纹理 + 高透明度。 */
 :where(#nd-subnav) {
-  background-color: var(--glass-tint);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
@@ -105,10 +106,28 @@
   transform: translateZ(0);
 }
 
+:is([data-theme="light"], .light) :where(#nd-subnav) {
+  background:
+    linear-gradient(180deg, rgba(255, 252, 248, 0.35) 0%, rgba(248, 244, 238, 0.42) 100%),
+    url("/imgs/blocks/planks-oak.png");
+  background-size:
+    100% 100%,
+    32px 32px;
+}
+
+[data-theme="dark"] :where(#nd-subnav),
+.dark :where(#nd-subnav) {
+  background:
+    linear-gradient(180deg, rgba(38, 38, 52, 0.42) 0%, rgba(30, 30, 42, 0.48) 100%),
+    url("/imgs/blocks/stone.png");
+  background-size:
+    100% 100%,
+    32px 32px;
+}
+
 /* Docs left sidebar: expanded state gets full glassification; collapsed state uses glass-edge only to avoid double blur.
    文档左侧栏：展开态完整玻璃化；折叠态外框只走 glass-edge 修饰，避免双重 blur。 */
 :where(#nd-sidebar):not([data-collapsed="true"]) {
-  background-color: var(--glass-tint);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
@@ -118,6 +137,26 @@
     inset 0 1px 0 var(--glass-highlight),
     var(--glass-shadow);
 }
+
+:is([data-theme="light"], .light) :where(#nd-sidebar):not([data-collapsed="true"]) {
+  background:
+    linear-gradient(180deg, rgba(255, 252, 248, 0.32) 0%, rgba(248, 244, 238, 0.38) 100%),
+    url("/imgs/blocks/planks-oak.png");
+  background-size:
+    100% 100%,
+    32px 32px;
+}
+
+[data-theme="dark"] :where(#nd-sidebar):not([data-collapsed="true"]),
+.dark :where(#nd-sidebar):not([data-collapsed="true"]) {
+  background:
+    linear-gradient(180deg, rgba(38, 38, 52, 0.4) 0%, rgba(30, 30, 42, 0.45) 100%),
+    url("/imgs/blocks/stone.png");
+  background-size:
+    100% 100%,
+    32px 32px;
+}
+
 :where(#nd-sidebar)[data-collapsed="true"] {
   background-color: var(--glass-tint-soft);
   border-color: var(--glass-border-hairline);

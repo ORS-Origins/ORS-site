@@ -86,15 +86,6 @@ body {
   isolation: isolate;
 }
 
-/* Force GPU compositing on the root element to stabilise Chromium's
-   hit-test coordinate system at non-integer DPI scaling (e.g. 150%).
-   This is a workaround for https://crbug.com/1281226.
-   强制根元素进入 GPU 合成层，以稳定 Chromium 在非整数 DPI 缩放
-   （如 150%）下的 hit-test 坐标系统。这是 crbug.com/1281226 的变通方案。 */
-html {
-  transform: translateZ(0);
-}
-
 /* Global ambient light: provides refraction color sources for glass surfaces.
    全局环境光：给玻璃表面提供折射色源。 */
 body::before {

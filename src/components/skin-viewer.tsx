@@ -468,7 +468,7 @@ export function SkinViewerComponent({
   className = '',
   skinType = 'steve',
   enableMouseTrack = true,
-  animation = 'stand',
+  animation = 'walk',
 }: SkinViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<SkinViewer | null>(null);
@@ -485,8 +485,8 @@ export function SkinViewerComponent({
     }
 
     // Apply animation class / 应用动画类
-    if (animation !== 'none') {
-      const animClass = `d-skin-action-${animation}`;
+    const animClass = animation !== 'none' ? `d-skin-action-${animation}` : null;
+    if (animClass) {
       container.classList.add(animClass);
     }
 
@@ -506,6 +506,10 @@ export function SkinViewerComponent({
     return () => {
       if (mouseHandler) {
         document.removeEventListener('mousemove', mouseHandler);
+      }
+      // Remove animation class on cleanup / 清理时移除动画类
+      if (animClass) {
+        container.classList.remove(animClass);
       }
       container.innerHTML = '';
       viewerRef.current = null;

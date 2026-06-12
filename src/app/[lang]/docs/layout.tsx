@@ -21,20 +21,47 @@ export default async function Layout({ params, children }: LayoutProps<'/[lang]/
   return (
     <>
       <MaskReveal />
-      <DocsLayout
-        tree={source.pageTree[locale]}
-        {...baseOptions(locale)}
-        slots={{
-          sidebar: {
-            provider: SidebarProvider,
-            root: Sidebar,
-            trigger: SidebarTrigger,
-            useSidebar,
-          },
-        }}
-      >
-        {children}
-      </DocsLayout>
+      {/* Unified docs background container / 统一的文档背景容器 */}
+      <div className="mc-doc-shell">
+        {/* Subtle Minecraft-themed ambient background effects.
+            微妙的 Minecraft 风格环境背景光效。 */}
+        <div aria-hidden="true" className="mc-doc-background">
+          <div className="mc-doc-halo mc-doc-halo--emerald" />
+          <div className="mc-doc-halo mc-doc-halo--sky" />
+          <div className="mc-doc-halo mc-doc-halo--amethyst" />
+          <div className="mc-doc-float-block mc-doc-float-block--diamond" />
+          <div className="mc-doc-float-block mc-doc-float-block--emerald" />
+          <div className="mc-doc-float-block mc-doc-float-block--lapis" />
+          <div className="mc-doc-float-block mc-doc-float-block--glowstone" />
+          <div className="mc-doc-float-block mc-doc-float-block--prismarine" />
+          <div className="mc-doc-float-block mc-doc-float-block--redstone" />
+          <div className="mc-doc-float-block mc-doc-float-block--iron" />
+          <div className="mc-doc-pixel-dust" />
+          <div className="mc-doc-pixel-dust" />
+          <div className="mc-doc-pixel-dust" />
+          <div className="mc-doc-pixel-dust" />
+          <div className="mc-doc-pixel-dust" />
+          <div className="mc-doc-pixel-dust" />
+          <div className="mc-doc-pixel-dust" />
+          <div className="mc-doc-pixel-dust" />
+        </div>
+        <div className="mc-doc-content">
+          <DocsLayout
+            tree={source.pageTree[locale]}
+            {...baseOptions(locale)}
+            slots={{
+              sidebar: {
+                provider: SidebarProvider,
+                root: Sidebar,
+                trigger: SidebarTrigger,
+                useSidebar,
+              },
+            }}
+          >
+            {children}
+          </DocsLayout>
+        </div>
+      </div>
       <SkinViewerComponent />
     </>
   );

@@ -127,28 +127,26 @@ export function McServerStatus({ locale }: { locale?: string }) {
 
       {/* Skeleton layer / 骨架屏层 */}
       <div
-        className={`flex flex-col gap-1 transition-opacity duration-500 ${loading ? 'opacity-100' : 'opacity-0 pointer-events-none absolute inset-0'}`}
+        className={`flex flex-col gap-2 transition-opacity duration-300 ${loading ? 'opacity-100' : 'opacity-0 pointer-events-none absolute inset-0'}`}
         aria-hidden={!loading}
       >
-        <div className="flex items-center gap-2 text-sm">
-          <Users size={14} className="text-fd-muted-foreground" />
-          <span className="h-4 w-24 rounded bg-fd-muted-foreground/20 animate-pulse" />
+        <div className="flex items-center gap-2">
+          <Users size={14} className="text-fd-muted-foreground/40" />
+          <span className="h-4 w-24 rounded-md bg-fd-muted-foreground/15 animate-pulse" />
         </div>
-        <div className="flex items-center gap-2 text-sm">
-          <Box size={14} className="text-fd-muted-foreground" />
-          <span className="h-4 w-16 rounded bg-fd-muted-foreground/20 animate-pulse" />
+        <div className="flex items-center gap-2">
+          <Box size={14} className="text-fd-muted-foreground/40" />
+          <span className="h-4 w-16 rounded-md bg-fd-muted-foreground/15 animate-pulse" />
         </div>
-        <div className="mc-status__player-section">
-          <div className="mc-status__player-list">
-            <span className="mc-status__player">
-              <span className="mc-status__player-avatar rounded bg-fd-muted-foreground/20 animate-pulse" />
-              <span className="h-3 w-16 rounded bg-fd-muted-foreground/20 animate-pulse" />
-            </span>
-            <span className="mc-status__player">
-              <span className="mc-status__player-avatar rounded bg-fd-muted-foreground/20 animate-pulse" />
-              <span className="h-3 w-12 rounded bg-fd-muted-foreground/20 animate-pulse" />
-            </span>
-          </div>
+        <div className="flex flex-wrap gap-1.5 pt-1">
+          <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-fd-muted-foreground/10 animate-pulse">
+            <span className="w-4 h-4 rounded-sm bg-fd-muted-foreground/15" />
+            <span className="h-3 w-14 rounded-sm bg-fd-muted-foreground/15" />
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-fd-muted-foreground/10 animate-pulse">
+            <span className="w-4 h-4 rounded-sm bg-fd-muted-foreground/15" />
+            <span className="h-3 w-10 rounded-sm bg-fd-muted-foreground/15" />
+          </span>
         </div>
       </div>
 

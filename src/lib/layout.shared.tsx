@@ -2,7 +2,7 @@
 // Fumadocs UI 翻译 + 语言感知的基础布局选项。
 import { i18nProvider, uiTranslations } from 'fumadocs-ui/i18n';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { siteConfig } from '@/config';
+import { NavLogo } from '@/components/nav-logo';
 import { i18n, type Locale } from '@/lib/i18n';
 
 export const i18nUI = i18n
@@ -50,15 +50,7 @@ export { i18nProvider };
 export function baseOptions(locale: Locale = i18n.defaultLanguage): BaseLayoutProps {
   return {
     nav: {
-      title: (
-        <span className="flex items-center gap-2">
-          {/* biome-ignore lint/performance/noImgElement: static site logo */}
-          <img src={siteConfig.logoPath} alt={siteConfig.appName} className="h-6 w-auto" />
-          <span className="font-minecraft-ae font-bold text-xl tracking-wider">
-            {siteConfig.appName}
-          </span>
-        </span>
-      ),
+      title: <NavLogo />,
       url: `/${locale}`,
     },
     links: [],
