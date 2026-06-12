@@ -31,17 +31,27 @@ function SidebarStateSyncer() {
     if (initialized.current) return;
     initialized.current = true;
 
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === 'true') {
-      setCollapsed(true);
-    } else if (stored === 'false') {
-      setCollapsed(false);
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored === 'true') {
+        setCollapsed(true);
+      } else if (stored === 'false') {
+        setCollapsed(false);
+      }
+    } catch {
+      // localStorage may be disabled (private browsing, quota exceeded, etc.)
+      // localStorage 可能被禁用（隐私浏览模式、配额超限等）。
     }
   }, [setCollapsed]);
 
   useLayoutEffect(() => {
     if (!initialized.current) return;
-    localStorage.setItem(STORAGE_KEY, String(collapsed));
+    try {
+      localStorage.setItem(STORAGE_KEY, String(collapsed));
+    } catch {
+      // Silently ignore write failures — state is already in React.
+      // 静默忽略写入失败 — 状态已在 React 中维护。
+    }
   }, [collapsed]);
 
   return null;

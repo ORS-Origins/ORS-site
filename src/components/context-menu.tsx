@@ -50,7 +50,10 @@ export function ContextMenu({ locale }: ContextMenuProps) {
       label: dict.ctxMenuCopyLink,
       icon: <Link2 className="w-4 h-4" />,
       action: () => {
-        navigator.clipboard.writeText(window.location.href);
+        navigator.clipboard.writeText(window.location.href).catch(() => {
+          // Clipboard API may fail when page is not focused or permission denied.
+          // 页面未聚焦或权限被拒绝时 clipboard API 可能失败。
+        });
       },
     },
     {
@@ -148,7 +151,10 @@ export function ContextMenu({ locale }: ContextMenuProps) {
               <button
                 type="button"
                 onClick={() => {
-                  navigator.clipboard.writeText(selectedText);
+                  navigator.clipboard.writeText(selectedText).catch(() => {
+                    // Clipboard API may fail when page is not focused or permission denied.
+                    // 页面未聚焦或权限被拒绝时 clipboard API 可能失败。
+                  });
                   setVisible(false);
                 }}
                 className="w-full px-3 py-2 flex items-center gap-3 text-white/90 hover:bg-[#4a90d9]/30 hover:text-white transition-colors duration-75 cursor-pointer"

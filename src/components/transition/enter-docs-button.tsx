@@ -1,17 +1,7 @@
-// CTA button that triggers a mask-reveal page transition from the homepage
-// to the docs area. On click, it snapshots the current <main> DOM into
-// sessionStorage so MaskReveal can animate the clip-path reveal.
-// Uses Link's native navigation instead of router.push to avoid RSC fetch
-// being aborted by React state-driven re-renders.
-// 触发遮罩揭示页面过渡的 CTA 按钮，从首页跳转至文档区。
-// 点击时将当前 <main> DOM 快照存入 sessionStorage，供 MaskReveal 执行裁剪揭示动画。
-// 使用 Link 原生导航而非 router.push，避免 React 状态更新导致的重渲染中止 RSC 请求。
-
 'use client';
 
 import Link from 'next/link';
 import { type MouseEvent, type ReactNode, useRef } from 'react';
-import { storageKeys } from '@/config';
 
 export default function EnterDocsButton({
   href,
@@ -66,7 +56,7 @@ export default function EnterDocsButton({
         ts: Date.now(),
         isTransitioning: true,
       };
-      sessionStorage.setItem(storageKeys.transitionData, JSON.stringify(data));
+      sessionStorage.setItem('nd-docs-transition', JSON.stringify(data));
     }
 
     // Do NOT call e.preventDefault() or router.push() here.

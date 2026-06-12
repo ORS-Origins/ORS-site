@@ -84,7 +84,10 @@ function CopyButton({ containerRef }: { containerRef: React.RefObject<HTMLDivEle
     clone.querySelectorAll('.nd-copy-ignore').forEach((node) => {
       node.replaceWith('\n');
     });
-    navigator.clipboard.writeText(clone.textContent ?? '');
+    navigator.clipboard.writeText(clone.textContent ?? '').catch(() => {
+      // Clipboard API may fail when page is not focused or permission denied.
+      // 页面未聚焦或权限被拒绝时 clipboard API 可能失败。
+    });
   });
 
   return (

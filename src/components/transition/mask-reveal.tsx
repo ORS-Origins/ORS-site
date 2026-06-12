@@ -1,60 +1,43 @@
-// Mask-reveal page transition: reads a DOM snapshot and click coordinates
-// from sessionStorage (written by EnterDocsButton), then animates a
-// radial-gradient clip-path from the click point outward — the inner circle
-// reveals the target docs page while the outer area shows the snapshot overlay.
-// 遮罩揭示页面过渡：从 sessionStorage 读取 DOM 快照与点击坐标（由 EnterDocsButton 写入），
-// 然后从点击位置向外扩展 radial-gradient 裁剪动画——内圈揭示目标文档页，外圈展示快照遮罩。
+// Mask-reveal page transition: reads a DOM snapshot and click coordinates from
+// sessionStorage, then animates a radial-gradient clip-path from the click point
+// outward — the inner circle reveals the target docs page while the outer area
+// shows the snapshot overlay.
+// 遮罩揭示页面过渡：从 sessionStorage 读取 DOM 快照与点击坐标，然后从点击
+// 位置向外扩展 radial-gradient 裁剪动画——内圈揭示目标文档页，外圈展示快照遮罩。
 
 'use client';
 
 import { animate, motion, useMotionTemplate, useMotionValue, useTransform } from 'framer-motion';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { storageKeys, themeConfig } from '@/config';
 import { maskRevealTransition } from '@/lib/motion';
 
 export default function MaskReveal() {
-  const [revealData, setRevealData] = useState<{
-    x: number;
-    y: number;
-    domHTML: string;
-    scrollY: number;
-  } | null>(() => {
-    // Initialize synchronously on client navigation to avoid flicker
-    // 客户端跳转时同步初始化，避免闪烁
-    if (typeof window !== 'undefined') {
-      const raw = sessionStorage.getItem(storageKeys.transitionData);
-      if (raw) {
-        try {
-          const data = JSON.parse(raw);
-          if (
-            data.isTransitioning &&
-            Date.now() - data.ts < themeConfig.maskRevealDurationMs + 500
-          ) {
-            return {
-              x: data.x,
-              y: data.y,
-              domHTML: data.domHTML,
-              scrollY: data.scrollY ?? 0,
-            };
-          }
-        } catch {}
-      }
+  // Read data synchronously in useState initializer.
+  // 在 useState 初始化函数中同步读取数据。
+  const [revealData, setRevealData] = useState(() => {
+    if (typeof window === 'undefined') return null;
+    const raw = sessionStorage.getItem('nd-docs-transition');
+    if (raw) {
+      try {
+        const data = JSON.parse(raw);
+        if (data.isTransitioning && Date.now() - data.ts < 3000) {
+          return data;
+        }
+      } catch {}
     }
     return null;
   });
 
   const radius = useMotionValue(0);
-  const feather = useMotionValue(40);
+  const feather = useMotionValue(5);
   const maskRef = useRef<HTMLDivElement>(null);
-
-  // Clear the flag immediately after reading to prevent re-trigger on refresh or back navigation
-  // 清除标志位，阅后即焚，避免刷新或后退后误触发
-  useLayoutEffect(() => {
-    sessionStorage.removeItem(storageKeys.transitionData);
-  }, []);
 
   useEffect(() => {
     if (revealData) {
+      // Clear immediately after reading to prevent re-trigger on refresh or back navigation
+      // 阅后即焚，避免刷新或后退后误触发
+      sessionStorage.removeItem('nd-docs-transition');
+
       // Calculate the maximum radius needed to cover the screen using the Pythagorean theorem
       // 勾股定理算出覆盖屏幕需要的最大半径
       const maxRadius =
@@ -64,24 +47,40 @@ export default function MaskReveal() {
           Math.hypot(window.innerWidth, window.innerHeight),
         ) * 1.2; // Slightly enlarge to ensure corners are covered / 稍微扩大保障角落
 
-      const controls = animate(radius, maxRadius, {
-        ...maskRevealTransition,
-        onComplete: () => {
-          setRevealData(null);
-        },
-      });
+      // Defer animation start by one frame so the browser has time to paint
+      // the innerHTML snapshot before the mask-radius begins growing.
+      // Without this, the large DOM injection blocks the main thread and
+      // the first second of the animation is dropped (swallowed).
+      // 将动画启动推迟一帧，让浏览器有时间在 mask-radius 开始增长之前
+      // 先绘制 innerHTML 快照。否则大量 DOM 注入会阻塞主线程，
+      // 导致动画的第一秒被丢弃（吞掉）。
+      let rafId: number;
+      let controls: ReturnType<typeof animate>;
+      let featherControls: ReturnType<typeof animate>;
 
-      // Feather animation: gradually increase feather size for softer edge reveal
-      // 羽化动画：逐渐增大羽化尺寸，使边缘揭示更柔和
-      const featherControls = animate(feather, maxRadius * 0.35, {
-        duration: maskRevealTransition.duration,
-        ease: maskRevealTransition.ease,
+      rafId = requestAnimationFrame(() => {
+        controls = animate(radius, maxRadius, {
+          ...maskRevealTransition,
+          onComplete: () => {
+            setRevealData(null);
+          },
+        });
+
+        // Feather animation: gradually increase feather size for softer edge reveal
+        // 羽化动画：逐渐增大羽化尺寸，使边缘揭示更柔和
+        featherControls = animate(feather, maxRadius * 0.35, {
+          duration: maskRevealTransition.duration,
+          ease: maskRevealTransition.ease,
+        });
       });
 
       return () => {
-        controls.stop();
-        featherControls.stop();
+        cancelAnimationFrame(rafId);
+        controls?.stop();
+        featherControls?.stop();
       };
+    } else {
+      sessionStorage.removeItem('nd-docs-transition');
     }
   }, [revealData, radius, feather]);
 
@@ -130,7 +129,7 @@ export default function MaskReveal() {
       id="nd-docs-transition-mask"
       // Apply bg-background to prevent cloned DOM with transparent areas from showing through
       // 指定 bg-background 防止克隆过来的 DOM 有透明底的区域穿帮
-      className="fixed inset-0 z-9999 pointer-events-none bg-background"
+      className="fixed inset-0 z-[9999] pointer-events-none bg-background"
       ref={maskRef}
       style={{
         opacity: 1, // Must be absolutely opaque / 必须绝对不透明
