@@ -616,6 +616,32 @@
   animation-delay: 0.26s;
 }
 
+/* Responsive splash position: visible on mobile without covering the main title.
+   响应式闪烁标语位置：移动端也显示，同时避免遮挡主标题。 */
+.home-splash-wrap {
+  position: absolute;
+  right: -4.25rem;
+  bottom: -4.25rem;
+  transform: scale(0.58);
+  transform-origin: center;
+}
+
+@media (min-width: 640px) {
+  .home-splash-wrap {
+    right: -5rem;
+    bottom: -3.5rem;
+    transform: scale(0.72);
+  }
+}
+
+@media (min-width: 768px) {
+  .home-splash-wrap {
+    right: -6rem;
+    bottom: -2.5rem;
+    transform: scale(1);
+  }
+}
+
 @keyframes home-enter-fade {
   to {
     opacity: 1;
@@ -632,15 +658,11 @@
   }
 
   .home-photo-carousel__slide {
-    display: none;
-    animation: none !important;
+    /* Mobile keeps photo changes but removes transform work.
+       移动端保留照片变化，但移除 transform 运算。 */
+    animation: home-photo-fade 30s linear infinite;
     transform: none !important;
-    will-change: auto;
-  }
-
-  .home-photo-carousel__slide--1 {
-    display: block;
-    opacity: 1;
+    will-change: opacity;
   }
 
   .mc-block-halo,

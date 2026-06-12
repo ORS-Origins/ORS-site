@@ -15,15 +15,20 @@ export function generateStaticParams() {
   return i18n.languages.map((lang) => ({ lang }));
 }
 
-function getRandomSplash(): string | null {
+// Splash files are enumerated during build; the client component picks one on page load.
+// 闪烁标语文件在构建时枚举，客户端组件在页面加载时随机选择其中一张。
+function getSplashFiles(): string[] {
   try {
-    const splashDir = join(process.cwd(), 'public', 'imgs', 'splash');
-    const files = readdirSync(splashDir).filter((f) => f.endsWith('.png'));
-    if (files.length === 0) return null;
-    const random = Math.floor(Math.random() * files.length);
-    return `/imgs/splash/${files[random]}`;
+    const splashDir = join(
+      /*turbopackIgnore: true*/ process.cwd(),
+      brandConfig.splashPublicRoot,
+      brandConfig.splashPathPrefix.replace(/^\/+/, ''),
+    );
+    return readdirSync(splashDir)
+      .filter((file) => file.endsWith(brandConfig.splashImageExtension))
+      .sort((a, b) => a.localeCompare(b));
   } catch {
-    return null;
+    return [];
   }
 }
 
@@ -31,7 +36,7 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
   const { lang } = await params;
   const locale = (lang as Locale) ?? i18n.defaultLanguage;
   const dict = getPageDictionary(locale);
-  const splashSrc = getRandomSplash();
+  const splashFiles = getSplashFiles();
 
   return (
     <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden">
@@ -111,10 +116,14 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
           <h1 className="text-6xl md:text-8xl font-minecrafter tracking-widest text-shadow-md text-white/80 drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
             {brandConfig.homeTitle}
           </h1>
-          {splashSrc && (
-            <div className="hidden md:block absolute -right-20 -bottom-8 md:-right-24 md:-bottom-10">
-              <SplashText src={splashSrc} />
-            </div>
+          {splashFiles.length > 0 && (
+            <>
+              {/* Responsive splash wrapper keeps the random player splash visible on mobile and desktop.
+                  响应式闪烁标语包装层，让随机玩家标语在移动端与桌面端都可见。 */}
+              <div className="home-splash-wrap">
+                <SplashText files={splashFiles} pathPrefix={brandConfig.splashPathPrefix} />
+              </div>
+            </>
           )}
         </div>
         <p className="home-enter home-enter--delay-2 text-xl md:text-2xl text-white/60 max-w-2xl mx-auto font-minecraft-ae drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]">
