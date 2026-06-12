@@ -176,14 +176,12 @@ export function McServerStatus({ locale }: { locale?: string }) {
             })()}
           </span>
         </div>
-
         {data?.version && (
           <div className="flex items-center gap-2 text-sm">
             <Box size={14} className="text-fd-muted-foreground" />
             <span className="font-minecraft-ae text-black dark:text-white">{data.version}</span>
           </div>
         )}
-
         {/* Real players returned by API / API 返回的真人玩家 */}
         {data?.players.list && data.players.list.length > 0 && (
           <div className="mc-status__player-section">
@@ -216,7 +214,7 @@ export function McServerStatus({ locale }: { locale?: string }) {
                 ? 'bg-green-500/20 text-green-700 dark:text-green-400 ring-1 ring-green-500/40'
                 : ''
             }`}
-            title={copied ? '已复制 / Copied' : '点击复制 / Click to copy'}
+            title={copied ? `${labels.copiedLabel}` : `${labels.clickToCopyLabel}`}
           >
             {mcConfig.defaultPort === 25565
               ? mcConfig.serverIp
@@ -234,7 +232,7 @@ export function McServerStatus({ locale }: { locale?: string }) {
                   <title>Check</title>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
-                {currentLocale === 'zh' ? '已复制' : 'Copied'}
+                {labels.copiedLabel}
                 {/* Small arrow pointing down / 指向下方的箭头 */}
                 <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#1a2e1a] border-r border-b border-green-600/60 rotate-45" />
               </span>
