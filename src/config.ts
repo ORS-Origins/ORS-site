@@ -23,6 +23,10 @@ export const brandConfig = {
   aboutUrl: 'https://github.com/ORS-Origins/ORS-site',
   /** Splash image directory path prefix. / 闪烁标语图片目录路径前缀。 */
   splashPathPrefix: '/imgs/splash',
+  /** Public asset root for discovering splash images at build time. / 构建时发现闪烁标语图片的公开资源根目录。 */
+  splashPublicRoot: 'public',
+  /** Splash image extension included in the random pool. / 随机池包含的闪烁标语图片扩展名。 */
+  splashImageExtension: '.png',
 } as const;
 
 // ── Minecraft server / Minecraft 服务器 ──────────────────────────
