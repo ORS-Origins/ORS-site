@@ -78,6 +78,77 @@
   box-shadow: var(--glass-shadow-hover);
 }
 
+/* Custom context menu: follows the site's liquid-glass surface and compact control language.
+   自定义右键菜单：沿用站点液态玻璃表面与紧凑控件语言。 */
+.ors-context-menu {
+  overflow: hidden;
+  padding: calc(var(--spacing) * 1.5);
+  color: var(--foreground);
+  background:
+    radial-gradient(120% 90% at 12% 0%, var(--glass-ambient-a), transparent 58%),
+    radial-gradient(92% 80% at 100% 18%, var(--glass-ambient-c), transparent 64%),
+    var(--glass-tint-soft);
+  border: 1px solid var(--glass-border-hairline);
+  border-radius: var(--radius-lg);
+  -webkit-backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
+  backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    var(--glass-shadow-hover);
+  transform-origin: top left;
+}
+
+.ors-context-menu__item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: calc(var(--spacing) * 2.5);
+  padding-inline: calc(var(--spacing) * 2.5);
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius-lg) - 2px);
+  color: var(--nav-control-color);
+  text-align: start;
+  cursor: pointer;
+  transition:
+    background-color var(--theme-transition-duration) ease,
+    border-color var(--theme-transition-duration) ease,
+    box-shadow var(--theme-transition-duration) ease,
+    color var(--theme-transition-duration) ease,
+    transform var(--theme-transition-duration) ease;
+}
+
+.ors-context-menu__item:hover,
+.ors-context-menu__item:focus-visible {
+  color: var(--nav-control-active-color);
+  background-color: var(--nav-control-background-hover);
+  border-color: var(--nav-control-border);
+  box-shadow: var(--nav-control-shadow-hover);
+  outline: none;
+  transform: translateX(1px);
+}
+
+.ors-context-menu__icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: var(--nav-control-active-color);
+  opacity: 0.9;
+}
+
+.ors-context-menu__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ors-context-menu__divider {
+  height: 1px;
+  margin: calc(var(--spacing) * 1) calc(var(--spacing) * 1.5);
+  background: linear-gradient(90deg, transparent, var(--glass-border-hairline), transparent);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

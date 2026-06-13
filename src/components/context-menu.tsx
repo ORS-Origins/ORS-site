@@ -142,8 +142,9 @@ export function ContextMenu({ locale }: ContextMenuProps) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.92 }}
           transition={{ duration: 0.12, ease: 'easeOut' }}
-          style={{ left: position.x, top: position.y }}
-          className="fixed z-9999 w-48 py-2 bg-[#1a1a2e]/95 border-2 border-[#4a4a6e] shadow-[0_4px_0_#2a2a4e,0_6px_12px_rgba(0,0,0,0.5)] backdrop-blur-sm font-minecraft-ae text-sm select-none"
+          style={{ left: position.x, top: position.y, width: uiConfig.contextMenu.width }}
+          className="ors-context-menu fixed z-9999 font-minecraft-ae text-sm select-none"
+          role="menu"
           onClick={(e) => e.stopPropagation()}
         >
           {selectedText && (
@@ -157,29 +158,33 @@ export function ContextMenu({ locale }: ContextMenuProps) {
                   });
                   setVisible(false);
                 }}
-                className="w-full px-3 py-2 flex items-center gap-3 text-white/90 hover:bg-[#4a90d9]/30 hover:text-white transition-colors duration-75 cursor-pointer"
+                style={{ minHeight: uiConfig.contextMenu.itemHeight }}
+                className="ors-context-menu__item"
+                role="menuitem"
               >
-                <span className="text-[#7dd3fc] opacity-80">
+                <span className="ors-context-menu__icon">
                   <Copy className="w-4 h-4" />
                 </span>
-                <span>{dict.ctxMenuCopyText}</span>
+                <span className="ors-context-menu__label">{dict.ctxMenuCopyText}</span>
               </button>
-              <div className="mx-2 my-1 h-px bg-[#4a4a6e]/60" />
+              <div className="ors-context-menu__divider" />
             </>
           )}
           {baseItems.map((item, index) => (
             <div key={item.id}>
-              {item.divider && index > 0 && <div className="mx-2 my-1 h-px bg-[#4a4a6e]/60" />}
+              {item.divider && index > 0 && <div className="ors-context-menu__divider" />}
               <button
                 type="button"
                 onClick={() => {
                   item.action();
                   setVisible(false);
                 }}
-                className="w-full px-3 py-2 flex items-center gap-3 text-white/90 hover:bg-[#4a90d9]/30 hover:text-white transition-colors duration-75 cursor-pointer"
+                style={{ minHeight: uiConfig.contextMenu.itemHeight }}
+                className="ors-context-menu__item"
+                role="menuitem"
               >
-                <span className="text-[#7dd3fc] opacity-80">{item.icon}</span>
-                <span>{item.label}</span>
+                <span className="ors-context-menu__icon">{item.icon}</span>
+                <span className="ors-context-menu__label">{item.label}</span>
               </button>
             </div>
           ))}
