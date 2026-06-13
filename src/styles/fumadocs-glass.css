@@ -2,12 +2,16 @@
    Fumadocs 表面玻璃化覆盖、TOC 约束、侧栏按钮、布局间距。 */
 
 /* ── TOC Popover Header Enhancement / TOC 弹出层头部增强 ─────────────────── */
-[data-toc-popover-content] > div > div > header.border-b.backdrop-blur-sm.bg-fd-background\/80 {
+[data-toc-popover] header.bg-fd-background\/80 {
   backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate))
-    brightness(var(--glass-brightness));
+    brightness(var(--glass-brightness)) !important;
   -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate))
-    brightness(var(--glass-brightness));
-  background-color: var(--glass-tint-strong);
+    brightness(var(--glass-brightness)) !important;
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="light"] [data-toc-popover] header.bg-fd-background\/80 {
+  background-color: rgba(248, 250, 252, 0.22) !important;
 }
 
 /* ── TOC Right Sidebar Constraints / TOC 右侧栏约束 ─────────────────── */
@@ -210,7 +214,7 @@
 
 /* TOC popover 内容：整体卡片化 */
 :where([data-toc-popover-content]) > div {
-  background-color: var(--glass-tint-medium) !important;
+  background-color: rgba(255, 255, 255, 0.12) !important;
   -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
   backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate))
@@ -218,6 +222,10 @@
   box-shadow:
     inset 0 1px 0 var(--glass-highlight),
     var(--glass-shadow);
+}
+
+[data-theme="light"] :where([data-toc-popover-content]) > div {
+  background-color: rgba(248, 250, 252, 0.18) !important;
 }
 
 /* TOC popover trigger button: glass-chip style (small element, light blur + soft tint).
