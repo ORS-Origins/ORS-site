@@ -9,6 +9,7 @@
 
 import { animate, motion, useMotionTemplate, useMotionValue, useTransform } from 'framer-motion';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { storageKeys } from '@/config';
 import { maskRevealTransition } from '@/lib/motion';
 
 export default function MaskReveal() {
@@ -16,7 +17,7 @@ export default function MaskReveal() {
   // 在 useState 初始化函数中同步读取数据。
   const [revealData, setRevealData] = useState(() => {
     if (typeof window === 'undefined') return null;
-    const raw = sessionStorage.getItem('nd-docs-transition');
+    const raw = sessionStorage.getItem(storageKeys.transitionData);
     if (raw) {
       try {
         const data = JSON.parse(raw);
@@ -36,7 +37,7 @@ export default function MaskReveal() {
     if (revealData) {
       // Clear immediately after reading to prevent re-trigger on refresh or back navigation
       // 阅后即焚，避免刷新或后退后误触发
-      sessionStorage.removeItem('nd-docs-transition');
+      sessionStorage.removeItem(storageKeys.transitionData);
 
       // Calculate the maximum radius needed to cover the screen using the Pythagorean theorem
       // 勾股定理算出覆盖屏幕需要的最大半径
@@ -80,7 +81,7 @@ export default function MaskReveal() {
         featherControls?.stop();
       };
     } else {
-      sessionStorage.removeItem('nd-docs-transition');
+      sessionStorage.removeItem(storageKeys.transitionData);
     }
   }, [revealData, radius, feather]);
 

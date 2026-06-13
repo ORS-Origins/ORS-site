@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { type MouseEvent, type ReactNode, useRef } from 'react';
+import { storageKeys } from '@/config';
 
 export default function EnterDocsButton({
   href,
@@ -48,15 +49,17 @@ export default function EnterDocsButton({
     const mainNode = document.querySelector('main');
 
     if (mainNode) {
+      const domHTML = mainNode.outerHTML;
+      const scrollY = window.scrollY;
       const data = {
         x,
         y,
-        domHTML: mainNode.outerHTML,
-        scrollY: window.scrollY,
+        domHTML,
+        scrollY,
         ts: Date.now(),
         isTransitioning: true,
       };
-      sessionStorage.setItem('nd-docs-transition', JSON.stringify(data));
+      sessionStorage.setItem(storageKeys.transitionData, JSON.stringify(data));
     }
 
     // Do NOT call e.preventDefault() or router.push() here.
