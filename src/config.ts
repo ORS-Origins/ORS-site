@@ -55,6 +55,16 @@ export const themeConfig = {
   maskRevealDurationMs: 2500,
   /** Mask reveal easing curve (cubic-bezier). / 遮罩揭示缓动曲线（cubic-bezier）。 */
   maskRevealEase: [0.22, 0.61, 0.36, 1.0] as [number, number, number, number],
+  /** Mask reveal radius multiplier for covering viewport corners. / 遮罩揭示覆盖视口角落的半径倍率。 */
+  maskRevealRadiusScale: 1.2,
+  /** Initial soft edge width for mask reveal in px. / 遮罩揭示初始柔边宽度（像素）。 */
+  maskRevealInitialFeatherPx: 40,
+  /** Final soft edge width as a ratio of reveal radius. / 最终柔边宽度相对揭示半径的比例。 */
+  maskRevealFeatherScale: 0.35,
+  /** Maximum age of a pending docs transition in ms. / 待执行文档过渡的最大有效期（毫秒）。 */
+  docsTransitionMaxAgeMs: 3000,
+  /** Idle timeout for caching homepage transition snapshot in ms. / 首页过渡快照空闲缓存超时（毫秒）。 */
+  docsTransitionSnapshotIdleTimeoutMs: 1000,
 } as const;
 
 // ── Cursor / 光标 ────────────────────────────────────────────────
@@ -83,6 +93,22 @@ export const cursorConfig = {
     'ew-resize': 'resize-ew.png',
     'nesw-resize': 'resize-ne.png',
     'nwse-resize': 'resize-nw.png',
+  },
+  /** CSS fallback keywords used after custom cursor URLs. / 自定义光标 URL 后的 CSS 回退关键字。 */
+  fallbacks: {
+    default: 'none',
+    pointer: 'none',
+    text: 'none',
+    grab: 'none',
+    grabbing: 'none',
+    crosshair: 'none',
+    help: 'none',
+    'not-allowed': 'none',
+    wait: 'none',
+    'ns-resize': 'none',
+    'ew-resize': 'none',
+    'nesw-resize': 'none',
+    'nwse-resize': 'none',
   },
   /** Cursor hotspot coordinates. / 光标热点坐标。 */
   hotspots: {
@@ -152,4 +178,6 @@ export const storageKeys = {
   sidebarCollapsed: 'sidebar-collapsed',
   /** Page transition snapshot data key. / 页面过渡快照数据 sessionStorage 键名。 */
   transitionData: 'nd-docs-transition',
+  /** Page transition DOM snapshot key. / 页面过渡 DOM 快照 sessionStorage 键名。 */
+  transitionSnapshot: 'nd-docs-transition-snapshot',
 } as const;

@@ -1,5 +1,6 @@
 // Shared framer-motion animation presets for consistent transitions across the app.
 // framer-motion 动画预设，确保全站过渡效果一致。
+import { themeConfig } from '@/config';
 
 // Optimized docs transition: smoother cubic-bezier easing, slightly longer duration for perceived quality.
 // 优化后的文档过渡：更平滑的 cubic-bezier 缓动，稍长的时长提升质感。
@@ -17,8 +18,8 @@ export const docTransitionTransition = {
 // Optimized mask reveal: added feathering via mask-size animation for softer edge reveal.
 // 优化后的遮罩揭示：通过 mask-size 动画添加羽化边缘，揭示更柔和。
 export const maskRevealTransition = {
-  duration: 2.5,
-  ease: [0.22, 0.61, 0.36, 1.0] as [number, number, number, number],
+  duration: themeConfig.maskRevealDurationMs / 1000,
+  ease: themeConfig.maskRevealEase,
 } as const;
 
 // Optimized page enter: more noticeable scale difference, longer duration for smoother feel, will-change hint.
