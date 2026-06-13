@@ -46,4 +46,7 @@ export const zh = {
   // MC status copy IP button / MC 状态 IP 复制按钮
   copiedLabel: '已复制',
   clickToCopyLabel: '点击复制',
+  // Skin viewer collapse toggle / 纸娃娃收回切换按钮
+  skinViewerCollapse: '收回纸娃娃',
+  skinViewerExpand: '展开纸娃娃',
 } as const;

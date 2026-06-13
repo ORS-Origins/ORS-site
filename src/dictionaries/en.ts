@@ -47,4 +47,7 @@ export const en = {
   // MC status copy IP button / MC 状态 IP 复制按钮
   copiedLabel: 'Copied',
   clickToCopyLabel: 'Click to copy',
+  // Skin viewer collapse toggle / 纸娃娃收回切换按钮
+  skinViewerCollapse: 'Collapse paper doll',
+  skinViewerExpand: 'Expand paper doll',
 } as const;

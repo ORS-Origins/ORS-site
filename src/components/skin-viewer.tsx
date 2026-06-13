@@ -5,7 +5,13 @@
 
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useI18n } from 'fumadocs-ui/contexts/i18n';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import type { CSSProperties } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { storageKeys, uiConfig } from '@/config';
+import { getPageDictionary } from '@/dictionaries';
+import { i18n, type Locale } from '@/lib/i18n';
 
 // ── Texture map: defines UV regions on a 64x64 skin image / 纹理映射：定义 64x64 皮肤图像上的 UV 区域 ──
 const TEXTURE_MAP = {
@@ -499,8 +505,52 @@ export function SkinViewerComponent({
   enableMouseTrack = true,
   animation = 'walk',
 }: SkinViewerProps) {
+  const { locale } = useI18n();
+  const [collapsed, setCollapsed] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<SkinViewer | null>(null);
+  const currentLocale = i18n.languages.includes(locale as Locale)
+    ? (locale as Locale)
+    : i18n.defaultLanguage;
+  const dict = getPageDictionary(currentLocale);
+  const controlLabel = collapsed ? dict.skinViewerExpand : dict.skinViewerCollapse;
+  // Skin viewer CSS variables keep spacing configurable from uiConfig.
+  // 纸娃娃 CSS 变量从 uiConfig 读取，避免将间距写死在样式中。
+  const skinViewerStyle = {
+    '--skinviewer-right': `${uiConfig.skinViewer.rightOffsetPx}px`,
+    '--skinviewer-bottom': `${uiConfig.skinViewer.bottomOffsetPx}px`,
+    '--skinviewer-control-gap': `${uiConfig.skinViewer.controlGapPx}px`,
+    '--skinviewer-control-left': `${uiConfig.skinViewer.controlLeftPx}px`,
+    '--skinviewer-control-top': `${uiConfig.skinViewer.controlTopPx}px`,
+    '--skinviewer-control-width': `${uiConfig.skinViewer.controlWidthPx}px`,
+    '--skinviewer-control-height': `${uiConfig.skinViewer.controlHeightPx}px`,
+    '--skinviewer-collapsed-control-offset': `${uiConfig.skinViewer.collapsedControlOffsetPx}px`,
+    '--skinviewer-slide-offset': `${uiConfig.skinViewer.slideOffsetPx}px`,
+  } satisfies CSSProperties &
+    Record<
+      | '--skinviewer-right'
+      | '--skinviewer-bottom'
+      | '--skinviewer-control-gap'
+      | '--skinviewer-control-left'
+      | '--skinviewer-control-top'
+      | '--skinviewer-control-width'
+      | '--skinviewer-control-height'
+      | '--skinviewer-collapsed-control-offset'
+      | '--skinviewer-slide-offset',
+      string
+    >;
+
+  useEffect(() => {
+    setCollapsed(window.localStorage.getItem(storageKeys.skinViewerCollapsed) === 'true');
+  }, []);
+
+  const handleToggleCollapsed = () => {
+    setCollapsed((value) => {
+      const nextValue = !value;
+      window.localStorage.setItem(storageKeys.skinViewerCollapsed, String(nextValue));
+      return nextValue;
+    });
+  };
 
   useEffect(() => {
     const container = containerRef.current;
@@ -554,6 +604,31 @@ export function SkinViewerComponent({
   }, [skinType, enableMouseTrack, animation]);
 
   return (
-    <div ref={containerRef} className={`skinviewer-container ${className}`} aria-hidden="true" />
+    <div
+      className={`skinviewer-shell ${collapsed ? 'skinviewer-shell--collapsed' : ''} ${className}`}
+      style={skinViewerStyle}
+    >
+      <div
+        ref={containerRef}
+        className={`skinviewer-container ${collapsed ? 'skinviewer-container--collapsed' : ''}`}
+        aria-hidden="true"
+      />
+      {/* Floating collapse toggle below the character's feet. / 悬浮在人物脚下方的收回切换按钮。 */}
+      <button
+        type="button"
+        className="skinviewer-toggle"
+        aria-label={controlLabel}
+        title={controlLabel}
+        aria-expanded={!collapsed}
+        onClick={handleToggleCollapsed}
+      >
+        {collapsed ? (
+          <ChevronLeft className="skinviewer-toggle__icon" aria-hidden="true" />
+        ) : (
+          <ChevronRight className="skinviewer-toggle__icon" aria-hidden="true" />
+        )}
+        <span className="sr-only">{controlLabel}</span>
+      </button>
+    </div>
   );
 }

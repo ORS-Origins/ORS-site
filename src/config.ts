@@ -67,66 +67,6 @@ export const themeConfig = {
   docsTransitionSnapshotIdleTimeoutMs: 1000,
 } as const;
 
-// ── Cursor / 光标 ────────────────────────────────────────────────
-export const cursorConfig = {
-  /** Frame interval in ms for animated cursors. / 动态光标帧间隔（毫秒）。 */
-  frameIntervalMs: 80,
-  /** Base path for cursor images. / 光标图片基础路径。 */
-  pathPrefix: '/imgs/widget/cursor',
-  /** Animated cursor frame sequences. / 动态光标帧序列配置。 */
-  frameSequences: {
-    pointer: { length: 11, filenameTemplate: 'pointer_page_{frame}.png' },
-    grabbing: { length: 8, filenameTemplate: 'grabbing_page_{frame}.png' },
-    notAllowed: { length: 8, filenameTemplate: 'not-allowed_page_{frame}.png' },
-  },
-  /** Static fallback cursor filenames. / 静态回退光标文件名。 */
-  staticCursors: {
-    default: 'default.png',
-    pointer: 'pointer_page_01.png',
-    text: 'text.png',
-    grab: 'grab.png',
-    grabbing: 'grabbing_page_01.png',
-    crosshair: 'crosshair.png',
-    help: 'help.png',
-    'not-allowed': 'not-allowed_page_01.png',
-    'ns-resize': 'resize-ns.png',
-    'ew-resize': 'resize-ew.png',
-    'nesw-resize': 'resize-ne.png',
-    'nwse-resize': 'resize-nw.png',
-  },
-  /** CSS fallback keywords used after custom cursor URLs. / 自定义光标 URL 后的 CSS 回退关键字。 */
-  fallbacks: {
-    default: 'none',
-    pointer: 'none',
-    text: 'none',
-    grab: 'none',
-    grabbing: 'none',
-    crosshair: 'none',
-    help: 'none',
-    'not-allowed': 'none',
-    wait: 'none',
-    'ns-resize': 'none',
-    'ew-resize': 'none',
-    'nesw-resize': 'none',
-    'nwse-resize': 'none',
-  },
-  /** Cursor hotspot coordinates. / 光标热点坐标。 */
-  hotspots: {
-    default: '16 16',
-    pointer: '18 18',
-    text: '36 16',
-    grab: '18 18',
-    grabbing: '18 6',
-    crosshair: '30 30',
-    help: '16 6',
-    'not-allowed': '31 31',
-    'ns-resize': '31 31',
-    'ew-resize': '31 31',
-    'nesw-resize': '31 31',
-    'nwse-resize': '31 31',
-  },
-} as const;
-
 // ── UI / 用户界面 ────────────────────────────────────────────────
 export const uiConfig = {
   /** Context menu dimensions (px). / 右键菜单尺寸（像素）。 */
@@ -142,6 +82,18 @@ export const uiConfig = {
   },
   /** Docs table of contents style. / 文档目录样式。 */
   tocStyle: 'clerk' as const,
+  /** Floating skin viewer collapse control spacing. / 悬浮纸娃娃收回控件间距。 */
+  skinViewer: {
+    rightOffsetPx: 20,
+    bottomOffsetPx: 20,
+    controlGapPx: 8,
+    controlLeftPx: 22,
+    controlTopPx: 175,
+    controlWidthPx: 34,
+    controlHeightPx: 28,
+    collapsedControlOffsetPx: 0,
+    slideOffsetPx: 24,
+  },
 } as const;
 
 // ── Mermaid viewer / Mermaid 图表查看器 ──────────────────────────
@@ -176,6 +128,8 @@ export const searchConfig = {
 export const storageKeys = {
   /** Sidebar collapsed state key. / 侧栏折叠状态 localStorage 键名。 */
   sidebarCollapsed: 'sidebar-collapsed',
+  /** Floating skin viewer collapsed state key. / 悬浮纸娃娃收起状态 localStorage 键名。 */
+  skinViewerCollapsed: 'skin-viewer-collapsed',
   /** Page transition snapshot data key. / 页面过渡快照数据 sessionStorage 键名。 */
   transitionData: 'nd-docs-transition',
   /** Page transition DOM snapshot key. / 页面过渡 DOM 快照 sessionStorage 键名。 */
