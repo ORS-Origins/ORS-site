@@ -138,7 +138,7 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
 
       <EnterDocsButton
         href={`/${locale}/docs/${siteConfig.defaultDocsPath}`}
-        className="home-enter home-enter--delay-4 z-10 mt-8 glass-chip px-8 py-3 rounded-lg text-base font-semibold font-minecraft-ae inline-block no-underline text-foreground hover:scale-105 transition-transform duration-200"
+        className="home-enter home-enter--delay-4 z-10 mt-8 glass-chip px-10 py-4 rounded-2xl text-lg font-semibold font-minecraft-ae inline-block no-underline text-foreground hover:scale-105 transition-transform duration-200"
       >
         {dict.enterDocs} →
       </EnterDocsButton>
