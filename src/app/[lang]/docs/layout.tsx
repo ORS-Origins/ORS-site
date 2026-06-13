@@ -6,7 +6,6 @@ import { Sidebar, SidebarTrigger, useSidebar } from 'fumadocs-ui/layouts/docs/sl
 import type { CSSProperties } from 'react';
 import { SidebarProvider } from '@/components/sidebar-provider';
 import { SkinViewerComponent } from '@/components/skin-viewer';
-import MaskReveal from '@/components/transition/mask-reveal';
 import { uiConfig } from '@/config';
 import { i18n, type Locale } from '@/lib/i18n';
 import { baseOptions } from '@/lib/layout.shared';
@@ -29,7 +28,6 @@ export default async function Layout({ params, children }: LayoutProps<'/[lang]/
 
   return (
     <>
-      <MaskReveal />
       {/* Unified docs background container / 统一的文档背景容器 */}
       <div className="mc-doc-shell">
         {/* Subtle Minecraft-themed ambient background effects.

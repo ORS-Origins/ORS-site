@@ -105,6 +105,35 @@ export function CursorAnimator() {
     function getCursorState(el: Element | null): { owner: Element | null; type: string } {
       if (!el) return { owner: null, type: 'default' };
 
+      // Prefer semantic selectors over computed fallback keywords because CSS uses
+      // `none` as the URL fallback to prevent the native cursor from flashing.
+      // 优先通过语义选择器判断类型，因为 CSS 使用 `none` 作为 URL 回退以避免系统光标闪现。
+      for (const type of [
+        'not-allowed',
+        'text',
+        'grabbing',
+        'grab',
+        'pointer',
+        'help',
+        'crosshair',
+        'wait',
+        'ns-resize',
+        'ew-resize',
+        'nesw-resize',
+        'nwse-resize',
+      ]) {
+        const selector = CURSOR_OWNER_SELECTORS[type];
+        const owner = selector ? el.closest(selector) : null;
+        if (owner) {
+          const resolvedType =
+            mouseDownRef.current && (type === 'grab' || type === 'grabbing') ? 'grabbing' : type;
+          return {
+            owner,
+            type: resolvedType,
+          };
+        }
+      }
+
       const keyword = getCursorKeyword(el);
       if (keyword in STATIC_CURSORS) {
         const type =
@@ -162,7 +191,9 @@ export function CursorAnimator() {
       const hotspot =
         cursorConfig.hotspots[type as keyof typeof cursorConfig.hotspots] ??
         cursorConfig.hotspots.default;
-      const fallback = type === 'default' ? 'auto' : type;
+      const fallback =
+        cursorConfig.fallbacks[type as keyof typeof cursorConfig.fallbacks] ??
+        cursorConfig.fallbacks.default;
       return `url("${url}") ${hotspot}, ${fallback}`;
     }
 

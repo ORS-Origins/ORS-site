@@ -62,7 +62,7 @@ html,
 body {
   cursor:
     url("/imgs/widget/cursor/default.png") 16 16,
-    auto !important;
+    none !important;
 }
 
 a,
@@ -76,7 +76,7 @@ label,
 .mc-item-slot {
   cursor:
     url("/imgs/widget/cursor/pointer_page_01.png") 18 18,
-    pointer !important;
+    none !important;
 }
 
 input,
@@ -85,7 +85,7 @@ select,
 [contenteditable="true"] {
   cursor:
     url("/imgs/widget/cursor/text.png") 36 16,
-    text !important;
+    none !important;
 }
 
 [draggable="true"],
@@ -93,7 +93,7 @@ select,
 .grab {
   cursor:
     url("/imgs/widget/cursor/grab.png") 18 18,
-    grab !important;
+    none !important;
 }
 
 [draggable="true"]:active,
@@ -102,7 +102,7 @@ select,
 .grabbing {
   cursor:
     url("/imgs/widget/cursor/grabbing_page_01.png") 18 6,
-    grabbing !important;
+    none !important;
 }
 
 .mc-crosshair,
@@ -112,7 +112,7 @@ pre,
 kbd {
   cursor:
     url("/imgs/widget/cursor/crosshair.png") 30 30,
-    crosshair !important;
+    none !important;
 }
 
 .mc-help,
@@ -120,7 +120,7 @@ kbd {
 abbr[title] {
   cursor:
     url("/imgs/widget/cursor/help.png") 16 6,
-    help !important;
+    none !important;
 }
 
 .mc-not-allowed,
@@ -128,14 +128,14 @@ abbr[title] {
 [aria-disabled="true"] {
   cursor:
     url("/imgs/widget/cursor/not-allowed_page_01.png") 31 31,
-    not-allowed !important;
+    none !important;
 }
 
 .mc-wait,
 [aria-busy="true"] {
   cursor:
     url("/imgs/widget/cursor/help.png") 16 6,
-    wait !important;
+    none !important;
 }
 
 /* Vertical resize / 垂直调整大小 */
@@ -144,7 +144,7 @@ abbr[title] {
 textarea[rows] {
   cursor:
     url("/imgs/widget/cursor/resize-ns.png") 31 31,
-    ns-resize !important;
+    none !important;
 }
 
 /* Horizontal resize / 水平调整大小 */
@@ -152,7 +152,7 @@ textarea[rows] {
 .mc-resize-ew {
   cursor:
     url("/imgs/widget/cursor/resize-ew.png") 31 31,
-    ew-resize !important;
+    none !important;
 }
 
 /* Diagonal resize (top-left to bottom-right) / 沿对角线调整大小 1 */
@@ -160,7 +160,7 @@ textarea[rows] {
 .mc-resize-ne {
   cursor:
     url("/imgs/widget/cursor/resize-ne.png") 31 31,
-    nesw-resize !important;
+    none !important;
 }
 
 /* Diagonal resize (top-right to bottom-left) / 沿对角线调整大小 2 */
@@ -168,7 +168,7 @@ textarea[rows] {
 .mc-resize-nw {
   cursor:
     url("/imgs/widget/cursor/resize-nw.png") 31 31,
-    nwse-resize !important;
+    none !important;
 }
 
 /* ── MC Font Faces / MC 字体定义 ─────────────────────────────── */
@@ -540,7 +540,7 @@ textarea[rows] {
   user-select: none;
   cursor:
     url("/imgs/widget/cursor/pointer_page_01.png") 2 0,
-    pointer !important;
+    none !important;
   image-rendering: pixelated;
   background-size: cover;
   background-image: url("/imgs/ui/button-inside.png");

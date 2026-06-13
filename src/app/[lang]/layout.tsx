@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { ContextMenu } from '@/components/context-menu';
 import { CursorAnimator } from '@/components/cursor-animator';
 import DefaultSearchDialog from '@/components/search';
+import MaskReveal from '@/components/transition/mask-reveal';
 
 import { siteConfig } from '@/config';
 import { getPageDictionary } from '@/dictionaries';
@@ -43,6 +44,7 @@ export default async function LangLayout({ params, children }: LayoutProps<'/[la
     >
       <CursorAnimator />
       <ContextMenu locale={locale} />
+      <MaskReveal />
       {children}
     </RootProvider>
   );
