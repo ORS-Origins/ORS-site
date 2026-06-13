@@ -1,4 +1,4 @@
-﻿<p align="center">
+<p align="center">
   <img src="public/imgs/widget/ors.png" alt="ORS Logo" width="120" />
 </p>
 
@@ -198,12 +198,6 @@ bun start
 | :--- | :--- | :--- |
 | `transitionDurationMs` | `300` | 主题切换过渡时长 |
 | `maskRevealDurationMs` | `2500` | 页面过渡动画时长 |
-
-### 光标配置（`cursorConfig`）
-
-支持多组动态帧序列光标（`pointer`、`grabbing`、`notAllowed`）及静态回退光标，热点坐标可独立配置。
-
-更多配置请参阅 [`src/config.ts`](src/config.ts) 源文件及注释。
 
 ---
 
