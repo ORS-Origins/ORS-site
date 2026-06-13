@@ -1375,13 +1375,10 @@
 }
 
 :is([data-theme="light"], .light) [role="dialog"]:has(> p:first-child):has(> button) > p {
-  font-family: "Minecraft AE", "Minecraft", monospace !important;
   color: #5a4a2a !important;
-  text-shadow: 0.75px 0.75px 0 rgba(255, 255, 255, 0.6) !important;
 }
 
 :is([data-theme="light"], .light) [role="dialog"]:has(> p:first-child):has(> button) > button {
-  font-family: "Minecraft AE", "Minecraft", monospace !important;
   border-radius: 0 !important;
   color: #3a2e1a !important;
   border: 2px solid transparent !important;
@@ -1435,14 +1432,11 @@
 
 [data-theme="dark"] [role="dialog"]:has(> p:first-child):has(> button) > p,
 .dark [role="dialog"]:has(> p:first-child):has(> button) > p {
-  font-family: "Minecraft AE", "Minecraft", monospace !important;
   color: #c8c8d8 !important;
-  text-shadow: 0.75px 0.75px 0 rgba(0, 0, 0, 0.6) !important;
 }
 
 [data-theme="dark"] [role="dialog"]:has(> p:first-child):has(> button) > button,
 .dark [role="dialog"]:has(> p:first-child):has(> button) > button {
-  font-family: "Minecraft AE", "Minecraft", monospace !important;
   border-radius: 0 !important;
   color: #e8e8f8 !important;
   border: 2px solid transparent !important;
