@@ -108,6 +108,14 @@
           }
         }
       }
+    },
+    {
+      "includes": ["src/styles/minecraft.css"],
+      "css": {
+        "linter": {
+          "enabled": false
+        }
+      }
     }
   ]
 }

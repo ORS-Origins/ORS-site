@@ -111,7 +111,7 @@ export function McServerStatus({ locale }: { locale?: string }) {
         ) : data?.online ? (
           <>
             <span className="mc-status__indicator mc-status__indicator--online" />
-            <span className="text-xs text-green-600 dark:text-green-400 font-minecraft-ae">
+            <span className="text-xs text-green-800 dark:text-green-400 font-minecraft-ae drop-shadow-sm">
               {labels.serverOnline}
             </span>
           </>
