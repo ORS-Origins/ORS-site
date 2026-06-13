@@ -220,6 +220,29 @@ function getDefaultSkin(): HTMLImageElement {
   return _defaultSkin;
 }
 
+// Wait for the base64 skin to decode before slicing it into canvas textures.
+// 等待 base64 皮肤完成解码后，再切分为 canvas 纹理。
+function waitForImageReady(image: HTMLImageElement): Promise<void> {
+  if (image.complete && image.naturalWidth > 0) {
+    return Promise.resolve();
+  }
+
+  if (typeof image.decode === 'function') {
+    return image.decode().catch(
+      () =>
+        new Promise<void>((resolve) => {
+          image.addEventListener('load', () => resolve(), { once: true });
+          image.addEventListener('error', () => resolve(), { once: true });
+        }),
+    );
+  }
+
+  return new Promise((resolve) => {
+    image.addEventListener('load', () => resolve(), { once: true });
+    image.addEventListener('error', () => resolve(), { once: true });
+  });
+}
+
 function createCover(className: string, index: number): HTMLImageElement {
   const img = document.createElement('img');
   img.classList.add(className);
@@ -412,6 +435,12 @@ class SkinViewer {
     refreshTexture(this.elements, this.skin, this.skinType);
   }
 
+  // Re-slice the current skin after late image decoding finishes.
+  // 图片延迟解码完成后，重新切分当前皮肤纹理。
+  refreshSkinTexture(): void {
+    refreshTexture(this.elements, this.skin, this.skinType);
+  }
+
   private refreshMainRotate(): void {
     const [rx, ry, rz] = this.rotate.map((v) => v % 360) as [number, number, number];
     this.elements.skinMain.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg)`;
@@ -483,6 +512,14 @@ export function SkinViewerComponent({
     if (skinType === 'alex') {
       viewer.setSkinType('alex');
     }
+
+    // Refresh once the embedded skin image is decoded to avoid first-entry blank textures.
+    // 内嵌皮肤图片解码后刷新一次，避免首次进入文档时纹理为空。
+    void waitForImageReady(getDefaultSkin()).then(() => {
+      if (viewerRef.current === viewer) {
+        viewer.refreshSkinTexture();
+      }
+    });
 
     // Apply animation class / 应用动画类
     const animClass = animation !== 'none' ? `d-skin-action-${animation}` : null;

@@ -3,12 +3,21 @@
 
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { Sidebar, SidebarTrigger, useSidebar } from 'fumadocs-ui/layouts/docs/slots/sidebar';
+import type { CSSProperties } from 'react';
 import { SidebarProvider } from '@/components/sidebar-provider';
 import { SkinViewerComponent } from '@/components/skin-viewer';
 import MaskReveal from '@/components/transition/mask-reveal';
+import { uiConfig } from '@/config';
 import { i18n, type Locale } from '@/lib/i18n';
 import { baseOptions } from '@/lib/layout.shared';
 import { source } from '@/lib/source';
+
+// Docs layout sizing bridge: feeds configurable Fumadocs CSS variables to the official containerProps API.
+// 文档布局尺寸桥接：通过官方 containerProps API 注入可配置的 Fumadocs CSS 变量。
+const docsLayoutStyle = {
+  '--fd-layout-width': uiConfig.docsLayout.layoutWidth,
+  '--fd-sidebar-width': uiConfig.docsLayout.sidebarWidth,
+} satisfies CSSProperties & Record<'--fd-layout-width' | '--fd-sidebar-width', string>;
 
 export function generateStaticParams() {
   return i18n.languages.map((lang) => ({ lang }));
@@ -49,6 +58,9 @@ export default async function Layout({ params, children }: LayoutProps<'/[lang]/
           <DocsLayout
             tree={source.pageTree[locale]}
             {...baseOptions(locale)}
+            containerProps={{
+              style: docsLayoutStyle,
+            }}
             slots={{
               sidebar: {
                 provider: SidebarProvider,

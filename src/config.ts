@@ -109,6 +109,11 @@ export const uiConfig = {
     itemHeight: 40,
     padding: 8,
   },
+  /** Docs layout CSS variables for Fumadocs grid sizing. / Fumadocs 文档布局网格尺寸 CSS 变量。 */
+  docsLayout: {
+    layoutWidth: '100vw',
+    sidebarWidth: '268px',
+  },
   /** Docs table of contents style. / 文档目录样式。 */
   tocStyle: 'clerk' as const,
 } as const;
