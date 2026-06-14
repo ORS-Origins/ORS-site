@@ -5,111 +5,23 @@
    No yellow / amber / orange — Minecraft torch/gold blocks recolored to fit the brand.
    配色与 Neoverse-Doc 同步：浅蓝 + 浅绿 + 深蓝。无黄/橙色调，MC 火把/金方块重新着色以契合品牌。
 
-   - Photo 1: colored luminous blocks (emerald, sea-lantern, amethyst, diamond) with soft halos
-   - Photo 2: warm-cool color duel (kept as cyan/blue/teal only)
-   - Bottom-layer photo carousel from /imgs/photos (opacity-only cross fade).
+   - Colored luminous blocks (emerald, sea-lantern, amethyst, diamond) with soft halos
+   - Warm-cool color duel (kept as cyan/blue/teal only)
+   - Deep-space dark base with layered radial gradients
 */
-
-/* ── Photo Carousel Layer / 照片轮播底层 ─────────────────────────── */
-/* Each photo is stacked, fades in/out with a long cross-dissolve cycle.
-   每张照片堆叠叠加，通过长周期交叉淡入淡出实现轮播。 */
-.home-photo-carousel {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
-  background-color: #0a0d14;
-  /* First photo loads immediately without fade-in / 首张照片直接加载，无渐入 */
-  background-image: url("/imgs/photos/2021-7-8.webp");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.home-photo-carousel__slide {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0;
-  /* Performance: cross-fade photos without full-screen transform repaint.
-     性能：照片仅做淡入淡出，避免全屏 transform 重绘。 */
-  will-change: opacity;
-  animation: home-photo-fade 30s linear infinite;
-}
-
-/* Dark overlay on photos so light effects remain visible.
-   在照片上叠加深色蒙版，确保上层光影效果仍清晰可见。 */
-.home-photo-carousel__overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at center, rgba(8, 12, 24, 0.18) 0%, rgba(8, 12, 24, 0.4) 100%),
-    linear-gradient(180deg, rgba(6, 12, 24, 0.08) 0%, rgba(6, 12, 24, 0.28) 100%);
-  z-index: 2;
-}
-
-/* The 6 photos from /imgs/photos, each with a 5s offset to start sequentially.
-   6 张照片来自 /imgs/photos，每张错开 5 秒开始顺序播放。 */
-.home-photo-carousel__slide--1 {
-  background-image: url("/imgs/photos/2021-7-8.webp");
-  animation-delay: 0s;
-}
-.home-photo-carousel__slide--2 {
-  background-image: url("/imgs/photos/2021-12-1.webp");
-  animation-delay: 5s;
-}
-.home-photo-carousel__slide--3 {
-  background-image: url("/imgs/photos/2022-4.webp");
-  animation-delay: 10s;
-}
-.home-photo-carousel__slide--4 {
-  background-image: url("/imgs/photos/2022-7-3.webp");
-  animation-delay: 15s;
-}
-.home-photo-carousel__slide--5 {
-  background-image: url("/imgs/photos/2022-12-24.webp");
-  animation-delay: 20s;
-}
-.home-photo-carousel__slide--6 {
-  background-image: url("/imgs/photos/2023-1-21.webp");
-  animation-delay: 25s;
-}
-
-@keyframes home-photo-fade {
-  0%,
-  100% {
-    opacity: 0;
-  }
-  4% {
-    opacity: 0;
-  }
-  16% {
-    opacity: 1;
-  }
-  75% {
-    opacity: 1;
-  }
-  87% {
-    opacity: 0;
-  }
-}
 
 /* ── Brand-tinted Base Layer / 品牌色底层 ─────────────────────────── */
 /* Sky-blue (38bdf8) + leaf-green (4ade80) + ocean-blue (0ea5e9) — same as Neoverse-Doc.
    天空蓝 + 嫩绿 + 海蓝——与 Neoverse-Doc 一致。
-   The bottom linear gradient uses very low alpha (0.1-0.2) so the photo
-   carousel underneath stays clearly visible.
-   底层线性渐变使用极低不透明度 (0.1-0.2)，让底层照片轮播保持清晰可见。 */
+   Opacity raised since the photo carousel layer was removed; the gradient
+   now serves as the primary background. 渐变透明度提升，照片轮播层已移除，
+   渐变现在作为主背景使用。 */
 .home-gradient-bg {
   background:
-    radial-gradient(circle at 18% 18%, rgba(56, 189, 248, 0.22), transparent 38%),
-    radial-gradient(circle at 82% 22%, rgba(74, 222, 128, 0.2), transparent 36%),
-    radial-gradient(circle at 50% 82%, rgba(14, 165, 233, 0.18), transparent 42%),
-    linear-gradient(120deg, rgba(6, 12, 24, 0.1), rgba(8, 15, 32, 0.2));
+    radial-gradient(ellipse at 18% 18%, rgba(56, 189, 248, 0.35), transparent 42%),
+    radial-gradient(ellipse at 82% 22%, rgba(74, 222, 128, 0.3), transparent 38%),
+    radial-gradient(ellipse at 50% 82%, rgba(14, 165, 233, 0.28), transparent 44%),
+    linear-gradient(160deg, #060c18 0%, #0a0d14 40%, #0c1222 100%);
   background-size:
     180% 180%,
     180% 180%,
@@ -120,20 +32,39 @@
   z-index: 3;
 }
 
+:is([data-theme="light"], .light) .home-gradient-bg {
+  background:
+    radial-gradient(ellipse at 18% 18%, rgba(56, 189, 248, 0.2), transparent 42%),
+    radial-gradient(ellipse at 82% 22%, rgba(74, 222, 128, 0.18), transparent 38%),
+    radial-gradient(ellipse at 50% 82%, rgba(14, 165, 233, 0.16), transparent 44%),
+    linear-gradient(160deg, #e8eef6 0%, #f0f2f5 40%, #edf1f7 100%);
+  background-size:
+    180% 180%,
+    180% 180%,
+    160% 160%,
+    100% 100%;
+}
+
 /* ── Soft Color Orbs / 柔和色彩光球 ─────────────────────────────── */
 .home-gradient-bg__orb {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(120px);
-  opacity: 0.55;
+  filter: blur(140px);
+  opacity: 0.6;
   mix-blend-mode: screen;
   transform: translate3d(0, 0, 0);
   /* Performance: use contain to isolate paint / 性能：使用 contain 隔离绘制 */
   contain: layout style paint;
   will-change: transform;
   animation:
-    home-orb-float 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate,
-    home-orb-pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+    home-orb-float 10s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate,
+    home-orb-pulse 7s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+}
+
+:is([data-theme="light"], .light) .home-gradient-bg__orb {
+  opacity: 0.35;
+  mix-blend-mode: normal;
+  filter: blur(120px) saturate(120%);
 }
 
 .home-gradient-bg__orb--one {
@@ -165,6 +96,16 @@
   animation-delay: -8s, -5s;
 }
 
+:is([data-theme="light"], .light) .home-gradient-bg__orb--one {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.5), transparent 70%);
+}
+:is([data-theme="light"], .light) .home-gradient-bg__orb--two {
+  background: radial-gradient(circle, rgba(74, 222, 128, 0.45), transparent 68%);
+}
+:is([data-theme="light"], .light) .home-gradient-bg__orb--three {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.4), transparent 72%);
+}
+
 /* ── Luminous Minecraft Blocks / 自发光 Minecraft 方块 ─────────────── */
 /* All blocks recolored to fit Neoverse-Doc palette — no gold/amber/redstone.
    全部方块重新着色以契合 Neoverse-Doc 配色——无金/橙/红石色。 */
@@ -180,6 +121,11 @@
   /* 强化方块自身亮度 / Enhanced self-illumination */
   filter: brightness(1.4) drop-shadow(0 0 12px currentColor) drop-shadow(0 0 24px currentColor)
     drop-shadow(0 0 40px currentColor);
+}
+
+:is([data-theme="light"], .light) .mc-float-block {
+  opacity: 0.55;
+  filter: brightness(1.1) drop-shadow(0 0 6px currentColor) drop-shadow(0 0 12px currentColor);
 }
 
 .mc-float-block--grass {
@@ -276,6 +222,12 @@
     home-orb-pulse 7s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
 }
 
+:is([data-theme="light"], .light) .mc-block-halo {
+  opacity: 0.3;
+  mix-blend-mode: normal;
+  filter: blur(80px) saturate(120%);
+}
+
 .mc-block-halo--emerald {
   top: 8%;
   left: 4%;
@@ -337,6 +289,11 @@
   animation: mc-light-beam-flicker 3s ease-in-out infinite;
 }
 
+:is([data-theme="light"], .light) .mc-light-beam {
+  opacity: 0.2;
+  background: linear-gradient(180deg, transparent, rgba(14, 165, 233, 0.3), transparent);
+}
+
 .mc-light-beam--1 {
   top: 20%;
   left: 50%;
@@ -382,6 +339,10 @@
   will-change: transform, opacity;
   animation: mc-particle-burst 3s ease-out infinite;
   filter: brightness(1.5) drop-shadow(0 0 4px currentColor);
+}
+
+:is([data-theme="light"], .light) .mc-particle {
+  filter: brightness(1.1) drop-shadow(0 0 2px currentColor);
 }
 
 .mc-particle--dirt {
@@ -436,6 +397,11 @@
   animation: mc-pixel-drift linear infinite;
   box-shadow: 0 0 6px currentColor;
   color: #4ade80;
+}
+
+:is([data-theme="light"], .light) .mc-pixel-dust {
+  opacity: 0.6;
+  box-shadow: 0 0 3px currentColor;
 }
 
 .mc-pixel-dust:nth-child(1) {
@@ -500,8 +466,12 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%);
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.3) 100%);
   z-index: 9;
+}
+
+:is([data-theme="light"], .light) .home-vignette {
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.06) 100%);
 }
 
 /* ── Keyframes ─────────────────────────────────────────────────────── */
@@ -595,25 +565,61 @@
 }
 
 /* ── Entrance Animations / 首页进入动画 ───────────────────────────── */
+
+/* ── Home Title & Tagline / 首页标题与标语 ───────────────────────── */
+/* Light mode (default) / 浅色模式（默认） */
+.home-title {
+  color: rgba(56, 130, 180, 0.7);
+  letter-spacing: 0.12em;
+  text-shadow:
+    0 -1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 0 rgba(30, 80, 120, 0.15),
+    0 2px 3px rgba(30, 80, 120, 0.1),
+    0 0 20px rgba(56, 189, 248, 0.1),
+    0 0 50px rgba(74, 222, 128, 0.06);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.home-tagline {
+  color: rgba(100, 116, 139, 0.7);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+/* Dark mode / 深色模式 */
+.dark .home-title {
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.1em;
+  text-shadow:
+    0 0 24px rgba(0, 0, 0, 0.6),
+    0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.dark .home-tagline {
+  color: rgba(255, 255, 255, 0.5);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+}
+
 .home-enter {
   opacity: 0;
-  transform: translate3d(0, 16px, 0);
+  transform: translate3d(0, 20px, 0);
   will-change: transform, opacity;
   backface-visibility: hidden;
-  animation: home-enter-fade 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation: home-enter-fade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .home-enter--delay-1 {
-  animation-delay: 0.04s;
+  animation-delay: 0.06s;
 }
 .home-enter--delay-2 {
-  animation-delay: 0.1s;
+  animation-delay: 0.16s;
 }
 .home-enter--delay-3 {
-  animation-delay: 0.18s;
+  animation-delay: 0.28s;
 }
 .home-enter--delay-4 {
-  animation-delay: 0.26s;
+  animation-delay: 0.4s;
 }
 
 /* Responsive splash position: visible on mobile without covering the main title.
@@ -653,18 +659,6 @@
 /* Hide heavy animated layers on narrow screens to preserve GPU & battery.
    在窄屏下隐藏重型动画层，保护 GPU 与电量。 */
 @media (max-width: 767.98px), (hover: none) and (pointer: coarse) {
-  .home-photo-carousel {
-    contain: paint;
-  }
-
-  .home-photo-carousel__slide {
-    /* Mobile keeps photo changes but removes transform work.
-       移动端保留照片变化，但移除 transform 运算。 */
-    animation: home-photo-fade 30s linear infinite;
-    transform: none !important;
-    will-change: opacity;
-  }
-
   .mc-block-halo,
   .mc-float-block,
   .mc-light-beam,
@@ -674,14 +668,15 @@
   }
 
   .home-gradient-bg__orb {
-    display: none;
+    filter: blur(100px);
+    opacity: 0.45;
   }
 
   .home-gradient-bg {
     background-size:
-      120% 120%,
-      120% 120%,
-      110% 110%,
+      140% 140%,
+      140% 140%,
+      130% 130%,
       100% 100%;
   }
 
@@ -698,17 +693,12 @@
   .mc-particle,
   .mc-pixel-dust,
   .mc-light-beam,
-  .home-photo-carousel__slide,
   .home-enter {
     animation: none !important;
   }
 
   .mc-float-block {
     opacity: 0.5;
-  }
-
-  .home-photo-carousel__slide--1 {
-    opacity: 1;
   }
 
   .home-enter {

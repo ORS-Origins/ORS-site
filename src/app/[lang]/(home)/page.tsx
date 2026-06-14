@@ -39,18 +39,7 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
   const splashFiles = getSplashFiles();
 
   return (
-    <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden">
-      {/* Bottom-layer photo carousel from /imgs/photos. / 底层照片轮播。 */}
-      <div aria-hidden="true" className="home-photo-carousel">
-        <div className="home-photo-carousel__slide home-photo-carousel__slide--1" />
-        <div className="home-photo-carousel__slide home-photo-carousel__slide--2" />
-        <div className="home-photo-carousel__slide home-photo-carousel__slide--3" />
-        <div className="home-photo-carousel__slide home-photo-carousel__slide--4" />
-        <div className="home-photo-carousel__slide home-photo-carousel__slide--5" />
-        <div className="home-photo-carousel__slide home-photo-carousel__slide--6" />
-        <div className="home-photo-carousel__overlay" />
-      </div>
-
+    <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24">
       {/* Animated gradient background for the homepage only. / 首页动态渐变背景。 */}
       <div aria-hidden="true" className="home-gradient-bg pointer-events-none absolute inset-0">
         <div className="home-gradient-bg__orb home-gradient-bg__orb--one" />
@@ -58,8 +47,8 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
         <div className="home-gradient-bg__orb home-gradient-bg__orb--three" />
       </div>
 
-      {/* Large soft halos around blocks (Photo 1 inspiration).
-          方块周围的大范围柔光晕（照片 1 灵感）。 */}
+      {/* Large soft halos around blocks.
+          方块周围的大范围柔光晕。 */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden z-4">
         <div className="mc-block-halo mc-block-halo--emerald" />
         <div className="mc-block-halo mc-block-halo--sky" />
@@ -68,8 +57,8 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
         <div className="mc-block-halo mc-block-halo--teal" />
       </div>
 
-      {/* Floating luminous Minecraft blocks (Photo 1 inspiration).
-          自发光浮动方块（照片 1 灵感）。 */}
+      {/* Floating luminous Minecraft blocks.
+          自发光浮动方块。 */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden z-5">
         <div className="mc-float-block mc-float-block--grass" />
         <div className="mc-float-block mc-float-block--diamond" />
@@ -79,8 +68,8 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
         <div className="mc-float-block mc-float-block--prismarine" />
       </div>
 
-      {/* Light beams (central white block in Photo 1).
-          光柱效果（照片 1 中央白色方块）。 */}
+      {/* Light beams.
+          光柱效果。 */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden z-6">
         <div className="mc-light-beam mc-light-beam--1" />
         <div className="mc-light-beam mc-light-beam--2" />
@@ -111,28 +100,25 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
       {/* Vignette to enhance center light / 暗角增强中心光感 */}
       <div aria-hidden="true" className="home-vignette" />
 
-      <div className="relative z-10 space-y-6 text-center">
-        <div className="home-enter home-enter--delay-1 relative inline-block">
-          <h1 className="text-6xl md:text-8xl font-minecrafter tracking-widest text-shadow-md text-white/80 drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
+      {/* Main content area / 主内容区域 */}
+      <div className="relative z-10 flex flex-col items-center gap-8 text-center">
+        <div className="home-enter home-enter--delay-1 relative">
+          <h1 className="home-title text-6xl md:text-8xl font-minecrafter">
             {brandConfig.homeTitle}
           </h1>
           {splashFiles.length > 0 && (
-            <>
-              {/* Responsive splash wrapper keeps the random player splash visible on mobile and desktop.
-                  响应式闪烁标语包装层，让随机玩家标语在移动端与桌面端都可见。 */}
-              <div className="home-splash-wrap">
-                <SplashText files={splashFiles} pathPrefix={brandConfig.splashPathPrefix} />
-              </div>
-            </>
+            <div className="home-splash-wrap">
+              <SplashText files={splashFiles} pathPrefix={brandConfig.splashPathPrefix} />
+            </div>
           )}
         </div>
-        <p className="home-enter home-enter--delay-2 text-xl md:text-2xl text-white/60 max-w-2xl mx-auto font-minecraft-ae drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]">
+        <p className="home-enter home-enter--delay-2 text-xl md:text-2xl max-w-xl mx-auto font-minecraft-ae leading-relaxed home-tagline">
           {dict.tagline}
         </p>
       </div>
 
       {/* MC Server Status Component / MC 服务器状态组件 */}
-      <div className="home-enter home-enter--delay-3 z-10 mt-10 w-full max-w-md">
+      <div className="home-enter home-enter--delay-3 z-10 mt-10 w-full max-w-sm">
         <McServerStatus locale={locale} />
       </div>
 
