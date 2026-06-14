@@ -36,6 +36,19 @@
   }
 }
 
+/* ── Mobile Sidebar Drawer Performance / 移动端侧栏抽屉性能优化 ──────────── */
+/* The overlay's backdrop-blur-xs is GPU-expensive on mobile and causes
+   stutter during the fade animation. Replace with a simple semi-opaque
+   background that achieves the same dimming effect at a fraction of the cost.
+   遮罩层的 backdrop-blur-xs 在移动端 GPU 开销极大，导致淡入淡出动画卡顿。
+   替换为半透明背景，以极低成本实现相同的遮暗效果。 */
+@media (max-width: 767.98px) {
+  [data-state][class*="backdrop-blur-xs"][class*="fixed"][class*="inset-0"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
 /* ── Mobile Docs Layout Fix / 移动端文档布局修复 ─────────────────── */
 /* On narrow screens the fumadocs grid still reserves sidebar columns,
    squeezing the main content to ~140px. Force the layout to a single
@@ -75,10 +88,25 @@
 :where(#nd-subnav),
 :where(#nd-sidebar):not([data-collapsed="true"]),
 :where(#nd-sidebar)[data-collapsed="true"],
-:where(#nd-sidebar-mobile),
 :where([data-toc-popover-content]) > div,
 [role="dialog"][data-state="open"]:has(input) {
   transition-duration: var(--theme-transition-duration);
+}
+
+/* Mobile sidebar drawer: only transition theme-relevant properties so the
+   fumadocs open/close CSS animations (animate-fd-sidebar-in / sidebar-out)
+   are not intercepted by a competing CSS transition on transform/visibility.
+   Without this restriction, the generic transition-duration (0.3s) on
+   "all" properties causes visibility to stay "visible" for 300ms while
+   the animation completes at 250ms, producing a visible flicker.
+   移动端侧栏抽屉：仅过渡主题相关属性，避免 fumadocs 开关 CSS 动画
+   （animate-fd-sidebar-in / sidebar-out）被竞争性 CSS 过渡拦截。
+   不加此限制时，通用 transition-duration（0.3s）作用于所有属性，
+   导致 visibility 在动画 250ms 结束后仍保持 "visible" 长达 300ms，产生闪烁。 */
+:where(#nd-sidebar-mobile) {
+  transition-property: background, background-color, border-color, box-shadow, color;
+  transition-duration: var(--theme-transition-duration);
+  will-change: transform;
 }
 
 /* Top nav: inner div is the fumadocs backdrop-blur container, strengthen it directly.
