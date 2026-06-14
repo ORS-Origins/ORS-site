@@ -151,10 +151,18 @@
   box-shadow: var(--docs-bar-shadow);
 }
 
+/* Collapsed floating sidebar: strengthen blur and tint so page text reads as depth, not bleed-through.
+   折叠悬浮侧栏：增强模糊与色调，让正文成为景深而不是清晰透出。 */
 :where(#nd-sidebar)[data-collapsed="true"] {
-  background: var(--docs-bar-background);
+  background: var(--docs-sidebar-floating-background);
+  -webkit-backdrop-filter: blur(var(--docs-sidebar-floating-blur)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
+  backdrop-filter: blur(var(--docs-sidebar-floating-blur)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
   border-color: var(--docs-bar-border);
-  box-shadow: inset 0 1px 0 var(--glass-highlight);
+  border-inline-end-color: var(--docs-bar-border);
+  box-shadow: var(--docs-sidebar-floating-shadow);
+  transform: translateZ(0);
 }
 
 /* ── Sidebar Buttons Glassification / 侧栏按钮玻璃化 ────────────────────── */
@@ -259,24 +267,26 @@
 /* TOC popover trigger button: glass-chip style (small element, light blur + soft tint).
    TOC 弹出层触发按钮：glass-chip 样式（小元件，轻 blur + 软 tint）。 */
 :where([data-toc-popover-trigger]) {
-  background-color: var(--glass-tint-soft) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
+  background-color: var(--docs-toc-trigger-background) !important;
+  -webkit-backdrop-filter: blur(var(--docs-toc-bar-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
-  backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
+  backdrop-filter: blur(var(--docs-toc-bar-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
   border: 1px solid var(--glass-border-hairline);
   box-shadow: inset 0 1px 0 var(--glass-highlight);
 }
 
+/* TOC floating trigger bar: keep it transparent enough to show the page behind it.
+   TOC 悬浮触发条：保持足够透明，让下方页面内容可见。 */
 /* TOC popover header: replace fumadocs opaque bg-fd-background/80 with glass tint
    so the trigger button's backdrop-filter has something transparent to see through.
    TOC 弹出层头部：将 fumadocs 不透明的 bg-fd-background/80 替换为玻璃 tint，
    使触发按钮的 backdrop-filter 能透视到透明背景。 */
 :where([data-toc-popover]) > header {
-  background-color: var(--glass-tint-medium) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
+  background: var(--docs-toc-bar-background) !important;
+  -webkit-backdrop-filter: blur(var(--docs-toc-bar-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
+  backdrop-filter: blur(var(--docs-toc-bar-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
   border-color: var(--glass-border-hairline);
   box-shadow: inset 0 1px 0 var(--glass-highlight);

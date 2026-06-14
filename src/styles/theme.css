@@ -88,6 +88,24 @@ blockquote {
   --docs-bar-border: var(--glass-border-hairline);
   --docs-bar-shadow: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow);
 
+  /* Floating docs sidebar glass surface: denser tint for the collapsed hover rail.
+     悬浮文档侧栏玻璃面：为折叠悬浮侧栏提供更浓的色调。 */
+  --docs-sidebar-floating-background:
+    radial-gradient(120% 76% at 14% 0%, rgba(85, 255, 85, 0.06), transparent 58%),
+    radial-gradient(110% 72% at 100% 16%, rgba(85, 255, 255, 0.04), transparent 62%),
+    linear-gradient(180deg, rgba(248, 252, 255, 0.16) 0%, rgba(218, 239, 255, 0.08) 100%);
+  --docs-sidebar-floating-blur: var(--glass-blur-soft);
+  --docs-sidebar-floating-shadow:
+    inset 0 1px 0 var(--glass-highlight), 0 18px 48px -28px rgba(15, 23, 42, 0.34);
+
+  /* Docs TOC floating bar glass surface: light tint keeps background content visible.
+     文档目录悬浮条玻璃面：使用轻色调保留背景内容可见性。 */
+  --docs-toc-bar-background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.18), rgba(226, 241, 255, 0.08) 58%),
+    linear-gradient(90deg, rgba(85, 255, 85, 0.035), rgba(85, 255, 255, 0.04));
+  --docs-toc-trigger-background: rgba(255, 255, 255, 0.06);
+  --docs-toc-bar-blur: var(--glass-blur-soft);
+
   /* Navigation and sidebar control glass tokens: tune transparency from one place.
      导航与侧栏控件玻璃变量：集中调整透明度与质感。 */
   --nav-glass-background:
@@ -173,6 +191,24 @@ blockquote {
     linear-gradient(180deg, var(--glass-tint-strong) 0%, var(--glass-tint-medium) 100%);
   --docs-bar-border: var(--glass-border-hairline);
   --docs-bar-shadow: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow);
+
+  /* Floating docs sidebar glass surface: denser tint for the collapsed hover rail.
+     悬浮文档侧栏玻璃面：为折叠悬浮侧栏提供更浓的色调。 */
+  --docs-sidebar-floating-background:
+    radial-gradient(112% 72% at 12% 0%, rgba(85, 255, 85, 0.05), transparent 60%),
+    radial-gradient(96% 68% at 100% 18%, rgba(85, 255, 255, 0.035), transparent 64%),
+    linear-gradient(180deg, rgba(16, 24, 44, 0.18) 0%, rgba(10, 16, 30, 0.1) 100%);
+  --docs-sidebar-floating-blur: var(--glass-blur-soft);
+  --docs-sidebar-floating-shadow:
+    inset 0 1px 0 var(--glass-highlight), 0 18px 52px -28px rgba(0, 0, 0, 0.72);
+
+  /* Docs TOC floating bar glass surface: light tint keeps background content visible.
+     文档目录悬浮条玻璃面：使用轻色调保留背景内容可见性。 */
+  --docs-toc-bar-background:
+    linear-gradient(115deg, rgba(16, 24, 44, 0.2), rgba(10, 16, 30, 0.1) 58%),
+    linear-gradient(90deg, rgba(85, 255, 85, 0.04), rgba(85, 255, 255, 0.035));
+  --docs-toc-trigger-background: rgba(15, 23, 42, 0.08);
+  --docs-toc-bar-blur: var(--glass-blur-soft);
 
   /* Navigation and sidebar control glass tokens: tune transparency from one place.
      导航与侧栏控件玻璃变量：集中调整透明度与质感。 */
