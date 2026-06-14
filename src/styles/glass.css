@@ -61,6 +61,28 @@
   box-shadow: inset 0 1px 0 var(--glass-highlight);
 }
 
+/* Search dialog header: glass chip style with soft tint and light blur,
+   forming a cohesive search input bar inside the already-blurred dialog.
+   搜索弹窗头部：玻璃 chip 样式，带软色调与轻 blur，
+   在已模糊的弹窗内部形成统一的搜索输入栏。 */
+.search-glass-header {
+  --search-header-bg: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border-hairline);
+  border-radius: calc(var(--radius-lg) - 4px);
+  background-color: var(--search-header-bg) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
+  backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
+  box-shadow: inset 0 1px 0 var(--glass-highlight);
+}
+
+/* Dark mode: use dark tint for the search header.
+   深色模式：搜索头部使用深色调。 */
+.dark .search-glass-header {
+  --search-header-bg: rgba(15, 23, 42, 0.06);
+}
+
 /* Homepage CTA: keeps independent blur and shadow intensity.
    首页 CTA：保留独立 blur 与阴影强度。 */
 .glass-cta {

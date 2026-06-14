@@ -273,15 +273,29 @@
    通过 :has(input) 识别搜索弹窗（fumadocs 会在 SearchDialogContent 内强制渲染隐藏的 h2 DialogTitle，
    之前用 :not(:has(> h2)) 做排除会把整个搜索 dialog 也排除掉） */
 [role="dialog"][data-state="open"]:has(input) {
-  background-color: var(--glass-tint-soft) !important;
+  --search-dialog-bg: rgba(255, 255, 255, 0.15);
+  background-color: var(--search-dialog-bg) !important;
   -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
   backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) contrast(var(--glass-contrast)) !important;
   border: 1px solid var(--glass-border-hairline) !important;
+  border-radius: 1rem !important;
   box-shadow:
-    inset 0 0 0 1px var(--glass-highlight),
+    inset 0 1px 0 var(--glass-highlight),
     var(--glass-shadow) !important;
+}
+
+/* Dark mode: use dark tint for the search dialog.
+   深色模式：搜索弹窗使用深色调。 */
+.dark [role="dialog"][data-state="open"]:has(input) {
+  --search-dialog-bg: rgba(15, 23, 42, 0.1);
+}
+
+/* Override fumadocs' built-in opaque bg-fd-popover on the search dialog so glass tint shows through.
+   覆盖 fumadocs 内建的不透明 bg-fd-popover，让玻璃色调透出。 */
+[role="dialog"][data-state="open"]:has(input).bg-fd-popover {
+  background-color: var(--search-dialog-bg) !important;
 }
 
 /* ── Docs Layout Spacing / 文档布局间距优化 ─────────────────── */
