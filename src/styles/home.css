@@ -569,6 +569,7 @@
 /* ── Home Title & Tagline / 首页标题与标语 ───────────────────────── */
 /* Light mode (default) / 浅色模式（默认） */
 .home-title {
+  font-size: 6rem;
   color: rgba(56, 130, 180, 0.7);
   letter-spacing: 0.12em;
   text-shadow:
@@ -580,6 +581,18 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+@media (max-width: 639px) {
+  .home-title {
+    font-size: 6rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .home-title {
+    font-size: 8rem;
+  }
 }
 
 .home-tagline {
@@ -626,16 +639,17 @@
    响应式闪烁标语位置：移动端也显示，同时避免遮挡主标题。 */
 .home-splash-wrap {
   position: absolute;
-  right: -4.25rem;
-  bottom: -4.25rem;
-  transform: scale(0.58);
+  right: -2rem;
+  bottom: 2rem;
+  transform: scale(0.42);
   transform-origin: center;
+  z-index: 10;
 }
 
 @media (min-width: 640px) {
   .home-splash-wrap {
     right: -5rem;
-    bottom: -3.5rem;
+    bottom: 2rem;
     transform: scale(0.72);
   }
 }
@@ -643,7 +657,7 @@
 @media (min-width: 768px) {
   .home-splash-wrap {
     right: -6rem;
-    bottom: -2.5rem;
+    bottom: 2rem;
     transform: scale(1);
   }
 }

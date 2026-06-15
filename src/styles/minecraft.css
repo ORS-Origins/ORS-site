@@ -1289,23 +1289,24 @@
 }
 
 /* ── Minecraft Splash Text / Minecraft 闪烁标语 ─────────────────── */
-/* Random player splash image next to the brand wordmark.
-   品牌标题旁随机显示的玩家标语图片。 */
+/* Random splash text next to the brand wordmark.
+   品牌标题旁随机显示的闪烁标语文本。 */
 
 .mc-splash {
   pointer-events: none;
-  width: 14rem;
-  height: 9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transform: rotate(-12deg);
-  filter: drop-shadow(0 0 18px rgba(93, 188, 77, 0.5));
+  filter: drop-shadow(0 0 18px rgba(255, 255, 0, 0.7));
 }
 
-.mc-splash__img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  image-rendering: pixelated;
+.mc-splash__text {
+  font-size: 1.5rem;
+  color: #ffff00;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.45);
   animation: mc-splash-zoom 0.5s ease-in-out infinite alternate;
+  white-space: nowrap;
 }
 
 @keyframes mc-splash-zoom {
@@ -1318,7 +1319,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mc-splash__img {
+  .mc-splash__text {
     animation: none !important;
   }
 }

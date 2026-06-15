@@ -1,8 +1,6 @@
 // Locale home page: brand entry + MC server status component + dynamic light & shadow.
 // 多语言首页：品牌入口 + MC 服务器状态组件 + 动态光影。
 
-import { readdirSync } from 'node:fs';
-import { join } from 'node:path';
 import { McServerStatus } from '@/components/mc-status';
 import { SplashText } from '@/components/splash-text';
 import EnterDocsButton from '@/components/transition/enter-docs-button';
@@ -15,28 +13,10 @@ export function generateStaticParams() {
   return i18n.languages.map((lang) => ({ lang }));
 }
 
-// Splash files are enumerated during build; the client component picks one on page load.
-// 闪烁标语文件在构建时枚举，客户端组件在页面加载时随机选择其中一张。
-function getSplashFiles(): string[] {
-  try {
-    const splashDir = join(
-      /*turbopackIgnore: true*/ process.cwd(),
-      brandConfig.splashPublicRoot,
-      brandConfig.splashPathPrefix.replace(/^\/+/, ''),
-    );
-    return readdirSync(splashDir)
-      .filter((file) => file.endsWith(brandConfig.splashImageExtension))
-      .sort((a, b) => a.localeCompare(b));
-  } catch {
-    return [];
-  }
-}
-
 export default async function HomePage({ params }: PageProps<'/[lang]'>) {
   const { lang } = await params;
   const locale = (lang as Locale) ?? i18n.defaultLanguage;
   const dict = getPageDictionary(locale);
-  const splashFiles = getSplashFiles();
 
   return (
     <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24">
@@ -101,16 +81,12 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
       <div aria-hidden="true" className="home-vignette" />
 
       {/* Main content area / 主内容区域 */}
-      <div className="relative z-10 flex flex-col items-center gap-8 text-center">
+      <div className="relative z-10 flex flex-col items-center gap-4 text-center">
         <div className="home-enter home-enter--delay-1 relative">
-          <h1 className="home-title text-6xl md:text-8xl font-minecrafter">
-            {brandConfig.homeTitle}
-          </h1>
-          {splashFiles.length > 0 && (
-            <div className="home-splash-wrap">
-              <SplashText files={splashFiles} pathPrefix={brandConfig.splashPathPrefix} />
-            </div>
-          )}
+          <h1 className="home-title font-minecrafter">{brandConfig.homeTitle}</h1>
+          <div className="home-splash-wrap">
+            <SplashText key={Date.now()} />
+          </div>
         </div>
         <p className="home-enter home-enter--delay-2 text-xl md:text-2xl max-w-xl mx-auto font-minecraft-ae leading-relaxed home-tagline">
           {dict.tagline}
