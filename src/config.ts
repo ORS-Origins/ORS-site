@@ -91,6 +91,16 @@ export const uiConfig = {
     controlTopPx: 175,
     controlWidthPx: 34,
     controlHeightPx: 28,
+    /** Collapsed toggle reserved space for the system scrollbar. / 折叠按钮为系统滚动条预留的安全距离。 */
+    scrollbarSafeAreaPx: 18,
+    /** Dark mode toggle surface color. / 深色模式切换按钮表面色。 */
+    darkControlSurface: 'rgba(18, 33, 68, 0.92)',
+    /** Dark mode toggle hover surface color. / 深色模式切换按钮悬浮表面色。 */
+    darkControlSurfaceHover: 'rgba(28, 50, 96, 0.96)',
+    /** Dark mode toggle border color. / 深色模式切换按钮边框色。 */
+    darkControlBorder: 'rgba(95, 145, 220, 0.42)',
+    /** Dark mode toggle glow color. / 深色模式切换按钮光晕色。 */
+    darkControlGlow: 'rgba(80, 140, 220, 0.34)',
     collapsedControlOffsetPx: 0,
     slideOffsetPx: 24,
   },

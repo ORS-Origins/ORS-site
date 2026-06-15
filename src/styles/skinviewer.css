@@ -68,13 +68,21 @@
     left 0.28s ease,
     transform 0.16s ease,
     filter 0.16s ease,
+    background 0.16s ease,
+    color 0.16s ease,
+    box-shadow 0.16s ease,
     border-color 0.16s ease;
 }
 
-/* Collapse handle moves with the character and leaves only half visible at the right edge.
-   收起时按钮跟随人物滑向右侧，仅在视口右边缘露出一半作为把手。 */
+/* Collapse handle reserves scrollbar safe space while staying attached to the right edge.
+   折叠把手为系统滚动条预留安全距离，同时保持贴近右侧边缘。 */
 .skinviewer-shell--collapsed .skinviewer-toggle {
-  left: calc(100% + var(--skinviewer-right) + var(--skinviewer-collapsed-control-offset));
+  left: calc(
+    100% +
+    var(--skinviewer-right) +
+    var(--skinviewer-collapsed-control-offset) -
+    var(--skinviewer-scrollbar-safe-area)
+  );
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   box-shadow:
@@ -83,13 +91,27 @@
 }
 
 .skinviewer-toggle::after {
-  position: absolute;
-  inset: 3px;
-  border: 1px solid var(--glass-border-hairline);
-  border-radius: calc(var(--radius-lg) - 5px);
+  display: none;
   content: "";
-  opacity: 0.55;
-  pointer-events: none;
+}
+
+/* Dark mode uses a neutral glass handle to avoid dated accent-heavy styling.
+   深色模式使用中性玻璃把手，避免过重的强调色显得老气。 */
+:is([data-theme="dark"], .dark) .skinviewer-toggle {
+  color: color-mix(in oklab, var(--foreground) 92%, var(--skinviewer-dark-control-glow));
+  background:
+    radial-gradient(
+      120% 88% at 18% 0%,
+      color-mix(in oklab, var(--skinviewer-dark-control-glow) 84%, transparent),
+      transparent 62%
+    ),
+    linear-gradient(155deg, var(--skinviewer-dark-control-surface), var(--glass-tint-medium));
+  border-color: var(--skinviewer-dark-control-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 color-mix(in oklab, var(--background) 76%, transparent),
+    0 12px 28px -18px var(--skinviewer-dark-control-glow),
+    var(--nav-control-shadow);
 }
 
 .skinviewer-toggle:hover {
@@ -101,6 +123,25 @@
   border-color: var(--nav-control-border);
   box-shadow: var(--nav-control-shadow-hover);
   transform: translateX(-50%) translateY(-1px);
+}
+
+/* Dark mode hover strengthens the deep-blue surface without adding a second frame.
+   深色模式悬浮时强化深蓝表面，不额外增加第二层边框。 */
+:is([data-theme="dark"], .dark) .skinviewer-toggle:hover {
+  color: var(--foreground);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--foreground) 12%, transparent),
+      transparent 56%
+    ),
+    linear-gradient(155deg, var(--skinviewer-dark-control-surface-hover), var(--glass-tint-medium));
+  border-color: color-mix(in oklab, var(--skinviewer-dark-control-border) 82%, var(--foreground));
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 color-mix(in oklab, var(--background) 70%, transparent),
+    0 14px 34px -16px var(--skinviewer-dark-control-glow),
+    var(--nav-control-shadow-hover);
 }
 
 .skinviewer-toggle:active {

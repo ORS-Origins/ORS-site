@@ -524,6 +524,11 @@ export function SkinViewerComponent({
     '--skinviewer-control-top': `${uiConfig.skinViewer.controlTopPx}px`,
     '--skinviewer-control-width': `${uiConfig.skinViewer.controlWidthPx}px`,
     '--skinviewer-control-height': `${uiConfig.skinViewer.controlHeightPx}px`,
+    '--skinviewer-scrollbar-safe-area': `${uiConfig.skinViewer.scrollbarSafeAreaPx}px`,
+    '--skinviewer-dark-control-surface': uiConfig.skinViewer.darkControlSurface,
+    '--skinviewer-dark-control-surface-hover': uiConfig.skinViewer.darkControlSurfaceHover,
+    '--skinviewer-dark-control-border': uiConfig.skinViewer.darkControlBorder,
+    '--skinviewer-dark-control-glow': uiConfig.skinViewer.darkControlGlow,
     '--skinviewer-collapsed-control-offset': `${uiConfig.skinViewer.collapsedControlOffsetPx}px`,
     '--skinviewer-slide-offset': `${uiConfig.skinViewer.slideOffsetPx}px`,
   } satisfies CSSProperties &
@@ -535,6 +540,11 @@ export function SkinViewerComponent({
       | '--skinviewer-control-top'
       | '--skinviewer-control-width'
       | '--skinviewer-control-height'
+      | '--skinviewer-scrollbar-safe-area'
+      | '--skinviewer-dark-control-surface'
+      | '--skinviewer-dark-control-surface-hover'
+      | '--skinviewer-dark-control-border'
+      | '--skinviewer-dark-control-glow'
       | '--skinviewer-collapsed-control-offset'
       | '--skinviewer-slide-offset',
       string
