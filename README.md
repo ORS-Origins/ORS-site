@@ -32,6 +32,8 @@ ORS-Site 是一个基于 [Next.js](https://nextjs.org/) 与 [Fumadocs](https://f
 - 🌐 **多语言支持** — 默认简体中文，支持英文切换
 - 📚 **文档系统** — Markdown/MDX 渲染、自动生成目录导航、Orama 全文搜索
 - 🖱️ **自定义交互** — Minecraft 风格光标动画、右键自定义菜单、页面过渡动画
+- 🎭 **纸娃娃查看器** — 浮动 Minecraft 玩家皮肤展示，支持深浅色模式切换
+- 📊 **Mermaid 图表** — 支持流程图、时序图等 Mermaid 图表渲染与交互式缩放
 - 🚀 **静态导出** — 可部署到 Vercel、Cloudflare Pages、GitHub Pages 等平台
 
 ---
@@ -62,6 +64,8 @@ ORS-Site 是一个基于 [Next.js](https://nextjs.org/) 与 [Fumadocs](https://f
 | 动画 | [Framer Motion](https://www.framer.com/motion/) | 12.x |
 | 搜索 | [Orama](https://orama.com/) + `@orama/tokenizers` | — |
 | 图标 | [Lucide React](https://lucide.dev/) | — |
+| 图表 | [Mermaid](https://mermaid.js.org/) | 11.x |
+| 主题 | [next-themes](https://github.com/pacocoursey/next-themes) | 0.4.x |
 | 包管理器 | [Bun](https://bun.sh/) | 1.0+ |
 | 代码规范 | [Biome](https://biomejs.dev/) | 2.4.16 |
 
@@ -71,48 +75,141 @@ ORS-Site 是一个基于 [Next.js](https://nextjs.org/) 与 [Fumadocs](https://f
 
 ```txt
 .
-├── content/docs/              # 文档源文件
-│   ├── zh/                    # 中文文档
-│   │   ├── about/             # 关于 ORS
-│   │   ├── guide/             # 新手指南
-│   │   └── rules/             # 服务器规则
-│   └── en/                    # 英文文档（与 zh 镜像）
-├── public/                    # 静态资源
-│   ├── imgs/                  # 图片资源
-│   │   ├── avatars/           # 玩家头像
-│   │   ├── blocks/            # Minecraft 方块纹理
-│   │   ├── items/             # Minecraft 物品纹理
-│   │   ├── icons/             # UI 图标
-│   │   ├── paintings/         # 画作纹理
-│   │   ├── photos/            # 首页轮播照片
-│   │   └── splash/            # 闪烁标语图片
-│   ├── fonts/                 # Minecraft 风格字体
-│   └── audios/                # 音效文件
+├── content/docs/                  # 文档源文件
+│   ├── zh/                        # 中文文档
+│   │   ├── about/                 # 关于 ORS
+│   │   │   ├── index.mdx          # 关于首页
+│   │   │   ├── contributing.mdx   # 贡献指南
+│   │   │   ├── code-tabs-demo.mdx # 代码块标签页演示
+│   │   │   ├── syntax-example.md  # 语法示例
+│   │   │   └── meta.json          # 目录元数据
+│   │   ├── guide/                 # 新手指南
+│   │   │   ├── index.mdx          # 指南首页
+│   │   │   └── meta.json          # 目录元数据
+│   │   └── meta.json              # 顶级元数据
+│   └── en/                        # 英文文档（与 zh 镜像）
+│       ├── about/
+│       │   ├── index.mdx
+│       │   └── meta.json
+│       ├── guide/
+│       │   ├── index.mdx
+│       │   └── meta.json
+│       └── meta.json
+├── public/                        # 静态资源
+│   ├── imgs/                      # 图片资源
+│   │   ├── avatars/               # 玩家头像
+│   │   ├── blocks/                # Minecraft 方块纹理
+│   │   ├── icons/                 # UI 图标
+│   │   ├── items/                 # Minecraft 物品纹理
+│   │   ├── paintings/             # 画作纹理
+│   │   ├── photos/                # 首页轮播照片
+│   │   ├── ui/                    # Minecraft UI 元素（按钮、面板、槽位等）
+│   │   └── widget/                # 小部件（Logo、加载动画）
+│   ├── fonts/                     # Minecraft 风格字体
+│   │   ├── Minecraft-*.woff2      # Minecraft 官方字体
+│   │   ├── Minecrafter*.woff2     # Minecrafter 装饰字体
+│   │   ├── MinecraftEvenings.woff2
+│   │   └── Monocraft.woff2        # 等宽编程字体
+│   └── audios/                    # 音效文件
+│       ├── Block.barrel.*.wav     # 木桶开关音效
+│       ├── click.wav              # 点击音效
+│       ├── fuse.wav               # 引信音效
+│       ├── orb.wav                # 经验球音效
+│       ├── Step.wood3.wav         # 木板脚步声
+│       └── Tannng.mp3             # 自定义音效
 ├── src/
-│   ├── app/                   # Next.js App Router
-│   │   ├── [lang]/            # 多语言路由
-│   │   │   ├── (home)/        # 首页
-│   │   │   └── docs/          # 文档页
-│   │   ├── api/search/        # 搜索 API 路由
-│   │   ├── layout.tsx         # 根布局
-│   │   └── globals.css        # 全局样式
-│   ├── components/            # React 组件
-│   │   ├── mdx/               # MDX 自定义组件
-│   │   └── transition/        # 过渡动画组件
-│   ├── dictionaries/          # 页面级 i18n 文案
-│   ├── lib/                   # 工具库
-│   │   ├── i18n.ts            # i18n 配置
-│   │   ├── source.ts          # Fumadocs 文档源配置
-│   │   └── search-tokenizer.ts
-│   ├── styles/                # 自定义 CSS
-│   │   ├── minecraft.css      # Minecraft 主题样式
-│   │   ├── home.css           # 首页特效样式
-│   │   └── theme.css          # 主题变量
-│   └── config.ts              # 站点集中式配置
-├── next.config.ts             # Next.js 配置
-├── biome.json                 # Biome 配置
-├── postcss.config.mjs         # PostCSS 配置
-└── package.json
+│   ├── app/                       # Next.js App Router
+│   │   ├── [lang]/                # 多语言路由
+│   │   │   ├── (home)/            # 首页（路由组）
+│   │   │   │   ├── page.tsx       # 首页组件
+│   │   │   │   ├── layout.tsx     # 首页布局
+│   │   │   │   └── template.tsx   # 首页过渡模板
+│   │   │   ├── docs/              # 文档页
+│   │   │   │   ├── [...slug]/     # 动态路由
+│   │   │   │   │   └── page.tsx   # 文档页面组件
+│   │   │   │   ├── layout.tsx     # 文档布局
+│   │   │   │   ├── not-found.tsx  # 文档 404
+│   │   │   │   └── template.tsx   # 文档过渡模板
+│   │   │   ├── error.tsx          # 多语言路由错误边界
+│   │   │   └── layout.tsx         # 多语言根布局
+│   │   ├── api/search/            # 搜索 API 路由
+│   │   │   └── route.ts           # Orama 全文搜索接口
+│   │   ├── error.tsx              # 全局错误边界
+│   │   ├── globals.css            # 全局样式入口
+│   │   ├── layout.tsx             # 应用根布局
+│   │   ├── loading.tsx            # 全局加载状态
+│   │   ├── not-found.tsx          # 全局 404 页面
+│   │   └── page.tsx               # 根路径重定向
+│   ├── components/                # React 组件
+│   │   ├── mdx/                   # MDX 自定义组件
+│   │   │   ├── code-tabs.tsx          # 多语言代码块标签页
+│   │   │   ├── custom-codeblock.tsx   # 自定义代码块
+│   │   │   ├── docs-author.tsx        # 文档作者组件
+│   │   │   └── mermaid.tsx            # Mermaid 图表组件
+│   │   ├── transition/            # 过渡动画组件
+│   │   │   ├── enter-docs-button.tsx  # 进入文档按钮动画
+│   │   │   └── mask-reveal.tsx        # 遮罩揭示过渡
+│   │   ├── context-menu.tsx       # 右键自定义菜单
+│   │   ├── mc-status.tsx          # Minecraft 服务器状态卡片
+│   │   ├── nav-logo.tsx           # 导航栏 Logo
+│   │   ├── route-state.tsx        # 路由状态（加载/404）
+│   │   ├── search.tsx             # 搜索组件
+│   │   ├── sidebar-provider.tsx   # 侧栏状态管理
+│   │   ├── skin-viewer.tsx        # 纸娃娃查看器
+│   │   └── splash-text.tsx        # 闪烁标语组件
+│   ├── dictionaries/              # 页面级 i18n 文案
+│   │   ├── index.ts               # 字典入口
+│   │   ├── zh.ts                  # 中文文案
+│   │   └── en.ts                  # 英文文案
+│   ├── lib/                       # 工具库
+│   │   ├── i18n.ts                # i18n 路由配置
+│   │   ├── source.ts              # Fumadocs 文档源配置
+│   │   ├── language-mapping.ts    # 语言代码映射
+│   │   ├── layout.shared.tsx      # 共享布局组件
+│   │   ├── motion.ts              # Framer Motion 动画工具
+│   │   ├── parse-author.ts        # 作者信息解析
+│   │   ├── remark-code-title.ts   # 代码块标题 remark 插件
+│   │   ├── remark-collapsible-alert.ts # 可折叠提示框 remark 插件
+│   │   ├── search-tokenizer.ts    # Orama 搜索分词器
+│   │   └── transformer-meta-title.ts  # 元数据标题转换器
+│   ├── styles/                    # 自定义 CSS 样式
+│   │   ├── a11y.css               # 无障碍样式
+│   │   ├── fumadocs-glass.css     # Fumadocs 玻璃化覆盖
+│   │   ├── glass.css              # 液态玻璃基础样式
+│   │   ├── home.css               # 首页特效样式
+│   │   ├── mermaid.css            # Mermaid 图表样式
+│   │   ├── minecraft.css          # Minecraft 主题样式
+│   │   ├── skinviewer.css         # 纸娃娃查看器样式
+│   │   ├── skinviewer-animation.css # 纸娃娃动画样式
+│   │   ├── theme.css              # 主题变量与过渡
+│   │   └── typography.css         # 排版样式（代码块、表格等）
+│   └── config.ts                  # 站点集中式配置
+├── .mimocode/                     # MiMoCode 工作流配置
+│   ├── command/                   # 命令模板
+│   │   └── git-commit.md          # Git 提交规范
+│   ├── plans/                     # 任务计划
+│   ├── skills/                    # 自定义技能
+│   │   └── post-edit-verify/      # 编辑后验证技能
+│   ├── package.json               # MiMoCode 依赖
+│   └── .gitignore                 # Git 忽略配置
+├── .source/                       # Fumadocs 构建产物
+│   ├── browser.ts
+│   ├── dynamic.ts
+│   ├── server.ts
+│   └── source.config.mjs
+├── .vscode/                       # VS Code 配置
+│   ├── prompt/                    # 提示词模板
+│   │   └── commit-instruction.md  # 提交信息规范
+│   └── settings.json              # 编辑器设置
+├── scripts/                       # 脚本目录
+├── next.config.ts                 # Next.js 配置
+├── biome.json                     # Biome 格式化与 lint 配置
+├── postcss.config.mjs             # PostCSS 配置（Tailwind CSS）
+├── source.config.ts               # Fumadocs MDX 源配置
+├── tsconfig.json                  # TypeScript 配置
+├── bun.lock                       # Bun 锁文件
+├── LICENSE                        # MIT 许可证
+└── package.json                   # 项目依赖与脚本
 ```
 
 ---
@@ -161,7 +258,7 @@ bun start
 | `bun dev` | 启动 Next.js 开发服务器 |
 | `bun run build` | 构建生产版本（静态导出） |
 | `bun start` | 使用 `serve` 预览 `out/` 目录 |
-| `bun run typecheck` | 运行 TypeScript 类型检查 |
+| `bun run typecheck` | 运行 TypeScript 类型检查（含 `next typegen` 和 `fumadocs-mdx`） |
 | `bun run lint` | 运行 Biome Linter |
 | `bun run format` | 运行 Biome 格式化 |
 | `bun run check` | 运行 Biome 检查与自动修复 |
@@ -182,13 +279,23 @@ bun start
 | `defaultDocsPath` | `guide` | 默认文档入口路径 |
 | `docsBaseUrl` | `/docs` | Fumadocs 文档基础路径 |
 
+### 品牌配置（`brandConfig`）
+
+| 字段 | 默认值 | 说明 |
+| :--- | :--- | :--- |
+| `homeTitle` | `ORS` | 首页大号品牌标题 |
+| `aboutUrl` | GitHub 仓库地址 | 右键菜单"关于"跳转链接 |
+| `splashTexts` | 玩家标语文本数组 | 首页闪烁标语文本池 |
+
 ### Minecraft 服务器配置（`mcConfig`）
 
 | 字段 | 默认值 | 说明 |
 | :--- | :--- | :--- |
-| `serverIp` | `rio.mc6.cn` | 服务器域名或 IP |
-| `defaultPort` | `31015` | 服务器端口 |
+| `serverIp` | `bgp.strynir.cloud` | 服务器域名或 IP |
+| `defaultPort` | `58608` | 服务器端口 |
 | `statusApiBase` | `https://api.mcsrvstat.us/3` | 状态查询 API |
+| `avatarApiBase` | `https://mc-heads.net/avatar` | 玩家头像 API |
+| `avatarSize` | `16` | 头像图片尺寸（px） |
 | `pollingIntervalMs` | `60000` | 状态轮询间隔（毫秒） |
 | `showServerIp` | `true` | 是否显示服务器 IP |
 
@@ -198,6 +305,45 @@ bun start
 | :--- | :--- | :--- |
 | `transitionDurationMs` | `300` | 主题切换过渡时长 |
 | `maskRevealDurationMs` | `2500` | 页面过渡动画时长 |
+| `maskRevealEase` | `[0.22, 0.61, 0.36, 1.0]` | 遮罩揭示缓动曲线 |
+| `docsTransitionMaxAgeMs` | `3000` | 文档过渡最大有效期 |
+
+### UI 配置（`uiConfig`）
+
+| 字段 | 默认值 | 说明 |
+| :--- | :--- | :--- |
+| `contextMenu.width` | `192` | 右键菜单宽度（px） |
+| `contextMenu.itemHeight` | `40` | 右键菜单项高度（px） |
+| `docsLayout.sidebarWidth` | `268px` | 文档侧栏宽度 |
+| `tocStyle` | `clerk` | 目录样式 |
+| `skinViewer.*` | — | 纸娃娃查看器位置与样式参数 |
+| `routeState.loadingIconPath` | `/imgs/widget/loading.png` | 加载动画图标路径 |
+| `routeState.notFoundIconPath` | `/imgs/blocks/bedrock.png` | 404 页面图标路径 |
+
+### Mermaid 图表配置（`mermaidConfig`）
+
+| 字段 | 默认值 | 说明 |
+| :--- | :--- | :--- |
+| `minScale` | `0.25` | 最小缩放比例 |
+| `maxScale` | `4` | 最大缩放比例 |
+| `scaleStep` | `0.25` | 每次点击缩放步进值 |
+| `defaultScale` | `1` | 默认缩放比例 |
+
+### 搜索配置（`searchConfig`）
+
+| 字段 | 默认值 | 说明 |
+| :--- | :--- | :--- |
+| `threshold` | `0` | CJK 分词器搜索阈值 |
+| `tolerance` | `0` | CJK 分词器搜索容差 |
+
+### 存储键名（`storageKeys`）
+
+| 字段 | 键名 | 说明 |
+| :--- | :--- | :--- |
+| `sidebarCollapsed` | `sidebar-collapsed` | 侧栏折叠状态 |
+| `skinViewerCollapsed` | `skin-viewer-collapsed` | 纸娃娃收起状态 |
+| `transitionData` | `nd-docs-transition` | 页面过渡快照数据 |
+| `transitionSnapshot` | `nd-docs-transition-snapshot` | 页面过渡 DOM 快照 |
 
 ---
 
@@ -225,7 +371,7 @@ description: ORS Minecraft 服务器规则，所有玩家必须遵守。
 ---
 ```
 
-更多语法与组件用法请参阅 `content/docs/zh/contributing/` 下的贡献指南文档。
+更多语法与组件用法请参阅 `content/docs/zh/about/contributing.mdx` 下的贡献指南文档。
 
 ---
 
@@ -246,7 +392,7 @@ description: ORS Minecraft 服务器规则，所有玩家必须遵守。
 
 5. **提交 PR**：按照 `.vscode/prompt/commit-instruction.md` 规范编写 Commit Message
 
-详细的贡献流程请参阅站内文档：[贡献指南](content/docs/zh/contributing/guide.md)
+详细的贡献流程请参阅站内文档：[贡献指南](content/docs/zh/about/contributing.mdx)
 
 ---
 
