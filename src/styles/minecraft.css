@@ -1288,6 +1288,538 @@
   }
 }
 
+/* ── Route State Surfaces / 路由状态界面 ─────────────────────────── */
+/* Shared full-screen presentation for loading, 404, and error boundaries.
+   加载、404 与错误边界共用的全屏展示界面。 */
+.route-state {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 100dvh;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 6rem 1.5rem 4rem;
+  color: var(--foreground);
+  background: var(--background);
+}
+
+.route-state::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--fd-primary) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--fd-primary) 7%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at center, black 0%, transparent 68%);
+  opacity: 0.42;
+}
+
+/* Route state ambient layer: reuses docs floating blocks but scopes dust positions
+   because this scene has fewer decorative siblings than docs pages.
+   路由状态环境层：复用文档浮动方块，并按较少的装饰节点重设像素尘埃位置。 */
+.route-state__ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.route-state__ambient .mc-doc-halo {
+  opacity: 0.18;
+}
+
+.route-state__ambient .mc-doc-float-block {
+  opacity: 0.32;
+}
+
+.route-state__ambient .mc-doc-pixel-dust:nth-child(8) {
+  top: 22%;
+  left: 28%;
+  animation-duration: 18s;
+  animation-delay: -2s;
+  color: rgb(var(--mc-emerald));
+}
+
+.route-state__ambient .mc-doc-pixel-dust:nth-child(9) {
+  top: 62%;
+  left: 72%;
+  animation-duration: 22s;
+  animation-delay: -8s;
+  color: rgb(var(--mc-soul));
+}
+
+.route-state__ambient .mc-doc-pixel-dust:nth-child(10) {
+  top: 74%;
+  left: 34%;
+  animation-duration: 16s;
+  animation-delay: -12s;
+  color: rgb(var(--mc-sea-lantern));
+}
+
+.route-state__ambient .mc-doc-pixel-dust:nth-child(11) {
+  top: 34%;
+  left: 62%;
+  animation-duration: 20s;
+  animation-delay: -5s;
+  color: rgb(var(--mc-soul));
+}
+
+/* Route state card: a compact glass surface matching the current homepage/docs UI.
+   路由状态卡片：与当前首页 / 文档 UI 一致的紧凑玻璃界面。 */
+.route-state__card {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  width: min(100%, 36rem);
+  flex-direction: column;
+  align-items: center;
+  gap: 1.35rem;
+  padding: 2.25rem;
+  text-align: center;
+  background:
+    radial-gradient(
+      90% 64% at 50% 0%,
+      color-mix(in oklab, var(--fd-primary) 14%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(70% 52% at 92% 18%, rgba(var(--mc-soul), 0.1), transparent 72%),
+    var(--glass-tint-strong);
+}
+
+.route-state__card::before {
+  content: "";
+  position: absolute;
+  inset: 0.75rem;
+  pointer-events: none;
+  border: 1px solid var(--glass-border-hairline);
+  border-radius: calc(var(--radius-xl, 1rem) - 0.25rem);
+  opacity: 0.72;
+}
+
+.route-state__card--loading {
+  width: min(100%, 32rem);
+  gap: 1.15rem;
+}
+
+.route-state__brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  color: var(--foreground);
+  font-size: 2.6rem;
+  line-height: 1;
+  text-shadow: none;
+}
+
+.route-state__logo {
+  width: 4rem;
+  height: 4rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 16px color-mix(in oklab, var(--fd-primary) 26%, transparent))
+    drop-shadow(0 10px 24px rgba(0, 0, 0, 0.22));
+}
+
+.route-state__icon-shell {
+  display: inline-flex;
+  position: relative;
+  width: 5.75rem;
+  height: 5.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--glass-border-hairline);
+  border-radius: 1rem;
+  background:
+    radial-gradient(
+      circle at 50% 36%,
+      color-mix(in oklab, var(--fd-primary) 18%, transparent),
+      transparent 62%
+    ),
+    var(--glass-tint-soft);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 18px 36px -24px rgba(0, 0, 0, 0.5);
+}
+
+.route-state__icon-shell::before {
+  content: "";
+  position: absolute;
+  inset: -0.35rem;
+  border: 1px solid color-mix(in oklab, var(--fd-primary) 24%, transparent);
+  border-radius: 1.35rem;
+  opacity: 0.5;
+}
+
+.route-state__status-image {
+  width: 3.35rem;
+  height: 3.35rem;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 12px color-mix(in oklab, var(--fd-primary) 20%, transparent))
+    drop-shadow(0 8px 18px rgba(0, 0, 0, 0.22));
+}
+
+.route-state__error-core {
+  position: relative;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 0.7rem;
+  background:
+    linear-gradient(135deg, rgba(var(--mc-redstone), 0.9), rgba(var(--mc-amethyst), 0.58)),
+    var(--glass-tint-soft);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 28px rgba(var(--mc-redstone), 0.32);
+  transform: rotate(45deg);
+}
+
+.route-state__error-core::before,
+.route-state__error-core::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.35rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.route-state__error-core::after {
+  width: 0.42rem;
+  height: 0.42rem;
+  transform: translate(-50%, 1.05rem) rotate(-45deg);
+}
+
+/* Loading mark: brand logo, quiet orbital blocks, and no block-breaking cracks.
+   加载标记：品牌 Logo、轻量环绕方块，不再使用方块破坏裂纹。 */
+.route-state__loader {
+  position: relative;
+  display: grid;
+  width: 8.5rem;
+  height: 8.5rem;
+  place-items: center;
+}
+
+.route-state__loader::before,
+.route-state__loader::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.route-state__loader::before {
+  inset: 0.35rem;
+  border: 1px solid color-mix(in oklab, var(--fd-primary) 24%, transparent);
+  box-shadow:
+    inset 0 0 24px color-mix(in oklab, var(--fd-primary) 10%, transparent),
+    0 0 42px color-mix(in oklab, var(--fd-primary) 16%, transparent);
+  animation: route-state-loader-breathe 1.8s ease-in-out infinite;
+}
+
+.route-state__loader::after {
+  inset: 1.35rem;
+  background:
+    radial-gradient(
+      circle,
+      color-mix(in oklab, var(--fd-primary) 16%, transparent),
+      transparent 64%
+    ),
+    var(--glass-tint-soft);
+  -webkit-backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate));
+}
+
+.route-state__loader-ring {
+  position: absolute;
+  inset: 0;
+  animation: route-state-loader-spin 3.8s linear infinite;
+}
+
+.route-state__loader-cube {
+  position: absolute;
+  width: 1.05rem;
+  height: 1.05rem;
+  image-rendering: pixelated;
+  background: linear-gradient(135deg, rgb(var(--mc-emerald)), rgb(var(--mc-soul)));
+  box-shadow:
+    0 0 14px color-mix(in oklab, var(--fd-primary) 32%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.route-state__loader-cube--one {
+  top: 0.1rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.route-state__loader-cube--two {
+  top: 50%;
+  right: 0.1rem;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, rgb(var(--mc-soul)), rgb(var(--mc-sea-lantern)));
+}
+
+.route-state__loader-cube--three {
+  bottom: 0.1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgb(var(--mc-sea-lantern)), rgb(var(--mc-emerald)));
+}
+
+.route-state__loader-cube--four {
+  top: 50%;
+  left: 0.1rem;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, rgb(var(--mc-amethyst)), rgb(var(--mc-soul)));
+}
+
+.route-state__loader-core {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 4.75rem;
+  height: 4.75rem;
+  place-items: center;
+  border: 1px solid var(--glass-border-hairline);
+  border-radius: 1.1rem;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.18), transparent 58%),
+    var(--glass-tint-strong);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    var(--glass-shadow-hover);
+}
+
+.route-state__loader-logo {
+  width: 3.3rem;
+  height: 3.3rem;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 18px color-mix(in oklab, var(--fd-primary) 26%, transparent));
+}
+
+.route-state__code {
+  margin: 0;
+  color: var(--nav-control-active-color);
+  font-size: 4.5rem;
+  line-height: 0.9;
+  letter-spacing: 0;
+  filter: drop-shadow(0 0 18px color-mix(in oklab, var(--fd-primary) 28%, transparent));
+  text-shadow: none;
+}
+
+.route-state__copy {
+  display: flex;
+  width: min(100%, 26rem);
+  max-width: 26rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.route-state__title {
+  width: 100%;
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1.35rem;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: none;
+}
+
+.route-state__description {
+  width: 100%;
+  margin: 0;
+  color: var(--color-fd-muted-foreground);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: none;
+  text-wrap: balance;
+}
+
+.route-state__digest {
+  margin: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  border: 1px solid var(--glass-border-hairline);
+  border-radius: var(--radius-md);
+  background: var(--glass-tint-soft);
+  padding: 0.45rem 0.65rem;
+  color: var(--color-fd-muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  text-shadow: none;
+}
+
+.route-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.route-state__action {
+  min-width: 8.5rem;
+  padding: 0.72rem 1.05rem !important;
+  border: 1px solid var(--nav-control-border) !important;
+  border-width: 1px !important;
+  border-radius: var(--radius-lg) !important;
+  border-image: none !important;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--fd-primary) 12%, transparent),
+      transparent 58%
+    ),
+    var(--nav-control-background) !important;
+  background-image: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--fd-primary) 12%, transparent),
+    transparent 58%
+  ) !important;
+  background-color: var(--nav-control-background) !important;
+  color: var(--nav-control-color) !important;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    var(--nav-control-shadow) !important;
+  text-decoration: none;
+  text-shadow: none !important;
+  transform: translateZ(0);
+  transition:
+    border-color var(--theme-transition-duration) ease,
+    box-shadow var(--theme-transition-duration) ease,
+    color var(--theme-transition-duration) ease,
+    transform var(--theme-transition-duration) cubic-bezier(0.16, 1, 0.3, 1),
+    background-color var(--theme-transition-duration) ease,
+    filter var(--theme-transition-duration) ease;
+}
+
+.route-state__action:hover {
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--fd-primary) 20%, transparent),
+      transparent 58%
+    ),
+    var(--nav-control-background-hover) !important;
+  background-image: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--fd-primary) 20%, transparent),
+    transparent 58%
+  ) !important;
+  background-color: var(--nav-control-background-hover) !important;
+  border-color: color-mix(in oklab, var(--fd-primary) 36%, var(--nav-control-border)) !important;
+  color: var(--nav-control-active-color) !important;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 14px 34px -20px color-mix(in oklab, var(--fd-primary) 45%, transparent),
+    var(--nav-control-shadow-hover) !important;
+  filter: brightness(1.04);
+  transform: translateY(-2px);
+}
+
+.route-state__action:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@keyframes route-state-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes route-state-loader-breathe {
+  0%,
+  100% {
+    opacity: 0.62;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@media (min-width: 768px) {
+  .route-state__card {
+    padding: 2.5rem;
+  }
+
+  .route-state__brand {
+    font-size: 3rem;
+  }
+
+  .route-state__logo {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  .route-state__code {
+    font-size: 5.5rem;
+  }
+
+  .route-state__title {
+    font-size: 1.55rem;
+  }
+}
+
+@media (max-width: 767.98px), (hover: none) and (pointer: coarse) {
+  .route-state__ambient .mc-doc-float-block,
+  .route-state__ambient .mc-doc-pixel-dust {
+    display: none !important;
+  }
+
+  .route-state__card {
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .route-state__brand {
+    gap: 0.65rem;
+    font-size: 2rem;
+  }
+
+  .route-state__logo {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
+  .route-state__loader {
+    width: 7.25rem;
+    height: 7.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-state__ambient .mc-doc-halo,
+  .route-state__ambient .mc-doc-float-block,
+  .route-state__ambient .mc-doc-pixel-dust,
+  .route-state__loader,
+  .route-state__loader::before,
+  .route-state__loader-ring {
+    animation: none !important;
+  }
+}
+
 /* ── Minecraft Splash Text / Minecraft 闪烁标语 ─────────────────── */
 /* Random splash text next to the brand wordmark.
    品牌标题旁随机显示的闪烁标语文本。 */

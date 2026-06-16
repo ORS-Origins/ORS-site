@@ -9,3 +9,13 @@ export const i18n = defineI18n({
 });
 
 export type Locale = (typeof i18n.languages)[number];
+
+export function getLocaleFromPathname(pathname: string | null | undefined): Locale {
+  // Resolve locale from the first route segment for global route-state boundaries.
+  // 为全局路由状态边界从首个路径片段解析语言。
+  const [firstSegment] = pathname?.split('/').filter(Boolean) ?? [];
+
+  return i18n.languages.includes(firstSegment as Locale)
+    ? (firstSegment as Locale)
+    : i18n.defaultLanguage;
+}

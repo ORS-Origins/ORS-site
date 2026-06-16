@@ -6,7 +6,10 @@
 // 本字典只承载页面用到的 副标题 / 导航栏名 / 卡片标题等业务文案。
 
 export const en = {
+  // Route state labels / 路由状态界面文案
   loading: 'Loading...',
+  loadingTitle: 'Loading Page',
+  loadingDesc: 'Generating chunks. Please wait.',
   tagline: 'A Minecraft Server Documentation',
   enterDocs: 'Enter',
   primaryAuthorLabel: 'Primary author:',
@@ -17,6 +20,7 @@ export const en = {
   errorTitle: 'Page Failed to Load',
   errorDesc: 'An unexpected error occurred. Please try reloading the page.',
   errorRetry: 'Retry',
+  errorHome: 'Back to Home',
   notFoundTitle: 'Page Not Found',
   notFoundDesc:
     'The page you are looking for might have been removed, renamed, or temporarily unavailable.',

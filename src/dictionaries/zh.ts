@@ -6,7 +6,10 @@
 // 本字典只承载页面用到的 副标题 / 导航栏名 / 卡片标题等业务文案。
 
 export const zh = {
+  // Route state labels / 路由状态界面文案
   loading: '加载中…',
+  loadingTitle: '正在加载页面',
+  loadingDesc: '区块正在生成，请稍候。',
   tagline: '一个 Minecraft 服务器文档站',
   enterDocs: '进入文档',
   primaryAuthorLabel: '主要编写者：',
@@ -17,6 +20,7 @@ export const zh = {
   errorTitle: '页面加载失败',
   errorDesc: '发生了意外错误，请尝试重新加载页面。',
   errorRetry: '重试',
+  errorHome: '返回首页',
   notFoundTitle: '页面未找到',
   notFoundDesc: '你访问的页面可能已被移除、重命名或暂时不可用。',
   notFoundBack: '返回上一页',

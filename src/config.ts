@@ -126,6 +126,11 @@ export const uiConfig = {
     collapsedControlOffsetPx: 0,
     slideOffsetPx: 24,
   },
+  /** Route state UI assets. / 路由状态界面资源。 */
+  routeState: {
+    /** Decorative icon path for not-found surfaces. / 404 界面装饰图标路径。 */
+    notFoundIconPath: '/imgs/blocks/bedrock.png',
+  },
 } as const;
 
 // ── Mermaid viewer / Mermaid 图表查看器 ──────────────────────────

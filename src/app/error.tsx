@@ -3,7 +3,12 @@
 
 'use client';
 
+import { Home, RotateCcw } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect } from 'react';
+import { RouteState } from '@/components/route-state';
+import { getPageDictionary } from '@/dictionaries';
+import { i18n } from '@/lib/i18n';
 
 export default function GlobalError({
   error,
@@ -17,23 +22,28 @@ export default function GlobalError({
     console.error(error);
   }, [error]);
 
+  const dict = getPageDictionary(i18n.defaultLanguage);
+
   return (
-    <html lang="zh">
-      <body className="antialiased min-h-screen bg-[#0a0d14] text-white flex flex-col items-center justify-center p-6">
-        <div className="mc-panel p-8 max-w-md w-full text-center space-y-6">
-          <div className="flex justify-center">
-            <div className="mc-destroy-anim w-16 h-16" />
-          </div>
-          <h1 className="text-2xl font-minecraft-ae text-red-400 text-shadow-md">页面发生了错误</h1>
-          <p className="text-white/60 font-minecraft-ae text-sm">
-            发生了意外错误，请尝试重新加载页面。
-          </p>
-          {error.digest && <p className="text-xs text-white/30 font-mono">{error.digest}</p>}
-          <button type="button" onClick={reset} className="mc-button px-6 py-2 text-sm">
-            重试
+    <RouteState
+      variant="error"
+      title={dict.errorTitle}
+      description={dict.errorDesc}
+      digest={error.digest}
+      actions={
+        // Error recovery actions: retry the boundary or leave for the localized home route.
+        // 错误恢复操作：重试边界或返回本地化首页。
+        <>
+          <button type="button" onClick={reset} className="mc-button route-state__action">
+            <RotateCcw className="size-4" aria-hidden="true" />
+            <span>{dict.errorRetry}</span>
           </button>
-        </div>
-      </body>
-    </html>
+          <Link href={`/${i18n.defaultLanguage}`} className="mc-button route-state__action">
+            <Home className="size-4" aria-hidden="true" />
+            <span>{dict.errorHome}</span>
+          </Link>
+        </>
+      }
+    />
   );
 }
