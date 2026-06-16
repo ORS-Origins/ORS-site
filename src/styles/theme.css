@@ -55,6 +55,20 @@ blockquote {
   font-family: "Minecraft AE", "Minecraft", monospace;
 }
 
+/* Brand wordmark trimming: cancels trailing letter-spacing after the final glyph.
+   品牌字标裁切：抵消最后一个字形后的额外字距。 */
+.brand-wordmark {
+  display: inline-block;
+  letter-spacing: var(--brand-wordmark-tracking, normal);
+  margin-inline-end: calc(var(--brand-wordmark-tracking, 0em) * -1);
+}
+
+/* Navbar wordmark tracking: preserves the compact pixel-logo rhythm without a trailing gap.
+   导航品牌字标字距：保留紧凑像素 Logo 节奏，同时去除尾部空隙。 */
+#nd-nav .brand-wordmark {
+  --brand-wordmark-tracking: 0.05em;
+}
+
 :root,
 [data-theme="light"],
 .light {

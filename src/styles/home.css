@@ -569,9 +569,10 @@
 /* ── Home Title & Tagline / 首页标题与标语 ───────────────────────── */
 /* Light mode (default) / 浅色模式（默认） */
 .home-title {
+  --brand-wordmark-tracking: 0.12em;
+
   font-size: 6rem;
   color: rgba(56, 130, 180, 0.7);
-  letter-spacing: 0.12em;
   text-shadow:
     0 -1px 0 rgba(255, 255, 255, 0.9),
     0 1px 0 rgba(30, 80, 120, 0.15),
@@ -602,8 +603,9 @@
 
 /* Dark mode / 深色模式 */
 .dark .home-title {
+  --brand-wordmark-tracking: 0.1em;
+
   color: rgba(255, 255, 255, 0.92);
-  letter-spacing: 0.1em;
   text-shadow:
     0 0 24px rgba(0, 0, 0, 0.6),
     0 2px 8px rgba(0, 0, 0, 0.4);
@@ -639,9 +641,9 @@
    响应式闪烁标语位置：移动端也显示，同时避免遮挡主标题。 */
 .home-splash-wrap {
   position: absolute;
-  right: -2rem;
-  bottom: 2rem;
-  transform: scale(0.42);
+  right: -3.5rem;
+  bottom: 1.5rem;
+  transform: scale(0.72);
   transform-origin: center;
   z-index: 10;
 }
@@ -650,7 +652,7 @@
   .home-splash-wrap {
     right: -5rem;
     bottom: 2rem;
-    transform: scale(0.72);
+    transform: scale(0.82);
   }
 }
 

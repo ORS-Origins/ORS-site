@@ -83,7 +83,7 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
       {/* Main content area / 主内容区域 */}
       <div className="relative z-10 flex flex-col items-center gap-4 text-center">
         <div className="home-enter home-enter--delay-1 relative">
-          <h1 className="home-title font-minecrafter">{brandConfig.homeTitle}</h1>
+          <h1 className="brand-wordmark home-title font-minecrafter">{brandConfig.homeTitle}</h1>
           <div className="home-splash-wrap">
             <SplashText key={Date.now()} />
           </div>

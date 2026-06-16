@@ -57,9 +57,9 @@ export const brandConfig = {
 // ── Minecraft server / Minecraft 服务器 ──────────────────────────
 export const mcConfig = {
   /** MC server hostname or IP. / MC 服务器域名或 IP。 */
-  serverIp: 'rio.mc6.cn',
+  serverIp: 'bgp.strynir.cloud',
   /** MC server default port. / MC 服务器默认端口。 */
-  defaultPort: 31015 as number,
+  defaultPort: 58608 as number,
   /** mcsrvstat.us status API base URL (no trailing slash). / mcsrvstat.us 状态 API 基础地址（无尾部斜杠）。 */
   statusApiBase: 'https://api.mcsrvstat.us/3',
   /** mc-heads.net avatar API base URL (no trailing slash). / mc-heads.net 头像 API 基础地址（无尾部斜杠）。 */
