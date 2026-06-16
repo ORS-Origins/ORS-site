@@ -9,7 +9,7 @@ export const en = {
   // Route state labels / 路由状态界面文案
   loading: 'Loading...',
   loadingTitle: 'Loading Page',
-  loadingDesc: 'Generating chunks. Please wait.',
+  loadingDesc: 'Generating chunks. Please wait...',
   tagline: 'A Minecraft Server Documentation',
   enterDocs: 'Enter',
   primaryAuthorLabel: 'Primary author:',

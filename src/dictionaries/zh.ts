@@ -9,7 +9,7 @@ export const zh = {
   // Route state labels / 路由状态界面文案
   loading: '加载中…',
   loadingTitle: '正在加载页面',
-  loadingDesc: '区块正在生成，请稍候。',
+  loadingDesc: '区块正在生成，请稍候……',
   tagline: '一个 Minecraft 服务器文档站',
   enterDocs: '进入文档',
   primaryAuthorLabel: '主要编写者：',

@@ -128,6 +128,8 @@ export const uiConfig = {
   },
   /** Route state UI assets. / 路由状态界面资源。 */
   routeState: {
+    /** Decorative cat spinner path for loading surfaces. / 加载界面装饰猫咪旋转图路径。 */
+    loadingIconPath: '/imgs/widget/loading.png',
     /** Decorative icon path for not-found surfaces. / 404 界面装饰图标路径。 */
     notFoundIconPath: '/imgs/blocks/bedrock.png',
   },

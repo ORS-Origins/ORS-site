@@ -90,18 +90,11 @@ export function RouteState({
 function RouteStateLoader() {
   return (
     <div className="route-state__loader" aria-hidden="true">
-      {/* ORS loading core: brand-colored energy ring with pixel blocks.
-          ORS 加载核心：品牌色能量环与像素方块。 */}
-      <div className="route-state__loader-ring">
-        <span className="route-state__loader-cube route-state__loader-cube--one" />
-        <span className="route-state__loader-cube route-state__loader-cube--two" />
-        <span className="route-state__loader-cube route-state__loader-cube--three" />
-        <span className="route-state__loader-cube route-state__loader-cube--four" />
-      </div>
-      <div className="route-state__loader-core">
-        {/* biome-ignore lint/performance/noImgElement: small static site logo inside the loader */}
-        <img src={siteConfig.logoPath} alt="" className="route-state__loader-logo" />
-      </div>
+      {/* Cat spinner: rotates the configured long-cat artwork inside a clipped glass badge.
+          猫咪加载器：在裁切后的玻璃徽章中旋转配置的条形猫图片。 */}
+      <div className="route-state__loader-track" />
+      {/* biome-ignore lint/performance/noImgElement: decorative local spinner artwork */}
+      <img src={uiConfig.routeState.loadingIconPath} alt="" className="route-state__loading-cat" />
     </div>
   );
 }
