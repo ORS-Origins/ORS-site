@@ -85,7 +85,7 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
         <div className="home-enter home-enter--delay-1 relative">
           <h1 className="brand-wordmark home-title font-minecrafter">{brandConfig.homeTitle}</h1>
           <div className="home-splash-wrap">
-            <SplashText key={Date.now()} />
+            <SplashText />
           </div>
         </div>
         <p className="home-enter home-enter--delay-2 text-xl md:text-2xl max-w-xl mx-auto font-minecraft-ae leading-relaxed home-tagline">

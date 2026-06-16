@@ -34,6 +34,7 @@ export const brandConfig = {
     'fanfan1024 帆帆！',
     'Hao_cch 浩仔！',
     'Havewhite 忆白！',
+    'Memories_white 忆白！',
     'How_Low_Hello！',
     'ItsTinyLamb 翔子！',
     'M_muu 摸鱼快乐木！',
@@ -157,6 +158,12 @@ export const searchConfig = {
   threshold: 0,
   /** Orama search tolerance for CJK tokenizer. / CJK 分词器的 Orama 搜索容差。 */
   tolerance: 0,
+} as const;
+
+// ── DOM events / DOM 事件 ─────────────────────────────────────────
+export const eventNames = {
+  /** Fired when the brand logo should reshuffle the homepage splash text. / 品牌 Logo 触发首页闪烁标语切换时派发。 */
+  splashShuffle: 'ors:splash-shuffle',
 } as const;
 
 // ── Storage keys / localStorage & sessionStorage 键名 ────────────

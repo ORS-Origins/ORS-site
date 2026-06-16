@@ -1,25 +1,40 @@
 'use client';
 
-// Minecraft splash text component: displays a random splash text
-// next to the brand wordmark with a pulsing zoom animation.
-// Minecraft 闪烁标语组件：在品牌标题旁随机显示标语文本，带脉冲缩放动画。
-
 import { useLayoutEffect, useState } from 'react';
-import { brandConfig } from '@/config';
+import { brandConfig, eventNames } from '@/config';
 
 // Fixed index for SSR to avoid hydration mismatch; swap to random on client.
-// SSR 使用固定索引避免水合不匹配；客户端切换为随机。
 const ssrIndex = 0;
 
-function randomSplash(): string {
-  return brandConfig.splashTexts[Math.floor(Math.random() * brandConfig.splashTexts.length)];
+function randomSplash(previousText?: string): string {
+  const texts: readonly string[] = brandConfig.splashTexts;
+  if (texts.length === 0) return '';
+  if (texts.length === 1) return texts[0];
+
+  let index = Math.floor(Math.random() * texts.length);
+  if (texts[index] === previousText) {
+    index = (index + 1) % texts.length;
+  }
+
+  return texts[index];
 }
 
 export function SplashText() {
   const [text, setText] = useState<string>(brandConfig.splashTexts[ssrIndex]);
 
   useLayoutEffect(() => {
-    setText(randomSplash());
+    setText((currentText) => randomSplash(currentText));
+
+    const handleSplashShuffle = () => {
+      // Re-randomize on same-route logo clicks after the home page has mounted.
+      setText((currentText) => randomSplash(currentText));
+    };
+
+    window.addEventListener(eventNames.splashShuffle, handleSplashShuffle);
+
+    return () => {
+      window.removeEventListener(eventNames.splashShuffle, handleSplashShuffle);
+    };
   }, []);
 
   if (!text) return null;
