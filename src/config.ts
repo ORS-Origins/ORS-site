@@ -169,6 +169,53 @@ export const eventNames = {
   splashShuffle: 'ors:splash-shuffle',
 } as const;
 
+// ── Jukebox / 唱片机 ─────────────────────────────────────────────
+export const jukeboxConfig = {
+  /** Default playback volume (0-1). / 默认播放音量（0-1）。 */
+  defaultVolume: 0.5,
+  /** Wood-step sound played when toggling the jukebox panel. / 切换唱片机面板时播放的木质踏步音效路径。 */
+  toggleSoundPath: '/audios/Step.wood3.wav',
+  /** Jukebox block icon path (button face). / 唱片机方块图标路径（按钮表面）。 */
+  jukeboxIconPath: '/imgs/blocks/jukebox.png',
+  /** Music disc list. Each disc maps an icon to an audio file. / 唱片列表。每张唱片映射一个图标与音频文件。 */
+  discs: [
+    // Community meme disc variants currently share one source audio.
+    // 当前社区梗唱片变体共用同一份源音频。
+    { id: 'Tannng', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
+    { id: 'Tannng2', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
+    { id: 'Tannng3', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
+    { id: 'Tannng4', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
+    { id: 'Tannng5', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
+    { id: 'Tannng6', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
+    { id: 'Tannng7', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
+    { id: 'Tannng8', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
+    { id: 'Tannng9', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
+    { id: 'Tannng10', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
+  ],
+  /** Stacking level for the inline panel. / 内联面板的层级。 */
+  zIndex: 45,
+  /** Toggle button size in pixels (inline mode). / 唱片机按钮尺寸（内联模式，像素）。 */
+  toggleSizePx: 36,
+  /** Toggle button size in pixels when embedded as a docs sidebar icon. / 文档侧栏图标模式下唱片机按钮尺寸（像素）。 */
+  iconToggleSizePx: 28,
+  /** Dock top offset in pixels. / 停靠按钮顶部偏移（像素）。 */
+  dockTopOffsetPx: 58,
+  /** Dock right offset in pixels. / 停靠按钮右侧偏移（像素）。 */
+  dockRightOffsetPx: 24,
+  /** Panel width in pixels. / 面板宽度（像素）。 */
+  panelWidthPx: 216,
+  /** Gap between the toggle button and the panel in pixels. / 按钮与面板之间的间距（像素）。 */
+  panelGapPx: 8,
+  /** Main deck area size in pixels. / 主唱片仓区域尺寸（像素）。 */
+  deckSizePx: 96,
+  /** Disc icon size in pixels (now-playing stage). / 唱片图标尺寸（正在播放舞台，像素）。 */
+  discIconSizePx: 58,
+  /** Disc thumbnail size in pixels (library grid). / 唱片缩略图尺寸（唱片库网格，像素）。 */
+  discThumbSizePx: 26,
+  /** Playback control button size in pixels. / 播放控制按钮尺寸（像素）。 */
+  controlButtonSizePx: 34,
+} as const;
+
 // ── Storage keys / localStorage & sessionStorage 键名 ────────────
 export const storageKeys = {
   /** Sidebar collapsed state key. / 侧栏折叠状态 localStorage 键名。 */
@@ -179,4 +226,6 @@ export const storageKeys = {
   transitionData: 'nd-docs-transition',
   /** Page transition DOM snapshot key. / 页面过渡 DOM 快照 sessionStorage 键名。 */
   transitionSnapshot: 'nd-docs-transition-snapshot',
+  /** Last played jukebox disc id. / 上次播放的唱片机唱片 id。 */
+  jukeboxLastDisc: 'jukebox-last-disc',
 } as const;

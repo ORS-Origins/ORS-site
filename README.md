@@ -112,6 +112,7 @@ ORS-Site 是一个基于 [Next.js](https://nextjs.org/) 与 [Fumadocs](https://f
 │   │   └── Monocraft.woff2        # 等宽编程字体
 │   └── audios/                    # 音效文件
 │       ├── Block.barrel.*.wav     # 木桶开关音效
+│       ├── Tannng.mp3             # 唱片机音频
 │       ├── click.wav              # 点击音效
 │       ├── fuse.wav               # 引信音效
 │       ├── orb.wav                # 经验球音效
@@ -336,6 +337,25 @@ bun start
 | `threshold` | `0` | CJK 分词器搜索阈值 |
 | `tolerance` | `0` | CJK 分词器搜索容差 |
 
+### 唱片机配置（`jukeboxConfig`）
+
+| 字段 | 默认值 | 说明 |
+| :--- | :--- | :--- |
+| `defaultVolume` | `0.5` | 唱片与 UI 音效默认音量 |
+| `toggleSoundPath` | `/audios/Step.wood3.wav` | 唱片机展开 / 收起音效 |
+| `jukeboxIconPath` | `/imgs/blocks/jukebox.png` | 唱片机按钮方块图标 |
+| `discs` | Minecraft 唱片数组 | 唱片图标与音频资源映射 |
+| `zIndex` | `45` | 唱片机停靠层级 |
+| `toggleSizePx` | `36` | 唱片机按钮尺寸 |
+| `dockTopOffsetPx` | `58` | 停靠按钮顶部偏移 |
+| `dockRightOffsetPx` | `24` | 停靠按钮右侧偏移 |
+| `panelWidthPx` | `216` | 唱片机面板宽度 |
+| `panelGapPx` | `8` | 按钮与面板间距 |
+| `deckSizePx` | `96` | 主唱片仓区域尺寸 |
+| `discIconSizePx` | `58` | 唱片图标尺寸（正在播放舞台） |
+| `discThumbSizePx` | `26` | 唱片缩略图尺寸（唱片库网格） |
+| `controlButtonSizePx` | `34` | 播放控制按钮尺寸 |
+
 ### 存储键名（`storageKeys`）
 
 | 字段 | 键名 | 说明 |
@@ -344,6 +364,7 @@ bun start
 | `skinViewerCollapsed` | `skin-viewer-collapsed` | 纸娃娃收起状态 |
 | `transitionData` | `nd-docs-transition` | 页面过渡快照数据 |
 | `transitionSnapshot` | `nd-docs-transition-snapshot` | 页面过渡 DOM 快照 |
+| `jukeboxLastDisc` | `jukebox-last-disc` | 上次选择的唱片 |
 
 ---
 

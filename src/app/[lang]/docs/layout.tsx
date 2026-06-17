@@ -4,6 +4,7 @@
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { Sidebar, SidebarTrigger, useSidebar } from 'fumadocs-ui/layouts/docs/slots/sidebar';
 import type { CSSProperties } from 'react';
+import { Jukebox } from '@/components/jukebox';
 import { SidebarProvider } from '@/components/sidebar-provider';
 import { SkinViewerComponent } from '@/components/skin-viewer';
 import { uiConfig } from '@/config';
@@ -25,6 +26,7 @@ export function generateStaticParams() {
 export default async function Layout({ params, children }: LayoutProps<'/[lang]/docs'>) {
   const { lang } = await params;
   const locale = (lang as Locale) ?? i18n.defaultLanguage;
+  const options = baseOptions(locale);
 
   return (
     <>
@@ -55,10 +57,21 @@ export default async function Layout({ params, children }: LayoutProps<'/[lang]/
         <div className="mc-doc-content">
           <DocsLayout
             tree={source.pageTree[locale]}
-            {...baseOptions(locale)}
-            containerProps={{
-              style: docsLayoutStyle,
-            }}
+            {...options}
+            links={[
+              ...(options.links ?? []),
+              // Embed the jukebox as a docs sidebar icon so it sits in the footer controls row.
+              // 将唱片机作为文档侧栏图标嵌入，使其位于底部控制行中。
+              {
+                type: 'icon',
+                url: '#',
+                label: 'Jukebox',
+                text: 'Jukebox',
+                icon: <Jukebox variant="icon" />,
+                secondary: true,
+                on: 'menu',
+              },
+            ]}
             slots={{
               sidebar: {
                 provider: SidebarProvider,
@@ -66,6 +79,9 @@ export default async function Layout({ params, children }: LayoutProps<'/[lang]/
                 trigger: SidebarTrigger,
                 useSidebar,
               },
+            }}
+            containerProps={{
+              style: docsLayoutStyle,
             }}
           >
             {children}

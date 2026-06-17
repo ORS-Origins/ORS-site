@@ -2202,3 +2202,605 @@
     animation: none !important;
   }
 }
+
+/* ── Jukebox / 唱片机 ─────────────────────────────────────────────── */
+/* Compact Minecraft record deck docked near the global navigation.
+   紧凑 Minecraft 唱片仓，停靠在全局导航附近。 */
+
+.mc-jukebox {
+  position: fixed;
+  top: var(--jukebox-dock-top);
+  right: var(--jukebox-dock-right);
+  z-index: var(--jukebox-z-index);
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Inline header variant sits inside the Fumadocs nav links instead of floating fixed.
+   内联标题栏变体：位于 Fumadocs 导航链接内，而非固定悬浮。 */
+.mc-jukebox.mc-jukebox--header,
+.mc-jukebox.mc-jukebox--sidebar {
+  position: relative;
+  top: auto;
+  right: auto;
+  z-index: auto;
+}
+
+/* Icon variant: embedded as a Fumadocs sidebar icon link.
+   The container is transparent so the parent anchor controls sizing.
+   图标变体：作为 Fumadocs 侧栏图标链接嵌入。
+   容器透明化，由外层锚点控制尺寸。 */
+.mc-jukebox.mc-jukebox--icon {
+  display: contents;
+}
+
+.mc-jukebox--icon .mc-jukebox__toggle {
+  width: var(--jukebox-icon-toggle-size);
+  height: var(--jukebox-icon-toggle-size);
+  padding: 2px;
+  border-radius: calc(var(--radius-lg) - 4px);
+}
+
+.mc-jukebox__toggle {
+  position: relative;
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--jukebox-toggle-size);
+  height: var(--jukebox-toggle-size);
+  padding: 5px;
+  cursor: pointer;
+  border-radius: calc(var(--radius-lg) - 4px);
+  border: 1px solid var(--nav-control-border);
+  background:
+    linear-gradient(145deg, var(--glass-highlight), transparent 42%), var(--nav-control-background);
+  color: var(--nav-control-color);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 color-mix(in oklab, var(--background) 55%, transparent),
+    var(--nav-control-shadow);
+  -webkit-backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
+  backdrop-filter: blur(var(--glass-blur-soft)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
+  transform: translateZ(0);
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.mc-jukebox__toggle::after {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--fd-primary) 78%, var(--foreground));
+  box-shadow: 0 0 8px color-mix(in oklab, var(--fd-primary) 58%, transparent);
+  content: "";
+  opacity: 0.72;
+}
+
+.mc-jukebox__toggle:hover {
+  background:
+    linear-gradient(145deg, var(--glass-highlight), transparent 40%),
+    var(--nav-control-background-hover);
+  border-color: var(--nav-control-border);
+  box-shadow: var(--nav-control-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.mc-jukebox__toggle:active {
+  transform: translateY(0);
+}
+
+.mc-jukebox__toggle[aria-expanded="true"] {
+  background:
+    linear-gradient(145deg, color-mix(in oklab, var(--fd-primary) 18%, transparent), transparent),
+    var(--nav-control-active-background);
+  color: var(--nav-control-active-color);
+  border-color: color-mix(in oklab, var(--fd-primary) 40%, transparent);
+}
+
+.mc-jukebox__toggle[aria-expanded="true"]::after {
+  opacity: 1;
+}
+
+.mc-jukebox__toggle-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  /* Prevent the texture from being dragged out of the page. / 防止贴图被拖出页面。 */
+  -webkit-user-drag: none;
+}
+
+.mc-jukebox__panel {
+  position: fixed;
+  z-index: var(--jukebox-z-index);
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  width: min(var(--jukebox-panel-width), calc(100vw - 1rem));
+  max-height: calc(100vh - var(--jukebox-toggle-size) - var(--jukebox-panel-gap) - 1rem);
+  overflow: auto;
+  padding: 0.6rem;
+  background:
+    radial-gradient(
+      80% 70% at 16% 0%,
+      color-mix(in oklab, var(--fd-primary) 13%, transparent),
+      transparent 60%
+    ),
+    linear-gradient(180deg, var(--glass-tint-strong), var(--glass-tint-medium));
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
+  backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) contrast(var(--glass-contrast));
+  border: 1px solid var(--glass-border-hairline);
+  border-radius: calc(var(--radius-lg) - 2px);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 color-mix(in oklab, var(--background) 60%, transparent),
+    0 18px 38px -24px color-mix(in oklab, var(--foreground) 44%, transparent);
+  color: var(--foreground);
+  animation: mc-jukebox-panel-in 0.18s ease-out;
+}
+
+.mc-jukebox__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 1.75rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--foreground);
+}
+
+.mc-jukebox__title-wrap {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mc-jukebox__title-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--nav-control-active-color);
+}
+
+.mc-jukebox__close {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius-lg) - 6px);
+  background: transparent;
+  color: currentColor;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition:
+    opacity 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.mc-jukebox__close:hover {
+  opacity: 1;
+  background-color: var(--glass-tint-soft);
+  border-color: var(--glass-border-hairline);
+}
+
+.mc-jukebox__icon {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+}
+
+.mc-jukebox__deck-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.1rem 0 0;
+}
+
+.mc-jukebox__deck {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--jukebox-deck-size);
+  height: var(--jukebox-deck-size);
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+  border-radius: calc(var(--radius-lg) - 4px);
+  background:
+    linear-gradient(145deg, color-mix(in oklab, var(--foreground) 7%, transparent), transparent),
+    color-mix(in oklab, var(--background) 72%, var(--glass-tint-soft));
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -2px 0 color-mix(in oklab, var(--background) 78%, transparent);
+  transition:
+    transform 0.15s ease,
+    filter 0.15s ease;
+}
+
+.mc-jukebox__deck:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.12);
+}
+
+.mc-jukebox__deck:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.mc-jukebox__deck-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--glass-border-hairline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--glass-border-hairline) 1px, transparent 1px);
+  background-size: calc(var(--jukebox-deck-size) / 8) calc(var(--jukebox-deck-size) / 8);
+  opacity: 0.28;
+}
+
+.mc-jukebox__deck--playing .mc-jukebox__disc {
+  animation: mc-jukebox-disc-spin 2.1s linear infinite;
+}
+
+.mc-jukebox__disc {
+  position: relative;
+  z-index: 1;
+  width: var(--jukebox-disc-size);
+  height: var(--jukebox-disc-size);
+  filter: drop-shadow(0 8px 10px color-mix(in oklab, var(--foreground) 22%, transparent));
+  image-rendering: pixelated;
+  /* Prevent the disc texture from being dragged out of the page. / 防止唱片贴图被拖出页面。 */
+  -webkit-user-drag: none;
+}
+
+.mc-jukebox__needle {
+  position: absolute;
+  z-index: 2;
+  top: 26%;
+  right: 13%;
+  width: 38%;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--foreground) 28%, transparent),
+    var(--foreground)
+  );
+  box-shadow: 0 1px 0 var(--glass-highlight);
+  /* Default dropped (paused). When playing the deck raises the needle.
+     默认落下（暂停）。播放时由 deck 类抬起唱针。 */
+  transform: rotate(18deg);
+  transform-origin: right center;
+  transition: transform 0.18s ease;
+  pointer-events: none;
+}
+
+.mc-jukebox__deck--playing .mc-jukebox__needle {
+  transform: rotate(-28deg);
+}
+
+.mc-jukebox__needle::after {
+  position: absolute;
+  left: -4px;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--fd-primary) 42%, var(--foreground));
+  content: "";
+}
+
+.mc-jukebox__meta {
+  min-width: 0;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.mc-jukebox__disc-name {
+  margin: 0;
+  overflow: hidden;
+  color: var(--foreground);
+  font-size: 0.86rem;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mc-jukebox__status {
+  align-self: flex-start;
+  padding: 0.22rem 0.45rem;
+  border: 1px solid var(--glass-border-hairline);
+  border-radius: 999px;
+  background: var(--glass-tint-soft);
+  color: var(--color-fd-muted-foreground);
+  font-size: 0.68rem;
+  line-height: 1;
+}
+
+.mc-jukebox__status--playing {
+  color: color-mix(in oklab, var(--fd-primary) 68%, var(--foreground));
+  border-color: color-mix(in oklab, var(--fd-primary) 32%, transparent);
+  box-shadow: 0 0 12px color-mix(in oklab, var(--fd-primary) 18%, transparent);
+}
+
+.mc-jukebox__library {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, calc(var(--jukebox-disc-thumb-size) + 6px));
+  gap: 0.35rem;
+  padding: 0.35rem;
+  border: 1px solid var(--glass-border-hairline);
+  border-radius: calc(var(--radius-lg) - 5px);
+  background-color: var(--glass-tint-soft);
+}
+
+.mc-jukebox__disc-thumb {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--jukebox-disc-thumb-size) + 6px);
+  height: calc(var(--jukebox-disc-thumb-size) + 6px);
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid color-mix(in oklab, var(--foreground) 15%, transparent);
+  border-radius: calc(var(--radius-lg) - 4px);
+  background:
+    linear-gradient(145deg, color-mix(in oklab, var(--foreground) 8%, transparent), transparent 48%),
+    color-mix(in oklab, var(--background) 78%, var(--glass-tint-medium));
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 color-mix(in oklab, var(--background) 80%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--background) 70%, transparent);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease,
+    transform 0.15s ease;
+}
+
+/* Disc thumbnail hover frame: local styling avoids the harsher global slot hover texture.
+   唱片缩略图悬浮边框：使用局部样式，避开全局槽位 hover 贴图的生硬效果。 */
+.mc-jukebox__disc-thumb::before {
+  position: absolute;
+  inset: 3px;
+  z-index: -1;
+  border: 1px solid color-mix(in oklab, var(--foreground) 9%, transparent);
+  border-radius: calc(var(--radius-lg) - 6px);
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--foreground) 6%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 7px 7px;
+  content: "";
+  opacity: 0.36;
+  pointer-events: none;
+}
+
+.mc-jukebox__disc-thumb::after {
+  position: absolute;
+  inset: 2px;
+  border: 1px solid color-mix(in oklab, var(--fd-primary) 24%, transparent);
+  border-radius: calc(var(--radius-lg) - 6px);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--glass-highlight) 65%, transparent);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    border-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.mc-jukebox__disc-thumb:hover {
+  border-color: color-mix(in oklab, var(--fd-primary) 48%, transparent);
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in oklab, var(--fd-primary) 15%, transparent),
+      transparent 52%
+    ),
+    color-mix(in oklab, var(--background) 70%, var(--glass-tint-strong));
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 color-mix(in oklab, var(--background) 72%, transparent),
+    0 0 0 2px color-mix(in oklab, var(--fd-primary) 25%, transparent),
+    0 10px 16px -14px color-mix(in oklab, var(--fd-primary) 65%, transparent);
+  transform: translateY(-1px);
+}
+
+.mc-jukebox__disc-thumb:hover::after,
+.mc-jukebox__disc-thumb:focus-visible::after {
+  opacity: 1;
+}
+
+.mc-jukebox__disc-thumb:hover .mc-jukebox__disc-thumb-img {
+  transform: scale(1.08);
+  filter: brightness(1.12) contrast(1.06);
+}
+
+.mc-jukebox__disc-thumb:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--fd-primary) 62%, transparent);
+  outline-offset: 2px;
+}
+
+.mc-jukebox__disc-thumb--active {
+  border-color: color-mix(in oklab, var(--fd-primary) 58%, transparent);
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in oklab, var(--fd-primary) 20%, transparent),
+      transparent 52%
+    ),
+    color-mix(in oklab, var(--background) 72%, var(--glass-tint-strong));
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 color-mix(in oklab, var(--background) 72%, transparent),
+    0 0 0 2px color-mix(in oklab, var(--fd-primary) 34%, transparent),
+    0 0 14px color-mix(in oklab, var(--fd-primary) 20%, transparent);
+}
+
+.mc-jukebox__disc-thumb--active::after {
+  border-color: color-mix(in oklab, var(--fd-primary) 55%, transparent);
+  opacity: 1;
+}
+
+.mc-jukebox__disc-thumb-img {
+  position: relative;
+  z-index: 1;
+  width: var(--jukebox-disc-thumb-size);
+  height: var(--jukebox-disc-thumb-size);
+  image-rendering: pixelated;
+  -webkit-user-drag: none;
+  transition:
+    transform 0.15s ease,
+    filter 0.15s ease;
+}
+
+.mc-jukebox__disc-thumb-playing {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--fd-primary) 24%, transparent) 0%,
+    transparent 70%
+  );
+  animation: mc-jukebox-glow-pulse 1.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.mc-jukebox__error {
+  margin: 0;
+  font-size: 0.74rem;
+  color: color-mix(in oklab, var(--color-fd-error) 78%, var(--foreground));
+  text-shadow: 0 1px 0 var(--glass-highlight);
+}
+
+:is([data-theme="light"], .light) .mc-jukebox__error {
+  color: color-mix(in oklab, var(--color-fd-error) 88%, var(--foreground));
+}
+
+.mc-jukebox__controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  padding-top: 0;
+}
+
+.mc-jukebox__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--jukebox-control-size);
+  height: var(--jukebox-control-size);
+  padding: 0;
+  border: 1px solid var(--nav-control-border);
+  border-radius: calc(var(--radius-lg) - 6px);
+  background:
+    linear-gradient(145deg, var(--glass-highlight), transparent 42%), var(--nav-control-background);
+  color: var(--nav-control-color);
+  cursor: pointer;
+  box-shadow: var(--nav-control-shadow);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.mc-jukebox__btn:hover {
+  background:
+    linear-gradient(145deg, var(--glass-highlight), transparent 42%),
+    var(--nav-control-background-hover);
+  color: var(--nav-control-active-color);
+  border-color: color-mix(in oklab, var(--fd-primary) 32%, var(--nav-control-border));
+  transform: translateY(-1px);
+}
+
+.mc-jukebox__btn:active {
+  transform: translateY(0);
+}
+
+.mc-jukebox__btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  transform: none;
+}
+
+@keyframes mc-jukebox-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes mc-jukebox-disc-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes mc-jukebox-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mc-jukebox__panel {
+    animation: none !important;
+  }
+  .mc-jukebox__toggle,
+  .mc-jukebox__deck,
+  .mc-jukebox__disc,
+  .mc-jukebox__disc-thumb,
+  .mc-jukebox__needle,
+  .mc-jukebox__btn {
+    transition: none !important;
+  }
+  .mc-jukebox__deck--playing .mc-jukebox__disc,
+  .mc-jukebox__disc-thumb-playing {
+    animation: none !important;
+  }
+}
