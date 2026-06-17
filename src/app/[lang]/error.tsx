@@ -5,7 +5,7 @@
 
 import { Home, RotateCcw } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { RouteState } from '@/components/route-state';
 import { getPageDictionary } from '@/dictionaries';
 import { i18n } from '@/lib/i18n';
@@ -24,6 +24,13 @@ export default function LocaleError({
     : i18n.defaultLanguage;
   const dict = getPageDictionary(locale);
 
+  // Render a client-side timestamp so users can correlate screenshots with server logs.
+  // 渲染客户端时间戳，方便用户将截图与服务器日志对应。
+  const [trace, setTrace] = useState('');
+  useEffect(() => {
+    setTrace(new Date().toISOString());
+  }, []);
+
   useEffect(() => {
     // eslint-disable-next-line no-console
     console.error(error);
@@ -34,7 +41,7 @@ export default function LocaleError({
       variant="error"
       title={dict.errorTitle}
       description={dict.errorDesc}
-      digest={error.digest}
+      digest={trace ? `${error.name} · ${trace}` : error.name}
       actions={
         // Locale-aware recovery actions for nested route errors.
         // 嵌套路由错误的本地化恢复操作。
