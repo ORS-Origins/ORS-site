@@ -66,14 +66,5 @@ export const zh = {
   jukeboxPlaybackError: '无法播放所选唱片',
   jukeboxDiscNames: {
     Tannng: '阿汤娇喘纯享版',
-    Tannng2: '阿汤娇喘纯享版 2',
-    Tannng3: '阿汤娇喘纯享版 3',
-    Tannng4: '阿汤娇喘纯享版 4',
-    Tannng5: '阿汤娇喘纯享版 5',
-    Tannng6: '阿汤娇喘纯享版 6',
-    Tannng7: '阿汤娇喘纯享版 7',
-    Tannng8: '阿汤娇喘纯享版 8',
-    Tannng9: '阿汤娇喘纯享版 9',
-    Tannng10: '阿汤娇喘纯享版 10',
   },
 } as const;

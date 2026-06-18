@@ -67,14 +67,5 @@ export const en = {
   jukeboxPlaybackError: 'Unable to play the selected disc',
   jukeboxDiscNames: {
     Tannng: 'Tannng vocal cut',
-    Tannng2: 'Tannng vocal cut 2',
-    Tannng3: 'Tannng vocal cut 3',
-    Tannng4: 'Tannng vocal cut 4',
-    Tannng5: 'Tannng vocal cut 5',
-    Tannng6: 'Tannng vocal cut 6',
-    Tannng7: 'Tannng vocal cut 7',
-    Tannng8: 'Tannng vocal cut 8',
-    Tannng9: 'Tannng vocal cut 9',
-    Tannng10: 'Tannng vocal cut 10',
   },
 } as const;

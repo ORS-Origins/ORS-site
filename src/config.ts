@@ -182,15 +182,6 @@ export const jukeboxConfig = {
     // Community meme disc variants currently share one source audio.
     // 当前社区梗唱片变体共用同一份源音频。
     { id: 'Tannng', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
-    { id: 'Tannng2', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
-    { id: 'Tannng3', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
-    { id: 'Tannng4', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
-    { id: 'Tannng5', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
-    { id: 'Tannng6', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
-    { id: 'Tannng7', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
-    { id: 'Tannng8', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
-    { id: 'Tannng9', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
-    { id: 'Tannng10', iconPath: '/imgs/items/record-11.png', audioPath: '/audios/Tannng.mp3' },
   ],
   /** Stacking level for the inline panel. / 内联面板的层级。 */
   zIndex: 45,
