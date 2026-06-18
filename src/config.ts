@@ -196,8 +196,8 @@ export const jukeboxConfig = {
   zIndex: 45,
   /** Toggle button size in pixels (inline mode). / 唱片机按钮尺寸（内联模式，像素）。 */
   toggleSizePx: 36,
-  /** Toggle button size in pixels when embedded as a docs sidebar icon. / 文档侧栏图标模式下唱片机按钮尺寸（像素）。 */
-  iconToggleSizePx: 28,
+  /** Toggle texture size in pixels when embedded as a docs sidebar icon. / 文档侧栏图标模式下唱片机贴图尺寸（像素）。 */
+  iconToggleSizePx: 18,
   /** Dock top offset in pixels. / 停靠按钮顶部偏移（像素）。 */
   dockTopOffsetPx: 58,
   /** Dock right offset in pixels. / 停靠按钮右侧偏移（像素）。 */

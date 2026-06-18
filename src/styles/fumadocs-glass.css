@@ -243,6 +243,34 @@
   border-radius: var(--radius-lg) !important;
 }
 
+/* Sidebar footer controls: compact the jukebox/theme row so it matches the height rhythm of other sidebar controls.
+   侧栏底部控制栏：压缩唱片机 / 主题切换行，使其与其他侧栏控件的高度节奏一致。 */
+#nd-sidebar .bg-fd-secondary\/50:has(.mc-jukebox--icon),
+#nd-sidebar-mobile .bg-fd-secondary\/50:has(.mc-jukebox--icon) {
+  box-sizing: border-box;
+  height: auto !important;
+  min-height: auto !important;
+  align-items: center !important;
+  padding: var(--spacing) calc(var(--spacing) * 0.5) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+#nd-sidebar .bg-fd-secondary\/50:has(.mc-jukebox--icon) > a,
+#nd-sidebar-mobile .bg-fd-secondary\/50:has(.mc-jukebox--icon) > a {
+  width: calc(var(--spacing) * 7) !important;
+  height: calc(var(--spacing) * 7) !important;
+  padding: calc(var(--spacing) * 0.5) !important;
+  border-radius: calc(var(--radius-lg) - 4px) !important;
+}
+
+#nd-sidebar .bg-fd-secondary\/50:has(.mc-jukebox--icon) [data-theme-toggle],
+#nd-sidebar-mobile .bg-fd-secondary\/50:has(.mc-jukebox--icon) [data-theme-toggle] {
+  height: calc(var(--spacing) * 7) !important;
+  min-height: calc(var(--spacing) * 7) !important;
+  padding-block: 0 !important;
+  border-radius: calc(var(--radius-lg) - 4px) !important;
+}
+
 /* 右侧 TOC：仅追加极淡背景，不覆盖上方约束块的 box-sizing/max-width/overflow。 */
 :where(#nd-toc) {
   background-color: transparent;

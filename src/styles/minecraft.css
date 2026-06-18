@@ -2234,13 +2234,6 @@
   display: contents;
 }
 
-.mc-jukebox--icon .mc-jukebox__toggle {
-  width: var(--jukebox-icon-toggle-size);
-  height: var(--jukebox-icon-toggle-size);
-  padding: 2px;
-  border-radius: calc(var(--radius-lg) - 4px);
-}
-
 .mc-jukebox__toggle {
   position: relative;
   pointer-events: auto;
@@ -2310,6 +2303,47 @@
   opacity: 1;
 }
 
+/* Sidebar icon variant: let the Fumadocs icon link own the button edge while the jukebox texture stays centered.
+   侧栏图标变体：由 Fumadocs 外层图标链接承载按钮边缘，唱片机贴图只负责居中显示。 */
+.mc-jukebox--icon .mc-jukebox__toggle,
+.mc-jukebox--icon .mc-jukebox__toggle:hover,
+.mc-jukebox--icon .mc-jukebox__toggle:active,
+.mc-jukebox--icon .mc-jukebox__toggle[aria-expanded="true"] {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transform: none;
+}
+
+.mc-jukebox--icon .mc-jukebox__toggle::after {
+  content: none;
+}
+
+/* Docs sidebar icon state: mirror the regular active icon chip on the outer Fumadocs link.
+   文档侧栏图标状态：在外层 Fumadocs 链接上还原普通图标的激活反馈。 */
+#nd-sidebar a:has(.mc-jukebox--icon .mc-jukebox__toggle[aria-expanded="true"]),
+#nd-sidebar-mobile a:has(.mc-jukebox--icon .mc-jukebox__toggle[aria-expanded="true"]) {
+  background-color: var(--nav-control-background-hover) !important;
+  color: var(--nav-control-active-color) !important;
+  box-shadow: var(--nav-control-shadow-hover) !important;
+}
+
+#nd-sidebar a:has(.mc-jukebox--icon .mc-jukebox__toggle:active),
+#nd-sidebar-mobile a:has(.mc-jukebox--icon .mc-jukebox__toggle:active) {
+  background-color: var(--nav-control-background-hover) !important;
+  box-shadow: var(--nav-control-shadow-hover) !important;
+}
+
+.mc-jukebox--icon .mc-jukebox__toggle[aria-expanded="true"] .mc-jukebox__toggle-img {
+  filter: drop-shadow(0 0 6px color-mix(in oklab, var(--fd-primary) 46%, transparent));
+}
+
 .mc-jukebox__toggle-img {
   width: 100%;
   height: 100%;
@@ -2317,6 +2351,11 @@
   image-rendering: pixelated;
   /* Prevent the texture from being dragged out of the page. / 防止贴图被拖出页面。 */
   -webkit-user-drag: none;
+}
+
+.mc-jukebox--icon .mc-jukebox__toggle-img {
+  width: var(--jukebox-icon-toggle-size);
+  height: var(--jukebox-icon-toggle-size);
 }
 
 .mc-jukebox__panel {
