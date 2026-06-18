@@ -2498,7 +2498,7 @@
 }
 
 .mc-jukebox__deck--playing .mc-jukebox__disc {
-  animation: mc-jukebox-disc-spin 2.1s linear infinite;
+  animation: mc-jukebox-disc-playback 1.35s linear infinite;
 }
 
 .mc-jukebox__disc {
@@ -2508,6 +2508,9 @@
   height: var(--jukebox-disc-size);
   filter: drop-shadow(0 8px 10px color-mix(in oklab, var(--foreground) 22%, transparent));
   image-rendering: pixelated;
+  transform-origin: 50% 50%;
+  backface-visibility: visible;
+  will-change: transform, filter;
   /* Prevent the disc texture from being dragged out of the page. / 防止唱片贴图被拖出页面。 */
   -webkit-user-drag: none;
 }
@@ -2805,12 +2808,21 @@
   }
 }
 
-@keyframes mc-jukebox-disc-spin {
+/* Playback motion: tilt the disc into a horizontal platter plane, then spin within that plane.
+   播放动效：先将唱片倾斜成水平盘面，再在盘面内旋转，模拟真实唱片转动。 */
+@keyframes mc-jukebox-disc-playback {
   from {
-    transform: rotate(0deg);
+    filter: drop-shadow(0 8px 10px color-mix(in oklab, var(--foreground) 22%, transparent));
+    transform: perspective(220px) rotateX(58deg) rotateZ(0turn);
+  }
+  50% {
+    filter: drop-shadow(0 10px 13px color-mix(in oklab, var(--foreground) 25%, transparent))
+      brightness(1.04);
+    transform: perspective(220px) rotateX(58deg) rotateZ(0.5turn);
   }
   to {
-    transform: rotate(360deg);
+    filter: drop-shadow(0 8px 10px color-mix(in oklab, var(--foreground) 22%, transparent));
+    transform: perspective(220px) rotateX(58deg) rotateZ(1turn);
   }
 }
 
