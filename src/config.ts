@@ -194,13 +194,13 @@ export const jukeboxConfig = {
   /** Dock right offset in pixels. / 停靠按钮右侧偏移（像素）。 */
   dockRightOffsetPx: 24,
   /** Panel width in pixels. / 面板宽度（像素）。 */
-  panelWidthPx: 216,
+  panelWidthPx: 264,
   /** Gap between the toggle button and the panel in pixels. / 按钮与面板之间的间距（像素）。 */
   panelGapPx: 8,
   /** Main deck area size in pixels. / 主唱片仓区域尺寸（像素）。 */
-  deckSizePx: 96,
+  deckSizePx: 84,
   /** Disc icon size in pixels (now-playing stage). / 唱片图标尺寸（正在播放舞台，像素）。 */
-  discIconSizePx: 58,
+  discIconSizePx: 52,
   /** Disc thumbnail size in pixels (library grid). / 唱片缩略图尺寸（唱片库网格，像素）。 */
   discThumbSizePx: 26,
   /** Playback control button size in pixels. / 播放控制按钮尺寸（像素）。 */

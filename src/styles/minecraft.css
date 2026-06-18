@@ -2562,12 +2562,19 @@
 
 .mc-jukebox__disc-name {
   margin: 0;
+  display: -webkit-box;
   overflow: hidden;
   color: var(--foreground);
   font-size: 0.86rem;
   line-height: 1.25;
+  /* Allow longer disc titles to use two compact lines before truncating.
+     允许较长唱片标题使用两行紧凑空间后再截断。 */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow-wrap: anywhere;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .mc-jukebox__status {
