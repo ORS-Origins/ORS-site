@@ -241,6 +241,14 @@
   display: flex !important;
 }
 
+/* Sidebar language popover: match the trigger width exposed by Radix to keep the dropdown aligned with the button.
+   侧栏语言弹层：使用 Radix 暴露的触发器宽度，让下拉框与语言按钮保持同宽。 */
+[role="dialog"][data-side="top"][style*="--radix-popover-trigger-width"]:has(> p):has(> button) {
+  box-sizing: border-box;
+  width: var(--radix-popover-trigger-width) !important;
+  min-width: var(--radix-popover-trigger-width) !important;
+}
+
 :where(#nd-sidebar) div:has(> button[data-theme-toggle]) {
   border-radius: var(--radius-lg) !important;
 }
