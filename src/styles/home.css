@@ -567,6 +567,16 @@
 /* ── Entrance Animations / 首页进入动画 ───────────────────────────── */
 
 /* ── Home Title & Tagline / 首页标题与标语 ───────────────────────── */
+/* Decorative hero copy should not be selected when dragging across the visual brand area.
+   装饰性首页 Hero 文案在鼠标拖拽品牌视觉区域时不应被选中。 */
+.home-title,
+.home-splash-wrap,
+.home-splash-wrap *,
+.home-tagline {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 /* Light mode (default) / 浅色模式（默认） */
 .home-title {
   --brand-wordmark-tracking: 0.12em;
