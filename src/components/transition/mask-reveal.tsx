@@ -6,7 +6,7 @@
 import { animate, motion, useMotionTemplate, useMotionValue, useTransform } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { siteConfig, storageKeys, themeConfig } from '@/config';
+import { eventNames, siteConfig, storageKeys, themeConfig } from '@/config';
 import { maskRevealTransition } from '@/lib/motion';
 
 interface RevealData {
@@ -18,6 +18,7 @@ interface RevealData {
 
 export default function MaskReveal() {
   const pathname = usePathname();
+  const isDocsRoute = pathname.includes(siteConfig.docsBaseUrl);
 
   const readRevealData = useCallback((): RevealData | null => {
     if (typeof window === 'undefined') return null;
@@ -51,6 +52,8 @@ export default function MaskReveal() {
       ? readRevealData()
       : null,
   );
+  const [isRevealReady, setIsRevealReady] = useState(false);
+  const [isHoldingOutgoingPage, setIsHoldingOutgoingPage] = useState(false);
 
   const radius = useMotionValue<number>(0);
   const feather = useMotionValue<number>(themeConfig.maskRevealInitialFeatherPx);
@@ -63,28 +66,116 @@ export default function MaskReveal() {
     // 该组件挂在根布局中不会卸载，因此每次新过渡都要重置持久化的 motion value。
     radius.set(0);
     feather.set(themeConfig.maskRevealInitialFeatherPx);
-    sessionStorage.removeItem(storageKeys.transitionData);
-    sessionStorage.removeItem(storageKeys.transitionSnapshot);
-  }, [revealData, radius, feather]);
-
-  useLayoutEffect(() => {
-    if (!pathname.includes(siteConfig.docsBaseUrl)) {
-      setRevealData(null);
-      radius.set(0);
-      feather.set(themeConfig.maskRevealInitialFeatherPx);
+    if (isDocsRoute) {
       sessionStorage.removeItem(storageKeys.transitionData);
       sessionStorage.removeItem(storageKeys.transitionSnapshot);
+    }
+  }, [isDocsRoute, revealData, radius, feather]);
+
+  useEffect(() => {
+    const handleTransitionStart = (event: Event) => {
+      const detail = (event as CustomEvent<RevealData>).detail;
+      if (!(detail && typeof detail.domHTML === 'string')) return;
+
+      // Hold the outgoing page before navigation so cold docs loads cannot flash through.
+      // 导航前先持有离开页，避免冷加载文档时露出闪烁。
+      setIsHoldingOutgoingPage(true);
+      setIsRevealReady(false);
+      setRevealData({
+        x: detail.x,
+        y: detail.y,
+        domHTML: detail.domHTML,
+        scrollY: detail.scrollY ?? 0,
+      });
+    };
+
+    window.addEventListener(eventNames.docsTransitionStart, handleTransitionStart);
+
+    return () => {
+      window.removeEventListener(eventNames.docsTransitionStart, handleTransitionStart);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!isDocsRoute) {
+      setIsRevealReady(false);
+      radius.set(0);
+      feather.set(themeConfig.maskRevealInitialFeatherPx);
+      if (!isHoldingOutgoingPage) {
+        setRevealData(null);
+        sessionStorage.removeItem(storageKeys.transitionData);
+        sessionStorage.removeItem(storageKeys.transitionSnapshot);
+      }
       return;
     }
+
+    setIsHoldingOutgoingPage(false);
 
     const nextRevealData = readRevealData();
     if (!nextRevealData) return;
 
     setRevealData((current) => current ?? nextRevealData);
-  }, [pathname, readRevealData, radius, feather]);
+  }, [isDocsRoute, isHoldingOutgoingPage, readRevealData, radius, feather]);
 
   useEffect(() => {
-    if (!revealData) return;
+    if (!revealData || isDocsRoute || !isHoldingOutgoingPage) return;
+
+    const fallbackId = window.setTimeout(
+      () => {
+        setRevealData(null);
+        setIsHoldingOutgoingPage(false);
+      },
+      Math.max(themeConfig.docsTransitionMaxAgeMs, themeConfig.docsTransitionReadyTimeoutMs),
+    );
+
+    return () => {
+      window.clearTimeout(fallbackId);
+    };
+  }, [isDocsRoute, isHoldingOutgoingPage, revealData]);
+
+  useEffect(() => {
+    if (!revealData) {
+      setIsRevealReady(false);
+      return;
+    }
+
+    if (!isDocsRoute) {
+      setIsRevealReady(false);
+      return;
+    }
+
+    let frameId: number | null = null;
+    let isCancelled = false;
+    const startedAt = Date.now();
+
+    const waitForDocsLayout = () => {
+      if (isCancelled) return;
+
+      const hasDocsLayout = Boolean(
+        document.querySelector(themeConfig.docsTransitionReadySelector),
+      );
+      const hasTimedOut = Date.now() - startedAt >= themeConfig.docsTransitionReadyTimeoutMs;
+
+      if (hasDocsLayout || hasTimedOut) {
+        setIsRevealReady(true);
+        return;
+      }
+
+      frameId = requestAnimationFrame(waitForDocsLayout);
+    };
+
+    waitForDocsLayout();
+
+    return () => {
+      isCancelled = true;
+      if (frameId !== null) {
+        cancelAnimationFrame(frameId);
+      }
+    };
+  }, [isDocsRoute, revealData]);
+
+  useEffect(() => {
+    if (!(revealData && isRevealReady)) return;
 
     const maxRadius =
       Math.max(
@@ -104,6 +195,7 @@ export default function MaskReveal() {
         ...maskRevealTransition,
         onComplete: () => {
           setRevealData(null);
+          setIsHoldingOutgoingPage(false);
         },
       });
 
@@ -120,19 +212,25 @@ export default function MaskReveal() {
       controls?.stop();
       featherControls?.stop();
     };
-  }, [revealData, radius, feather]);
+  }, [isRevealReady, revealData, radius, feather]);
 
   const featheredEdge = useTransform([radius, feather], ([r, f]) => Number(r) + Number(f));
   const maskImage = useMotionTemplate`radial-gradient(circle at ${revealData?.x ?? 0}px ${revealData?.y ?? 0}px, transparent ${radius}px, black ${featheredEdge}px)`;
+  const activeMaskImage = isRevealReady ? maskImage : 'linear-gradient(black, black)';
+
+  // Render the snapshot HTML with the overlay so its first paint already contains the held page.
+  // 随遮罩同步渲染快照 HTML，确保首帧就已经持有离开页。
+  const snapshotHTML = revealData
+    ? revealData.scrollY > 0
+      ? `<div style="transform:translateY(${-revealData.scrollY}px);will-change:transform;">${revealData.domHTML}</div>`
+      : revealData.domHTML
+    : '';
 
   useLayoutEffect(() => {
     if (!(maskRef.current && revealData)) return;
 
-    maskRef.current.innerHTML =
-      revealData.scrollY > 0
-        ? `<div style="transform:translateY(${-revealData.scrollY}px);will-change:transform;">${revealData.domHTML}</div>`
-        : revealData.domHTML;
-  }, [revealData]);
+    maskRef.current.innerHTML = snapshotHTML;
+  }, [revealData, snapshotHTML]);
 
   if (!revealData) return null;
 
@@ -144,8 +242,8 @@ export default function MaskReveal() {
       style={{
         opacity: 1,
         willChange: 'mask-image, -webkit-mask-image',
-        WebkitMaskImage: maskImage,
-        maskImage,
+        WebkitMaskImage: activeMaskImage,
+        maskImage: activeMaskImage,
       }}
     />
   );

@@ -308,6 +308,10 @@ bun start
 | `maskRevealDurationMs` | `2500` | 页面过渡动画时长 |
 | `maskRevealEase` | `[0.22, 0.61, 0.36, 1.0]` | 遮罩揭示缓动曲线 |
 | `docsTransitionMaxAgeMs` | `3000` | 文档过渡最大有效期 |
+| `docsTransitionSnapshotIdleTimeoutMs` | `1000` | 首页过渡快照空闲缓存超时 |
+| `docsTransitionReadySelector` | `#nd-docs-layout` | 文档布局就绪后再播放揭示动画的选择器 |
+| `docsTransitionReadyTimeoutMs` | `5000` | 等待文档布局就绪的最长时间 |
+| `docsTransitionSnapshotFreezeSelectors` | 见 `src/config.ts` | 过渡快照中需要冻结当前视觉状态的选择器 |
 
 ### UI 配置（`uiConfig`）
 

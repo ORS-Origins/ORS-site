@@ -87,6 +87,24 @@ export const themeConfig = {
   docsTransitionMaxAgeMs: 3000,
   /** Idle timeout for caching homepage transition snapshot in ms. / 首页过渡快照空闲缓存超时（毫秒）。 */
   docsTransitionSnapshotIdleTimeoutMs: 1000,
+  /** Selector that means the target docs layout is ready for reveal animation. / 标记目标文档布局已可播放揭示动画的选择器。*/
+  docsTransitionReadySelector: '#nd-docs-layout',
+  /** Maximum wait for the target docs layout before revealing anyway. / 等待目标文档布局就绪的最长时间，超时后仍继续揭示。*/
+  docsTransitionReadyTimeoutMs: 5000,
+  /** Selectors whose current visual state should be frozen in the transition snapshot. / 过渡快照中需要冻结当前视觉状态的选择器。*/
+  docsTransitionSnapshotFreezeSelectors: [
+    '.home-enter',
+    '.home-enter *',
+    '.home-gradient-bg__orb',
+    '.mc-block-halo',
+    '.mc-float-block',
+    '.mc-light-beam',
+    '.mc-particle',
+    '.mc-pixel-dust',
+    '.home-splash-wrap',
+    '.mc-splash',
+    '.mc-splash__text',
+  ] as const,
 } as const;
 
 // ── UI / 用户界面 ────────────────────────────────────────────────
@@ -167,6 +185,8 @@ export const searchConfig = {
 export const eventNames = {
   /** Fired when the brand logo should reshuffle the homepage splash text. / 品牌 Logo 触发首页闪烁标语切换时派发。 */
   splashShuffle: 'ors:splash-shuffle',
+  /** Fired when the homepage-to-docs mask transition should start holding the current page. / 首页到文档遮罩过渡应开始持有当前页面时派发。*/
+  docsTransitionStart: 'ors:docs-transition-start',
 } as const;
 
 // ── Jukebox / 唱片机 ─────────────────────────────────────────────
