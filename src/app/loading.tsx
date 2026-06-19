@@ -1,15 +1,16 @@
-// Global loading page: Minecraft block-breaking animation.
-// 全局加载页面：Minecraft 方块破坏动画。
-
+// Global loading page: minimal spinner shown during route transitions.
+// 全局加载页面：路由切换期间显示的最小化加载指示器。
 'use client';
 
-import { usePathname } from 'next/navigation';
-import { RouteState } from '@/components/route-state';
-import { getPageDictionary } from '@/dictionaries';
-import { getLocaleFromPathname } from '@/lib/i18n';
-
 export default function GlobalLoading() {
-  const dict = getPageDictionary(getLocaleFromPathname(usePathname()));
-
-  return <RouteState variant="loading" title={dict.loadingTitle} description={dict.loadingDesc} />;
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      style={{ background: 'linear-gradient(160deg, #060c18, #0a0d14, #0c1222)' }}
+    >
+      <div className="route-state__loader" aria-hidden="true">
+        <div className="route-state__loader-track" />
+      </div>
+    </div>
+  );
 }

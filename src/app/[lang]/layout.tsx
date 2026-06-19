@@ -4,7 +4,6 @@ import { RootProvider } from 'fumadocs-ui/provider/next';
 import type { Metadata } from 'next';
 import { ContextMenu } from '@/components/context-menu';
 import DefaultSearchDialog from '@/components/search';
-import MaskReveal from '@/components/transition/mask-reveal';
 
 import { siteConfig } from '@/config';
 import { getPageDictionary } from '@/dictionaries';
@@ -42,7 +41,6 @@ export default async function LangLayout({ params, children }: LayoutProps<'/[la
       i18n={i18nProvider(i18nUI, locale)}
     >
       <ContextMenu locale={locale} />
-      <MaskReveal />
       {children}
     </RootProvider>
   );

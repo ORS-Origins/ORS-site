@@ -1,9 +1,9 @@
 // Locale home page: brand entry + MC server status component + dynamic light & shadow.
 // 多语言首页：品牌入口 + MC 服务器状态组件 + 动态光影。
 
+import Link from 'next/link';
 import { McServerStatus } from '@/components/mc-status';
 import { SplashText } from '@/components/splash-text';
-import EnterDocsButton from '@/components/transition/enter-docs-button';
 import { brandConfig, siteConfig } from '@/config';
 import { getPageDictionary } from '@/dictionaries';
 
@@ -98,12 +98,12 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
         <McServerStatus locale={locale} />
       </div>
 
-      <EnterDocsButton
+      <Link
         href={`/${locale}/docs/${siteConfig.defaultDocsPath}`}
         className="home-enter home-enter--delay-4 z-10 mt-8 glass-chip px-10 py-4 rounded-2xl text-lg font-semibold font-minecraft-ae inline-block no-underline text-foreground hover:scale-105 transition-transform duration-200"
       >
         {dict.enterDocs} →
-      </EnterDocsButton>
+      </Link>
     </main>
   );
 }

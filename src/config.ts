@@ -73,38 +73,6 @@ export const mcConfig = {
 export const themeConfig = {
   /** CSS theme transition duration in ms. / CSS 主题切换过渡时长（毫秒）。 */
   transitionDurationMs: 300,
-  /** Mask reveal page transition duration in ms. / 遮罩揭示页面过渡时长（毫秒）。 */
-  maskRevealDurationMs: 2500,
-  /** Mask reveal easing curve (cubic-bezier). / 遮罩揭示缓动曲线（cubic-bezier）。 */
-  maskRevealEase: [0.22, 0.61, 0.36, 1.0] as [number, number, number, number],
-  /** Mask reveal radius multiplier for covering viewport corners. / 遮罩揭示覆盖视口角落的半径倍率。 */
-  maskRevealRadiusScale: 1.2,
-  /** Initial soft edge width for mask reveal in px. / 遮罩揭示初始柔边宽度（像素）。 */
-  maskRevealInitialFeatherPx: 40,
-  /** Final soft edge width as a ratio of reveal radius. / 最终柔边宽度相对揭示半径的比例。 */
-  maskRevealFeatherScale: 0.35,
-  /** Maximum age of a pending docs transition in ms. / 待执行文档过渡的最大有效期（毫秒）。 */
-  docsTransitionMaxAgeMs: 3000,
-  /** Idle timeout for caching homepage transition snapshot in ms. / 首页过渡快照空闲缓存超时（毫秒）。 */
-  docsTransitionSnapshotIdleTimeoutMs: 1000,
-  /** Selector that means the target docs layout is ready for reveal animation. / 标记目标文档布局已可播放揭示动画的选择器。*/
-  docsTransitionReadySelector: '#nd-docs-layout',
-  /** Maximum wait for the target docs layout before revealing anyway. / 等待目标文档布局就绪的最长时间，超时后仍继续揭示。*/
-  docsTransitionReadyTimeoutMs: 5000,
-  /** Selectors whose current visual state should be frozen in the transition snapshot. / 过渡快照中需要冻结当前视觉状态的选择器。*/
-  docsTransitionSnapshotFreezeSelectors: [
-    '.home-enter',
-    '.home-enter *',
-    '.home-gradient-bg__orb',
-    '.mc-block-halo',
-    '.mc-float-block',
-    '.mc-light-beam',
-    '.mc-particle',
-    '.mc-pixel-dust',
-    '.home-splash-wrap',
-    '.mc-splash',
-    '.mc-splash__text',
-  ] as const,
 } as const;
 
 // ── UI / 用户界面 ────────────────────────────────────────────────
@@ -185,8 +153,6 @@ export const searchConfig = {
 export const eventNames = {
   /** Fired when the brand logo should reshuffle the homepage splash text. / 品牌 Logo 触发首页闪烁标语切换时派发。 */
   splashShuffle: 'ors:splash-shuffle',
-  /** Fired when the homepage-to-docs mask transition should start holding the current page. / 首页到文档遮罩过渡应开始持有当前页面时派发。*/
-  docsTransitionStart: 'ors:docs-transition-start',
 } as const;
 
 // ── Jukebox / 唱片机 ─────────────────────────────────────────────
@@ -233,10 +199,6 @@ export const storageKeys = {
   sidebarCollapsed: 'sidebar-collapsed',
   /** Floating skin viewer collapsed state key. / 悬浮纸娃娃收起状态 localStorage 键名。 */
   skinViewerCollapsed: 'skin-viewer-collapsed',
-  /** Page transition snapshot data key. / 页面过渡快照数据 sessionStorage 键名。 */
-  transitionData: 'nd-docs-transition',
-  /** Page transition DOM snapshot key. / 页面过渡 DOM 快照 sessionStorage 键名。 */
-  transitionSnapshot: 'nd-docs-transition-snapshot',
   /** Last played jukebox disc id. / 上次播放的唱片机唱片 id。 */
   jukeboxLastDisc: 'jukebox-last-disc',
 } as const;
