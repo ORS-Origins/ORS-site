@@ -220,13 +220,15 @@
   box-shadow: var(--nav-control-shadow-hover);
 }
 
-/* Sidebar theme switcher: convert the bottom segmented control to the same glass chip language.
-   侧栏主题切换：将底部切换控件统一为同一套玻璃按钮语言。 */
+/* Sidebar theme switcher: share the footer glass surface to avoid nested translucent backgrounds.
+   侧栏主题切换：复用底部控制栏玻璃底色，避免半透明背景重复叠加。 */
 #nd-sidebar [data-theme-toggle] {
-  background-color: var(--nav-control-background) !important;
+  background-color: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   border-color: var(--nav-control-border) !important;
   border-radius: var(--radius-lg) !important;
-  box-shadow: var(--nav-control-shadow) !important;
+  box-shadow: none !important;
 }
 
 /* Fix physical sizing for legacy components like language switcher, force large border-radius.
