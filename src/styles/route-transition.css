@@ -1,0 +1,85 @@
+/* Loading-to-page route transitions shared by localized app routes.
+   多语言路由共用的加载页到页面内容过渡。 */
+.route-state[aria-busy="true"] {
+  animation: route-loading-enter var(--route-transition-loading-duration)
+    var(--route-transition-ease) both;
+}
+
+/* Page content entrance after a loading boundary is replaced.
+   加载边界替换为真实页面内容后的进入动画。 */
+.route-page-enter {
+  transform-origin: top center;
+  animation: route-page-enter var(--route-transition-page-duration) var(--route-transition-ease)
+    both;
+  will-change: opacity, transform, filter;
+}
+
+/* Persistent root redirect overlay: bridges the loading route and rendered homepage.
+   常驻根重定向覆盖层：衔接加载路由与已渲染首页。 */
+.route-transition-layer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--route-transition-overlay-z-index);
+  min-height: 100dvh;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--background);
+}
+
+.route-transition-layer--leaving {
+  animation: route-root-loading-exit var(--route-transition-root-duration)
+    var(--route-transition-ease) both;
+  will-change: opacity, transform, filter;
+}
+
+@keyframes route-loading-enter {
+  from {
+    opacity: 0;
+    filter: blur(0.35rem);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes route-page-enter {
+  from {
+    opacity: 0.72;
+    transform: translate3d(0, 0.35rem, 0);
+    filter: blur(0.12rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+@keyframes route-root-loading-exit {
+  from {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(0.45rem);
+    transform: scale(0.985);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-state[aria-busy="true"],
+  .route-page-enter,
+  .route-transition-layer--leaving {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+    filter: none;
+    will-change: auto;
+  }
+}

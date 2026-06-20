@@ -8,14 +8,42 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { RouteState } from '@/components/route-state';
+import { eventNames, uiConfig } from '@/config';
 import { getPageDictionary } from '@/dictionaries';
 import { i18n } from '@/lib/i18n';
+
+let rootRedirectInProgress = false;
 
 export default function RootRedirect() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace(`/${i18n.defaultLanguage}`);
+    if (rootRedirectInProgress) {
+      return;
+    }
+
+    rootRedirectInProgress = true;
+
+    const destination = `/${i18n.defaultLanguage}`;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const navigate = () => {
+      router.replace(destination);
+      window.setTimeout(() => {
+        rootRedirectInProgress = false;
+      }, uiConfig.routeTransition.redirectWaitTimeoutMs);
+    };
+
+    if (reducedMotion) {
+      navigate();
+      return;
+    }
+
+    // Keep a persistent loading overlay alive across the client redirect.
+    // 在客户端重定向期间保持常驻加载覆盖层，避免根加载页到首页出现断层。
+    window.requestAnimationFrame(() => {
+      window.dispatchEvent(new Event(eventNames.rootRedirectTransitionStart));
+      window.requestAnimationFrame(navigate);
+    });
   }, [router]);
 
   const dict = getPageDictionary(i18n.defaultLanguage);

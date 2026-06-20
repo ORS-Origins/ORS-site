@@ -138,7 +138,6 @@ ORS-Site 是一个基于 [Next.js](https://nextjs.org/) 与 [Fumadocs](https://f
 │   │   ├── error.tsx              # 全局错误边界
 │   │   ├── globals.css            # 全局样式入口
 │   │   ├── layout.tsx             # 应用根布局
-│   │   ├── loading.tsx            # 全局加载状态
 │   │   ├── not-found.tsx          # 全局 404 页面
 │   │   └── page.tsx               # 根路径重定向
 │   ├── components/                # React 组件
@@ -154,6 +153,7 @@ ORS-Site 是一个基于 [Next.js](https://nextjs.org/) 与 [Fumadocs](https://f
 │   │   ├── mc-status.tsx          # Minecraft 服务器状态卡片
 │   │   ├── nav-logo.tsx           # 导航栏 Logo
 │   │   ├── route-state.tsx        # 路由状态（加载/404）
+│   │   ├── route-transition-layer.tsx # 根路由过渡覆盖层
 │   │   ├── search.tsx             # 搜索组件
 │   │   ├── sidebar-provider.tsx   # 侧栏状态管理
 │   │   ├── skin-viewer.tsx        # 纸娃娃查看器
@@ -180,6 +180,7 @@ ORS-Site 是一个基于 [Next.js](https://nextjs.org/) 与 [Fumadocs](https://f
 │   │   ├── home.css               # 首页特效样式
 │   │   ├── mermaid.css            # Mermaid 图表样式
 │   │   ├── minecraft.css          # Minecraft 主题样式
+│   │   ├── route-transition.css   # 路由加载与页面进入过渡
 │   │   ├── skinviewer.css         # 纸娃娃查看器样式
 │   │   ├── skinviewer-animation.css # 纸娃娃动画样式
 │   │   ├── theme.css              # 主题变量与过渡
@@ -324,6 +325,13 @@ bun start
 | `skinViewer.*` | — | 纸娃娃查看器位置与样式参数 |
 | `routeState.loadingIconPath` | `/imgs/widget/loading.png` | 加载动画图标路径 |
 | `routeState.notFoundIconPath` | `/imgs/blocks/bedrock.png` | 404 页面图标路径 |
+| `routeTransition.loadingEnterDurationMs` | `220` | 加载页淡入时长（毫秒） |
+| `routeTransition.pageEnterDurationMs` | `360` | 页面内容淡入时长（毫秒） |
+| `routeTransition.rootRedirectDurationMs` | `420` | 根加载重定向覆盖层淡出时长（毫秒） |
+| `routeTransition.readyRevealDelayMs` | `320` | 目标页面就绪后开始揭示前的延迟（毫秒） |
+| `routeTransition.redirectWaitTimeoutMs` | `1200` | 等待重定向路由稳定的最长时间（毫秒） |
+| `routeTransition.overlayZIndex` | `80` | 根路由过渡覆盖层层级 |
+| `routeTransition.easing` | `cubic-bezier(0.16, 1, 0.3, 1)` | 路由过渡缓动曲线 |
 
 ### Mermaid 图表配置（`mermaidConfig`）
 

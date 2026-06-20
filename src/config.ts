@@ -119,6 +119,23 @@ export const uiConfig = {
     /** Decorative icon path for not-found surfaces. / 404 界面装饰图标路径。 */
     notFoundIconPath: '/imgs/blocks/bedrock.png',
   },
+  /** Route loading-to-page transition timing. / 路由加载页到页面内容的过渡时序。 */
+  routeTransition: {
+    /** Loading page fade-in duration in ms. / 加载页淡入时长（毫秒）。 */
+    loadingEnterDurationMs: 220,
+    /** Page content fade-in duration in ms. / 页面内容淡入时长（毫秒）。 */
+    pageEnterDurationMs: 360,
+    /** Root loading redirect overlay fade-out duration in ms. / 根加载重定向覆盖层淡出时长（毫秒）。 */
+    rootRedirectDurationMs: 420,
+    /** Delay after a target page is ready before revealing it in ms. / 目标页面就绪后开始揭示前的延迟（毫秒）。 */
+    readyRevealDelayMs: 320,
+    /** Maximum wait for the redirected route to settle in ms. / 等待重定向路由稳定的最长时间（毫秒）。 */
+    redirectWaitTimeoutMs: 1200,
+    /** Root transition overlay stacking level. / 根路由过渡覆盖层层级。 */
+    overlayZIndex: 80,
+    /** Shared transition easing curve. / 共享过渡缓动曲线。 */
+    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+  },
 } as const;
 
 // ── Mermaid viewer / Mermaid 图表查看器 ──────────────────────────
@@ -153,6 +170,10 @@ export const searchConfig = {
 export const eventNames = {
   /** Fired when the brand logo should reshuffle the homepage splash text. / 品牌 Logo 触发首页闪烁标语切换时派发。 */
   splashShuffle: 'ors:splash-shuffle',
+  /** Fired when the root loading route should persist during redirect. / 根加载路由重定向期间保持过渡层时派发。 */
+  rootRedirectTransitionStart: 'ors:root-redirect-transition-start',
+  /** Fired when the redirected homepage is mounted behind the root transition layer. / 首页已在根过渡层后挂载时派发。 */
+  rootRedirectTransitionReady: 'ors:root-redirect-transition-ready',
 } as const;
 
 // ── Jukebox / 唱片机 ─────────────────────────────────────────────

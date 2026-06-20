@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import { McServerStatus } from '@/components/mc-status';
+import { RouteTransitionReadySignal } from '@/components/route-transition-layer';
 import { SplashText } from '@/components/splash-text';
 import { brandConfig, siteConfig } from '@/config';
 import { getPageDictionary } from '@/dictionaries';
@@ -19,7 +20,10 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
   const dict = getPageDictionary(locale);
 
   return (
-    <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24">
+    // Page enter transition: smooths replacement after the locale loading route.
+    // 页面进入过渡：平滑衔接多语言加载页被替换后的真实首页。
+    <main className="route-page-enter relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24">
+      <RouteTransitionReadySignal />
       {/* Animated gradient background for the homepage only. / 首页动态渐变背景。 */}
       <div aria-hidden="true" className="home-gradient-bg pointer-events-none absolute inset-0">
         <div className="home-gradient-bg__orb home-gradient-bg__orb--one" />
