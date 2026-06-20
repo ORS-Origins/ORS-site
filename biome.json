@@ -18,8 +18,7 @@
       "!**/*.min.js",
       "!**/bun.lock",
       "!**/package-lock.json",
-      "!**/yarn.lock",
-      "!**/page.html"
+      "!**/yarn.lock"
     ]
   },
   "formatter": {

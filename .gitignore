@@ -37,3 +37,7 @@ next-env.d.ts
 
 # ai
 .mimocode/
+.agents/
+
+# build artifacts
+page.html
