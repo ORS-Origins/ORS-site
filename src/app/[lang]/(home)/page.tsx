@@ -1,8 +1,8 @@
 // Locale home page: brand entry + MC server status component + dynamic light & shadow.
 // 多语言首页：品牌入口 + MC 服务器状态组件 + 动态光影。
 
-import Link from 'next/link';
 import type { CSSProperties } from 'react';
+import { EnterDocsButton } from '@/components/enter-docs-button';
 import { McServerStatus } from '@/components/mc-status';
 import { RouteTransitionReadySignal } from '@/components/route-transition-layer';
 import { SplashText } from '@/components/splash-text';
@@ -11,17 +11,9 @@ import { getPageDictionary } from '@/dictionaries';
 
 import { i18n, type Locale } from '@/lib/i18n';
 
-type SplashLayoutStyle = CSSProperties & {
-  '--home-splash-font-size': string;
-  '--home-splash-line-height': string;
-  '--home-splash-max-width': string;
-  '--home-splash-offset-x': string;
-  '--home-splash-offset-y': string;
-};
-
 // Homepage splash layout variables keep responsive anchoring configurable.
 // 首页闪烁标语布局变量，保证响应式锚点参数可配置。
-const splashLayoutStyle: SplashLayoutStyle = {
+const splashLayoutStyle: CSSProperties = {
   '--home-splash-font-size': uiConfig.homeSplash.fontSize,
   '--home-splash-line-height': uiConfig.homeSplash.lineHeight,
   '--home-splash-max-width': uiConfig.homeSplash.maxWidth,
@@ -37,6 +29,7 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
   const { lang } = await params;
   const locale = (lang as Locale) ?? i18n.defaultLanguage;
   const dict = getPageDictionary(locale);
+  const docsEntryHref = `/${locale}/docs/${siteConfig.defaultDocsPath}`;
 
   return (
     // Page enter transition: smooths replacement after the locale loading route.
@@ -123,12 +116,12 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
         <McServerStatus locale={locale} />
       </div>
 
-      <Link
-        href={`/${locale}/docs/${siteConfig.defaultDocsPath}`}
-        className="home-enter home-enter--delay-4 z-10 mt-8 glass-chip px-10 py-4 rounded-2xl text-lg font-semibold font-minecraft-ae inline-block no-underline text-foreground hover:scale-105 transition-transform duration-200"
+      <EnterDocsButton
+        href={docsEntryHref}
+        className="enter-docs-button home-enter home-enter--delay-4 z-10 mt-8 glass-chip px-10 py-4 rounded-2xl text-lg font-semibold font-minecraft-ae inline-flex items-center justify-center gap-2 no-underline text-foreground hover:scale-105 transition-transform duration-200"
       >
         {dict.enterDocs} →
-      </Link>
+      </EnterDocsButton>
     </main>
   );
 }
