@@ -2,13 +2,32 @@
 // 多语言首页：品牌入口 + MC 服务器状态组件 + 动态光影。
 
 import Link from 'next/link';
+import type { CSSProperties } from 'react';
 import { McServerStatus } from '@/components/mc-status';
 import { RouteTransitionReadySignal } from '@/components/route-transition-layer';
 import { SplashText } from '@/components/splash-text';
-import { brandConfig, siteConfig } from '@/config';
+import { brandConfig, siteConfig, uiConfig } from '@/config';
 import { getPageDictionary } from '@/dictionaries';
 
 import { i18n, type Locale } from '@/lib/i18n';
+
+type SplashLayoutStyle = CSSProperties & {
+  '--home-splash-font-size': string;
+  '--home-splash-line-height': string;
+  '--home-splash-max-width': string;
+  '--home-splash-offset-x': string;
+  '--home-splash-offset-y': string;
+};
+
+// Homepage splash layout variables keep responsive anchoring configurable.
+// 首页闪烁标语布局变量，保证响应式锚点参数可配置。
+const splashLayoutStyle: SplashLayoutStyle = {
+  '--home-splash-font-size': uiConfig.homeSplash.fontSize,
+  '--home-splash-line-height': uiConfig.homeSplash.lineHeight,
+  '--home-splash-max-width': uiConfig.homeSplash.maxWidth,
+  '--home-splash-offset-x': uiConfig.homeSplash.offsetX,
+  '--home-splash-offset-y': uiConfig.homeSplash.offsetY,
+};
 
 export function generateStaticParams() {
   return i18n.languages.map((lang) => ({ lang }));
@@ -88,7 +107,9 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
       <div className="relative z-10 flex flex-col items-center gap-4 text-center">
         <div className="home-enter home-enter--delay-1 relative">
           <h1 className="brand-wordmark home-title font-minecrafter">{brandConfig.homeTitle}</h1>
-          <div className="home-splash-wrap">
+          {/* Configured splash anchor keeps long slogans pinned to the title corner.
+              配置化闪烁标语锚点，确保长标语固定在标题右下角。 */}
+          <div className="home-splash-wrap" style={splashLayoutStyle}>
             <SplashText />
           </div>
         </div>

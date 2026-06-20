@@ -651,27 +651,27 @@
    响应式闪烁标语位置：移动端也显示，同时避免遮挡主标题。 */
 .home-splash-wrap {
   position: absolute;
-  right: -3.5rem;
-  bottom: 1.5rem;
-  transform: scale(0.72);
-  transform-origin: center;
+  right: 0;
+  bottom: 0;
+  width: var(--home-splash-max-width);
+  max-width: calc(100vw - 2rem);
+  pointer-events: none;
+  transform: translate(var(--home-splash-offset-x), var(--home-splash-offset-y));
+  transform-origin: right center;
   z-index: 10;
 }
 
-@media (min-width: 640px) {
-  .home-splash-wrap {
-    right: -5rem;
-    bottom: 2rem;
-    transform: scale(0.82);
-  }
+.home-splash-wrap .mc-splash {
+  width: 100%;
+  justify-content: flex-end;
+  transform-origin: right center;
 }
 
-@media (min-width: 768px) {
-  .home-splash-wrap {
-    right: -6rem;
-    bottom: 2rem;
-    transform: scale(1);
-  }
+.home-splash-wrap .mc-splash__text {
+  max-width: 100%;
+  font-size: var(--home-splash-font-size);
+  line-height: var(--home-splash-line-height);
+  text-align: right;
 }
 
 @keyframes home-enter-fade {

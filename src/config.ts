@@ -119,6 +119,19 @@ export const uiConfig = {
     /** Decorative icon path for not-found surfaces. / 404 界面装饰图标路径。 */
     notFoundIconPath: '/imgs/blocks/bedrock.png',
   },
+  /** Homepage splash text responsive anchor layout. / 首页闪烁标语响应式锚点布局。 */
+  homeSplash: {
+    /** Maximum splash line width across viewport sizes. / 不同视口下标语单行最大宽度。 */
+    maxWidth: 'min(76vw, 30rem)',
+    /** Horizontal offset from the title lower-right corner. / 相对标题右下角的水平偏移。 */
+    offsetX: 'clamp(2.5rem, 11vw, 5.5rem)',
+    /** Vertical offset from the title lower-right corner. / 相对标题右下角的垂直偏移。 */
+    offsetY: 'clamp(-3.75rem, -10vw, -3rem)',
+    /** Fluid splash font size for mobile and desktop. / 适配移动端与桌面的流式标语字号。 */
+    fontSize: 'clamp(0.82rem, 2.8vw, 1.35rem)',
+    /** Compact line height keeps rotated long text aligned. / 紧凑行高用于保持旋转长文本对齐。 */
+    lineHeight: '1.1',
+  },
   /** Route loading-to-page transition timing. / 路由加载页到页面内容的过渡时序。 */
   routeTransition: {
     /** Loading page fade-in duration in ms. / 加载页淡入时长（毫秒）。 */

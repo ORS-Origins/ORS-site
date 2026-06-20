@@ -325,6 +325,11 @@ bun start
 | `skinViewer.*` | — | 纸娃娃查看器位置与样式参数 |
 | `routeState.loadingIconPath` | `/imgs/widget/loading.png` | 加载动画图标路径 |
 | `routeState.notFoundIconPath` | `/imgs/blocks/bedrock.png` | 404 页面图标路径 |
+| `homeSplash.maxWidth` | `min(76vw, 30rem)` | 首页闪烁标语单行最大宽度 |
+| `homeSplash.offsetX` | `clamp(2.5rem, 11vw, 5.5rem)` | 标语相对标题右下角的水平偏移 |
+| `homeSplash.offsetY` | `clamp(-3.75rem, -10vw, -3rem)` | 标语相对标题右下角的垂直偏移 |
+| `homeSplash.fontSize` | `clamp(0.82rem, 2.8vw, 1.35rem)` | 闪烁标语响应式字号 |
+| `homeSplash.lineHeight` | `1.1` | 旋转标语使用的紧凑行高 |
 | `routeTransition.loadingEnterDurationMs` | `220` | 加载页淡入时长（毫秒） |
 | `routeTransition.pageEnterDurationMs` | `360` | 页面内容淡入时长（毫秒） |
 | `routeTransition.rootRedirectDurationMs` | `420` | 根加载重定向覆盖层淡出时长（毫秒） |
