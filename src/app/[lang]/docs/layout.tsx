@@ -4,9 +4,9 @@
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { Sidebar, SidebarTrigger, useSidebar } from 'fumadocs-ui/layouts/docs/slots/sidebar';
 import type { CSSProperties } from 'react';
+import { DeferredSkinViewer } from '@/components/deferred-skin-viewer';
 import { Jukebox } from '@/components/jukebox';
 import { SidebarProvider } from '@/components/sidebar-provider';
-import { SkinViewerComponent } from '@/components/skin-viewer';
 import { uiConfig } from '@/config';
 import { i18n, type Locale } from '@/lib/i18n';
 import { baseOptions } from '@/lib/layout.shared';
@@ -88,7 +88,7 @@ export default async function Layout({ params, children }: LayoutProps<'/[lang]/
           </DocsLayout>
         </div>
       </div>
-      <SkinViewerComponent />
+      <DeferredSkinViewer />
     </>
   );
 }

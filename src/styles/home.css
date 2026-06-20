@@ -674,6 +674,50 @@
   text-align: right;
 }
 
+/* Enter docs CTA pending state: paint feedback before navigation work starts. */
+.enter-docs-button {
+  position: relative;
+  min-width: 10rem;
+}
+
+.enter-docs-button[data-pending="true"] {
+  cursor: progress;
+  filter: brightness(0.98) saturate(1.05);
+  transform: scale(0.985);
+}
+
+.enter-docs-button__label {
+  min-width: 0;
+}
+
+.enter-docs-button__indicator {
+  width: 0;
+  height: 0;
+  border: 0 solid transparent;
+  border-top-color: currentColor;
+  border-radius: 999px;
+  opacity: 0;
+  transition:
+    width 0.14s ease,
+    height 0.14s ease,
+    border-width 0.14s ease,
+    opacity 0.14s ease;
+}
+
+.enter-docs-button[data-pending="true"] .enter-docs-button__indicator {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-width: 0.16rem;
+  opacity: 0.72;
+  animation: enter-docs-button-spin 0.72s linear infinite;
+}
+
+@keyframes enter-docs-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes home-enter-fade {
   to {
     opacity: 1;

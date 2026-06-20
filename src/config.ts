@@ -101,6 +101,8 @@ export const uiConfig = {
     controlHeightPx: 28,
     /** Collapsed toggle reserved space for the system scrollbar. / 折叠按钮为系统滚动条预留的安全距离。 */
     scrollbarSafeAreaPx: 18,
+    /** Delay before mounting the docs skin viewer in ms. / 文档纸娃娃查看器延迟挂载时间（毫秒）。 */
+    deferredMountDelayMs: 700,
     /** Dark mode toggle surface color. / 深色模式切换按钮表面色。 */
     darkControlSurface: 'rgba(18, 33, 68, 0.92)',
     /** Dark mode toggle hover surface color. / 深色模式切换按钮悬浮表面色。 */
@@ -140,8 +142,6 @@ export const uiConfig = {
     pageEnterDurationMs: 360,
     /** Root loading redirect overlay fade-out duration in ms. / 根加载重定向覆盖层淡出时长（毫秒）。 */
     rootRedirectDurationMs: 420,
-    /** Delay after a target page is ready before revealing it in ms. / 目标页面就绪后开始揭示前的延迟（毫秒）。 */
-    readyRevealDelayMs: 320,
     /** Maximum wait for the redirected route to settle in ms. / 等待重定向路由稳定的最长时间（毫秒）。 */
     redirectWaitTimeoutMs: 1200,
     /** Root transition overlay stacking level. / 根路由过渡覆盖层层级。 */

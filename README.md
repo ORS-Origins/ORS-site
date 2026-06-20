@@ -128,6 +128,7 @@ ORS-Site 是一个基于 [Next.js](https://nextjs.org/) 与 [Fumadocs](https://f
 │   │   │   ├── docs/              # 文档页
 │   │   │   │   ├── [...slug]/     # 动态路由
 │   │   │   │   │   └── page.tsx   # 文档页面组件
+│   │   │   │   ├── loading.tsx     # 文档加载边界
 │   │   │   │   ├── layout.tsx     # 文档布局
 │   │   │   │   ├── not-found.tsx  # 文档 404
 │   │   │   │   └── template.tsx   # 文档过渡模板
@@ -150,6 +151,9 @@ ORS-Site 是一个基于 [Next.js](https://nextjs.org/) 与 [Fumadocs](https://f
 │   │   │   ├── enter-docs-button.tsx  # 进入文档按钮动画
 │   │   │   └── mask-reveal.tsx        # 遮罩揭示过渡
 │   │   ├── context-menu.tsx       # 右键自定义菜单
+│   │   ├── deferred-skin-viewer.tsx # 延迟加载纸娃娃查看器
+│   │   ├── enter-docs-button.tsx   # 进入文档按钮
+│   │   ├── localized-route-loading.tsx # 本地化加载界面
 │   │   ├── mc-status.tsx          # Minecraft 服务器状态卡片
 │   │   ├── nav-logo.tsx           # 导航栏 Logo
 │   │   ├── route-state.tsx        # 路由状态（加载/404）
@@ -322,7 +326,7 @@ bun start
 | `contextMenu.itemHeight` | `40` | 右键菜单项高度（px） |
 | `docsLayout.sidebarWidth` | `268px` | 文档侧栏宽度 |
 | `tocStyle` | `clerk` | 目录样式 |
-| `skinViewer.*` | — | 纸娃娃查看器位置与样式参数 |
+| `skinViewer.*` | — | 纸娃娃查看器位置、样式与延迟挂载参数 |
 | `routeState.loadingIconPath` | `/imgs/widget/loading.png` | 加载动画图标路径 |
 | `routeState.notFoundIconPath` | `/imgs/blocks/bedrock.png` | 404 页面图标路径 |
 | `homeSplash.maxWidth` | `min(76vw, 30rem)` | 首页闪烁标语单行最大宽度 |
@@ -333,7 +337,6 @@ bun start
 | `routeTransition.loadingEnterDurationMs` | `220` | 加载页淡入时长（毫秒） |
 | `routeTransition.pageEnterDurationMs` | `360` | 页面内容淡入时长（毫秒） |
 | `routeTransition.rootRedirectDurationMs` | `420` | 根加载重定向覆盖层淡出时长（毫秒） |
-| `routeTransition.readyRevealDelayMs` | `320` | 目标页面就绪后开始揭示前的延迟（毫秒） |
 | `routeTransition.redirectWaitTimeoutMs` | `1200` | 等待重定向路由稳定的最长时间（毫秒） |
 | `routeTransition.overlayZIndex` | `80` | 根路由过渡覆盖层层级 |
 | `routeTransition.easing` | `cubic-bezier(0.16, 1, 0.3, 1)` | 路由过渡缓动曲线 |
