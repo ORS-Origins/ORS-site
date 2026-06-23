@@ -1,5 +1,7 @@
 {
   "title": "About",
+  "description": "About Us",
   "icon": "Info",
-  "root": true
+  "root": true,
+  "pages": ["index", "---Contributing---", "contributing", "syntax-example", "code-tabs-demo"]
 }

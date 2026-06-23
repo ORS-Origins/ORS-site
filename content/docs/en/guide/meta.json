@@ -1,4 +1,6 @@
 {
   "title": "Play Guide",
-  "icon": "Gamepad2"
+  "description": "A guide to playing on ORS.",
+  "icon": "Gamepad2",
+  "root": true
 }

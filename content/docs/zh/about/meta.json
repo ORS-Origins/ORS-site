@@ -1,6 +1,6 @@
 {
-  "title": "关于我们",
-  "description": "关于 ORS 服务器",
+  "title": "关于",
+  "description": "关于我们",
   "icon": "Info",
   "root": true,
   "pages": ["index", "---加入贡献---", "contributing", "syntax-example", "code-tabs-demo"]
