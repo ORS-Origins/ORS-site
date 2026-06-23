@@ -13,13 +13,13 @@ import { i18n, type Locale } from '@/lib/i18n';
 
 // Homepage splash layout variables keep responsive anchoring configurable.
 // 首页闪烁标语布局变量，保证响应式锚点参数可配置。
-const splashLayoutStyle: CSSProperties = {
+const splashLayoutStyle = {
   '--home-splash-font-size': uiConfig.homeSplash.fontSize,
   '--home-splash-line-height': uiConfig.homeSplash.lineHeight,
   '--home-splash-max-width': uiConfig.homeSplash.maxWidth,
   '--home-splash-offset-x': uiConfig.homeSplash.offsetX,
   '--home-splash-offset-y': uiConfig.homeSplash.offsetY,
-};
+} as CSSProperties;
 
 export function generateStaticParams() {
   return i18n.languages.map((lang) => ({ lang }));
