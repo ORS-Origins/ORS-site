@@ -2,5 +2,6 @@
   "title": "Play Guide",
   "description": "A guide to playing on ORS.",
   "icon": "Gamepad2",
-  "root": true
+  "root": true,
+  "pages": ["index", "group_photo"]
 }
