@@ -6,7 +6,7 @@ import { EnterDocsButton } from '@/components/enter-docs-button';
 import { McServerStatus } from '@/components/mc-status';
 import { RouteTransitionReadySignal } from '@/components/route-transition-layer';
 import { SplashText } from '@/components/splash-text';
-import { brandConfig, siteConfig, uiConfig } from '@/config';
+import { brandConfig, mcConfig, siteConfig, uiConfig } from '@/config';
 import { getPageDictionary } from '@/dictionaries';
 
 import { i18n, type Locale } from '@/lib/i18n';
@@ -112,9 +112,11 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
       </div>
 
       {/* MC Server Status Component / MC 服务器状态组件 */}
-      <div className="home-enter home-enter--delay-3 z-10 mt-10 w-full max-w-sm">
-        <McServerStatus locale={locale} />
-      </div>
+      {mcConfig.showServerStatus && (
+        <div className="home-enter home-enter--delay-3 z-10 mt-10 w-full max-w-sm">
+          <McServerStatus locale={locale} />
+        </div>
+      )}
 
       <EnterDocsButton
         href={docsEntryHref}

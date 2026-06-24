@@ -65,6 +65,8 @@ export const mcConfig = {
   avatarSize: 16,
   /** Server status polling interval in ms. / 服务器状态轮询间隔（毫秒）。 */
   pollingIntervalMs: 60_000,
+  /** Whether to display the entire server status card on the homepage. / 是否在首页显示整个服务器状态卡片。 */
+  showServerStatus: false,
   /** Whether to show the server IP address in the status card. / 是否在状态卡片中显示服务器 IP 地址。 */
   showServerIp: false,
 } as const;
